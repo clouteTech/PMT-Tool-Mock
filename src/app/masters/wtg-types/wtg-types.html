@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="wtg-header">
+        <h2>WTG Types</h2>
+        <p-button icon="pi pi-plus" label="Add WTG Type" (onClick)="openWtgTypeModal()" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="wtgTypeList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>WTG Type</th>
+                    <th>Is Near Shore</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-wtg let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ wtg.wtgType }}</td>
+                    <td>{{ wtg.isNearShore ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <p-tag [value]="wtg.status ? 'Active' : 'Inactive'" [severity]="wtg.status ? 'success' : 'danger'">
+                        </p-tag>
+                    </td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="wtgTypeMenu($event, menu, wtg)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedWTGType ? 'Edit WTG Type' : 'Add WTG Type'" [modal]="true" [(visible)]="showWTGTypeModal" 
+    [style]="{ width: '40rem' }" [draggable]="false" (onHide)="onDialogClose()">
+    <form [formGroup]="wtgTypeForm" (ngSubmit)="submitWtgTypeForm()">
+        <div class="form-grid">
+            <div>
+                <label for="wtg-type">WTG Type</label>
+                <input type="text" pInputText formControlName="wtgType" class="w-full" id="wtg-type" />
+
+                @if (wtgType?.invalid && (wtgType?.dirty || wtgType?.touched)) {
+                    @if (wtgType?.hasError('required')) {
+                        <small class="required-field">WTG Type is required.</small>
+                    }
+                    @if (wtgType?.hasError('maxlength')) {
+                        <small class="required-field">WTG Type cannot exceed 10 characters.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="near-shore">Is Near Shore</label>
+                <p-select [options]="nearShoreList" formControlName="isNearShore" inputId="near-shore" 
+                    placeholder="Select Yes/No" appendTo="body" styleClass="input-full" />
+            </div>
+        </div>
+        @if(selectedWTGType){
+        
+        <div class="status-card">
+        
+            <div>
+        
+                <div class="status-title">
+                    WTG Type Availability
+                </div>
+        
+                <div class="status-subtitle">
+        
+                    Keep this blade type active if it is still in use.
+        
+                    Turn it off if it is no longer required.
+        
+                </div>
+        
+            </div>
+        
+            <div class="status-toggle-wrap">
+        
+                <span class="status-label" [class.inactive]="!wtgTypeForm.get('status')?.value">
+        
+                    {{
+                    wtgTypeForm.get('status')?.value
+                    ? 'Active'
+                    : 'Inactive'
+                    }}
+        
+                </span>
+        
+                <p-toggleswitch formControlName="status">
+                </p-toggleswitch>
+        
+            </div>
+        
+        </div>
+        
+        }
+        <div class="submit-btn">
+            <button pButton pRipple type="submit">Submit</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

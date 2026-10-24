@@ -1,0 +1,213 @@
+<div class="card">
+    <div class="dispatch-header">
+        <h2>WTG Dispatch</h2>
+        <p-button label="Plan Dispatch" icon="pi pi-truck" routerLink="/wtg-dispatch/plan" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="wtgDispatchPlanList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL NO</th>
+                    <th>
+                        <div class="summary-th-content">
+                            <span>P-Code</span>
+                            <p-columnFilter type="text" field="pCode" display="menu" />
+                        </div>
+                    </th>
+                    <th>Components</th>
+                    <th>Sub Components</th>
+                    <th>Dispatch Plan Start</th>
+                    <th>Dispatch Actual Start</th>
+                    <th>Dispatch Forecast Start</th>
+                    <th>Dispatch Start Delay Reason</th>
+                    <th>Dispatch Plan Finish</th>
+                    <th>Dispatch Actual Finish</th>
+                    <th>Dispatch Forecast Finish</th>
+                    <th>Dispatch Finish Delay Reason</th>
+                    <th>Frame No</th>
+                    <th>Root Frame No</th>
+                    <th>Tip Frame No</th>
+                    <th>Transporter</th>
+                    <th>Invoice Number</th>
+                    <th>Invoice Date</th>
+                    <th>Vehicle No</th>
+                    <th>LR Number</th>
+                    <th>LR Date</th>
+                    <th>DC No</th>
+                    <th>DC Date</th>
+                    <th>Vehicle In Date</th>
+                    <th>Delivery Plan</th>
+                    <th>Delivery Actual</th>
+                    <th>Delivery Forecast</th>
+                    <th>Delivery Delay Reason</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-dispatch let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ dispatch.pCode }}</td>
+                    <td>{{ dispatch.component }}</td>
+                    <td>{{ dispatch.subComponent }}</td>
+                    <td>{{ dispatch.dispatchPlanStart }}</td>
+                    <td>{{ dispatch.dispatchActualStart }}</td>
+                    <td>{{ dispatch.dispatchForecastStart }}</td>
+                    <td>{{ dispatch.dispatchStartDelayReason }}</td>
+                    <td>{{ dispatch.dispatchPlanFinish }}</td>
+                    <td>{{ dispatch.dispatchActualFinish }}</td>
+                    <td>{{ dispatch.dispatchForecastFinish }}</td>
+                    <td>{{ dispatch.dispatchFinishDelayReason }}</td>
+                    <td>{{ dispatch.frameNo }}</td>
+                    <td>{{ dispatch.rootFrameNo }}</td>
+                    <td>{{ dispatch.tipFrameNo }}</td>
+                    <td>{{ dispatch.transporter }}</td>
+                    <td>{{ dispatch.invoiceNumber }}</td>
+                    <td>{{ dispatch.invoiceDate }}</td>
+                    <td>{{ dispatch.vehicleNo }}</td>
+                    <td>{{ dispatch.lrNumber }}</td>
+                    <td>{{ dispatch.lrDate }}</td>
+                    <td>{{ dispatch.dcNo }}</td>
+                    <td>{{ dispatch.dcDate }}</td>
+                    <td>{{ dispatch.vehicleInDate }}</td>
+                    <td>{{ dispatch.deliveryPlan }}</td>
+                    <td>{{ dispatch.deliveryActual }}</td>
+                    <td>{{ dispatch.deliveryForecast }}</td>
+                    <td>{{ dispatch.deliveryDelayReason }}</td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="dispatchMenu($event, menu, dispatch)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog header="Edit Dispatch Details" [modal]="true" [(visible)]="showDispatchDetailsModal" [style]="{ width: '55rem' }"
+    [draggable]="false">
+    <div class="form-row">
+        <div class="form-field">
+            <label>Frame No</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.frameNo" />
+        </div>
+        <div class="form-field">
+            <label>Root Frame No</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.rootFrameNo" />
+        </div>
+        <div class="form-field">
+            <label>Tip Frame No</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.tipFrameNo" />
+        </div>
+        <div class="form-field">
+            <label>Transporter</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.transporter" />
+        </div>
+        <div class="form-field">
+            <label>Invoice Number</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.invoiceNumber" />
+        </div>
+        <div class="form-field">
+            <label>Invoice Date</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.invoiceDate" />
+        </div>
+        <div class="form-field">
+            <label>Vehicle No</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.vehicleNo" />
+        </div>
+        <div class="form-field">
+            <label>LR Number</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.lrNumber" />
+        </div>
+        <div class="form-field">
+            <label>LR Date</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.lrDate" />
+        </div>
+        <div class="form-field">
+            <label>DC No</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.dcNo" />
+        </div>
+        <div class="form-field">
+            <label>DC Date</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.dcDate" />
+        </div>
+        <div class="form-field">
+            <label>Vehicle In Date</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.vehicleInDate" />
+        </div>
+        <div class="form-field">
+            <label>Delivery Plan</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.deliveryPlan" />
+        </div>
+        <div class="form-field">
+            <label>Delivery Actual</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.deliveryActual" />
+        </div>
+        <div class="form-field">
+            <label>Delivery Forecast</label>
+            <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'" placeholder="Select Date"
+                appendTo="body" fluid [(ngModel)]="selectedDispatch.deliveryForecast" />
+        </div>
+        <div class="form-field">
+            <label>Delivery Delay Reason</label>
+            <input type="text" pInputText [(ngModel)]="selectedDispatch.deliveryDelayReason" />
+        </div>
+    </div>
+    <div class="submit-btn">
+        <button pButton pRipple type="button" (click)="submitDispatchDetails()">
+            Submit
+        </button>
+    </div>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />
+
+
+<p-dialog header="Upload Excel" [(visible)]="chooseUploadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+    [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+    }">
+    <div class="flex justify-content-center gap-5 py-4">
+        <div class="dl-item" (click)="uploadTemplate()">
+            <div class="dl-icon" style="background: #ede9fe; color: #6d28d9;">
+                <i class="pi pi-upload"></i>
+            </div>
+            <span class="dl-label">Dispatch Template</span>
+        </div>
+
+    </div>
+</p-dialog>
+
+<p-dialog header="Download Excel" [(visible)]="chooseDownloadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+    [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+  }">
+    <div class="flex justify-content-center gap-5 py-4">
+
+        <div class="dl-item" (click)="downloadTemplate()">
+            <div class="dl-icon" style="background: #dbeafe; color: #1d4ed8;">
+                <i class="pi pi-download"></i>
+            </div>
+            <span class="dl-label">Dispatch Template</span>
+        </div>
+
+    </div>
+</p-dialog>
+
+<p-toast />

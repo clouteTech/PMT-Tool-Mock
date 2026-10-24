@@ -1,0 +1,557 @@
+/* ─── Wrapper ─── */
+.cp-wrap { padding-bottom: 2rem; }
+
+/* ─── Card ─── */
+.cp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* ─── Card Header ─── */
+.cp-card-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.cp-card-header.flex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cp-title    { font-size: 20px; font-weight: 700; color: var(--text); }
+.cp-subtitle { font-size: 13px; color: var(--text3); margin-top: 3px; }
+.cp-title-sm { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+
+.step-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ─── Card Body ─── */
+.cp-card-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+/* ─── Row layout ─── */
+.cp-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.cp-row .cp-field { flex: 1 1 calc(50% - 10px); min-width: 200px; }
+
+/* ─── Field ─── */
+.cp-field { display: flex; flex-direction: column; gap: 6px; }
+.cp-label { font-size: 13px; font-weight: 600; color: var(--text2); }
+.cp-req { color: var(--red); }
+
+/* ─── Inputs ─── */
+.cp-input {
+  width: 100%; height: 40px; padding: 0 12px;
+  border: 1.5px solid var(--border2); border-radius: var(--r-sm);
+  font-size: 14px; font-family: 'Inter', sans-serif;
+  color: var(--text); background: #fff; outline: none;
+  transition: border-color .15s, box-shadow .15s; box-sizing: border-box;
+}
+.cp-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,168,107,.12); }
+.cp-input::placeholder { color: var(--text3); }
+
+.cp-textarea { height: auto; min-height: 100px; padding: 10px 12px; resize: vertical; }
+
+::ng-deep .cp-select {
+  width: 100% !important;
+  &.p-select { width: 100% !important; }
+  &.p-datepicker { width: 100% !important; }
+}
+::ng-deep .cp-select .p-select { width: 100% !important; }
+::ng-deep p-datepicker.cp-select { display: block; width: 100% !important; }
+::ng-deep p-datepicker.cp-select .p-datepicker { width: 100% !important; }
+
+/* ─── Card Footer ─── */
+.cp-card-footer {
+  padding: 14px 24px; border-top: 1px solid var(--border);
+  background: var(--surface); display: flex; justify-content: flex-end;
+}
+.cp-card-footer.flex-footer {
+  justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ─── Accordion header ─── */
+.acc-header-title {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 0.93rem;
+}
+.acc-icon { font-size: 1rem; color: var(--primary, #3b82f6); }
+.acc-spv-count {
+  margin-left: auto; margin-right: 12px; font-size: 0.75rem;
+  background: #e0f2fe; color: #0369a1;
+  padding: 2px 8px; border-radius: 12px; font-weight: 600;
+}
+
+/* ─── Shared field group ─── */
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-label {
+  font-size: 0.78rem; font-weight: 600; color: var(--text2, #475569);
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+.req { color: #ef4444; }
+
+/* ─── SPV Block ─── */
+.spv-block {
+  border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: 16px; margin-bottom: 16px; background: #f8fafc;
+}
+.spv-block-head {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 16px;
+}
+.spv-block-title { display: flex; align-items: center; gap: 12px; }
+.spv-idx {
+  background: var(--primary, #3b82f6); color: #fff;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.spv-remove-btn {
+  border: 1px solid #fca5a5; background: #fff; color: #ef4444;
+  border-radius: 6px; padding: 5px 10px; cursor: pointer;
+  font-size: 0.8rem; transition: background 0.15s;
+  &:hover { background: #fee2e2; }
+}
+
+/* ─── WTG Config Block ─── */
+.wtg-config-block {
+  border: 1px solid #dbeafe; border-radius: 8px;
+  padding: 14px 14px 10px; margin-bottom: 12px; background: #fff;
+}
+.wtg-config-head {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 12px;
+}
+.wtg-cfg-label {
+  font-size: 0.78rem; font-weight: 700; color: #1e40af;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.wtg-remove-btn {
+  border: 1px solid #cbd5e1; background: #f8fafc; color: #64748b;
+  border-radius: 5px; padding: 4px 10px; cursor: pointer;
+  font-size: 0.75rem; display: flex; align-items: center; gap: 4px;
+  transition: background 0.15s;
+  &:hover { background: #fee2e2; color: #ef4444; border-color: #fca5a5; }
+}
+
+/* ─── WTG fields row ─── */
+.wtg-fields-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px 16px; margin-bottom: 12px;
+}
+.wtg-field {
+  display: flex; flex-direction: column; gap: 5px; min-width: 0;
+}
+.wtg-field p-inputNumber,
+.wtg-field ::ng-deep .p-inputnumber,
+.wtg-field ::ng-deep .p-inputnumber-input { width: 100% !important; }
+
+/* ─── Monthly Distribution ─── */
+.monthly-section {
+  margin-top: 14px; border: 1px solid #e0f2fe;
+  border-radius: 8px; overflow: hidden;
+}
+.monthly-section-head {
+  background: #eff6ff; padding: 8px 14px;
+  font-size: 0.8rem; font-weight: 600; color: #1d4ed8;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.monthly-info { font-weight: 400; color: #334155; }
+.monthly-table-wrap { overflow-x: auto; padding: 10px 8px; }
+.monthly-table { border-collapse: collapse; min-width: 900px; width: 100%; }
+.monthly-table th {
+  background: #f1f5f9; font-size: 0.72rem; font-weight: 700; color: #475569;
+  text-align: center; padding: 6px 4px; white-space: nowrap;
+  border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0;
+}
+.monthly-table td {
+  text-align: center; padding: 6px 4px; border-right: 1px solid #f1f5f9;
+}
+.monthly-table td:last-child, .monthly-table th:last-child { border-right: none; }
+.total-col { background: #f8fafc; font-weight: 700; min-width: 80px; }
+.total-val { text-align: center; font-size: 0.85rem; }
+.total-ok   { color: #16a34a; }
+.total-warn { color: #d97706; }
+.total-over { color: #dc2626; }
+.over { color: #dc2626; }
+
+/* ─── Add buttons ─── */
+.add-wtg-wrap { margin-top: 12px; display: flex; justify-content: flex-start; }
+.add-spv-wrap { display: flex; justify-content: flex-start; margin-top: 4px; }
+
+/* ─── SPV footer bar (overall total + save) ─── */
+.spv-footer-bar {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  margin-top: 20px; padding: 12px 0 4px;
+  border-top: 1px solid #e2e8f0;
+}
+.overall-capacity-label { font-size: 0.9rem; color: #334155; }
+
+/* ─── Accordion overrides ─── */
+::ng-deep .accord-hdr-tbl {
+  .p-datatable-thead { display: none !important; }
+  .p-datatable-tbody > tr > td {
+    border: none !important; background: transparent !important;
+    padding: 8px 12px; font-size: 13px;
+  }
+  .p-datatable-tbody > tr { background: transparent !important; }
+  .p-datatable-tbody > tr:hover > td { background: transparent !important; }
+}
+.accord-th { padding: 0 !important; border: none !important; }
+.aht-num  { width: 6%;  font-weight: 700; color: var(--text); }
+.aht-name { width: 26%; font-weight: 600; color: var(--text); }
+.aht-date { width: 34%; color: var(--text2); }
+.aht-desc { width: 34%; color: var(--text3); font-size: 12px; }
+
+.acc-content { padding: 16px 8px; display: flex; flex-direction: column; gap: 16px; }
+.acc-footer  { display: flex; justify-content: flex-end; padding-top: 8px; }
+
+::ng-deep p-accordion-header .p-accordion-header-link { padding: 0 !important; width: 100%; }
+::ng-deep .p-accordion .p-accordion-panel .p-accordion-header {
+  .p-accordion-header-link { padding: 0 !important; }
+}
+
+tr th { font-weight: bold; }
+label { font-weight: bold; }
+/* ══ Step 1 — Compact layout ══ */
+.s1-wrap { padding: 4px 0 8px; }
+
+.s1-section-title {
+  font-size: 0.72rem; font-weight: 700; color: #1e40af;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 10px 0 6px; margin-top: 6px;
+  border-bottom: 1px solid #dbeafe; margin-bottom: 10px;
+}
+
+.s1-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px 14px;
+  margin-bottom: 4px;
+}
+
+.s1-field {
+  display: flex; flex-direction: column; gap: 3px;
+}
+.s1-field--inline {
+  flex-direction: row; align-items: center; gap: 8px; padding-top: 20px;
+}
+
+.s1-label {
+  font-size: 0.72rem; font-weight: 600;
+  color: #475569; text-transform: uppercase; letter-spacing: 0.03em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.s1-req { color: #ef4444; }
+
+.s1-input {
+  width: 100%; height: 32px; padding: 0 8px;
+  border: 1px solid #cbd5e1; border-radius: 5px;
+  font-size: 13px; color: #1e293b; background: #fff; outline: none;
+  transition: border-color .15s;
+  box-sizing: border-box;
+}
+.s1-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,.12); }
+.s1-input::placeholder { color: #94a3b8; }
+
+/* Make PrimeNG controls compact in step 1 */
+::ng-deep .s1-select {
+  width: 100% !important;
+  .p-select, .p-datepicker { height: 32px !important; font-size: 13px !important; }
+  .p-select-label { font-size: 13px !important; padding: 4px 8px !important; }
+  input { height: 32px !important; font-size: 13px !important; padding: 0 8px !important; }
+}
+
+/* Override p-inputNumber height in step 1 */
+.s1-field ::ng-deep .p-inputnumber-input {
+  height: 32px !important; font-size: 13px !important; padding: 0 8px !important;
+}
+
+.s1-footer {
+  display: flex; justify-content: center; gap: 12px;
+  margin-top: 16px; padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ══ Step 2 — Summary KV grid ══ */
+.s2-summary-section {
+  margin-bottom: 12px;
+}
+
+.s2-section-badge {
+  display: inline-block;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; color: #0369a1;
+  background: #e0f2fe; border-radius: 10px;
+  padding: 2px 10px; margin-bottom: 7px;
+}
+
+.s2-kv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 4px 12px;
+}
+
+.s2-kv {
+  display: flex; flex-direction: column;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 6px; padding: 5px 9px;
+}
+
+.s2-k {
+  font-size: 0.67rem; font-weight: 600; color: #64748b;
+  text-transform: uppercase; letter-spacing: 0.03em;
+  margin-bottom: 1px;
+}
+
+.s2-v {
+  font-size: 0.82rem; font-weight: 500; color: #1e293b;
+  word-break: break-word;
+}
+
+.s2-icon-yes { color: #16a34a; font-size: 1rem; }
+.s2-icon-no  { color: #dc2626; font-size: 1rem; }
+
+/* ══ DPR Projects Table — Redesign ══ */
+.dpr-card {
+  background: var(--surface-card, #fff);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.dpr-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dpr-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text, #1e293b);
+  margin: 0;
+}
+
+.dpr-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dpr-search { min-width: 220px; }
+.dpr-search-input { font-size: 13px !important; }
+
+.dpr-add-btn {
+  font-size: 13px !important;
+  white-space: nowrap;
+}
+
+/* Table overrides */
+::ng-deep .dpr-table {
+  .p-datatable-thead > tr > th {
+    background: #f8fafc !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    color: #64748b !important;
+    padding: 9px 10px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    white-space: nowrap;
+  }
+
+  .p-datatable-tbody > tr > td {
+    font-size: 12px !important;
+    padding: 10px 10px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+    color: #334155;
+  }
+
+  .p-datatable-tbody > tr:last-child > td { border-bottom: none !important; }
+  .p-datatable-tbody > tr:hover > td { background: #f8fafc !important; }
+
+  .p-paginator {
+    background: #f8fafc !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Cell content styles */
+.dpr-sl { color: #94a3b8; font-size: 12px; font-weight: 500; }
+
+.dpr-pcode {
+  color: #185FA5;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.dpr-desc {
+  color: #475569;
+  font-size: 12px;
+  display: block;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dpr-site { font-weight: 600; font-size: 12px; color: #1e293b; }
+
+.dpr-cust-badge {
+  display: inline-block;
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+
+.dpr-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.dpr-qty-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 8px;
+}
+
+.dpr-date { color: #64748b !important; }
+
+.dpr-delay-chip {
+  display: inline-block;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.dpr-remarks {
+  display: block;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.dpr-empty {
+  text-align: center !important;
+  padding: 3rem !important;
+  color: #94a3b8 !important;
+}
+
+/* ── SPV Selector Bar ── */
+.spv-selector-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.spv-selector-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spv-selector-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.form-field {
+  display: grid;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-top: 10px;
+}
+
+.update-spv-btn {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 20px;
+}
+
+.spv-border{
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.wtg-border {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.spv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wtg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.add-wtg-btn{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 10px;
+}

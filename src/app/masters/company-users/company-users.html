@@ -1,0 +1,831 @@
+<div class="card">
+    <div class="card-header">
+        <h2>Company Users</h2>
+        <p-button icon="pi pi-plus" label="Create Company User" (onClick)="openCompanyUserModal()" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="companyUserList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }"
+            [paginator]="true" [rows]="size" [first]="first" [showCurrentPageReport]="true" [lazy]="true"
+            [totalRecords]="totalRecords"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            (onLazyLoad)="loadUser($event)"
+            [rowsPerPageOptions]="[10, 25, 50]">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Company User</th>
+                    <th>Email</th>
+                    <th>Assigned User Groups</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-user let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ user.userName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.userGroups.length }}</td>
+                    <td>
+                        <p-tag [value]="user.status ? 'Active' : 'Inactive'" [severity]="user.status ? 'success' : 'danger'">
+                        </p-tag>
+                    </td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button"
+                            (click)="companyUserMenu($event, menu, user)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedCompanyUser ? 'Update Company User' : 'Create Company User'" [(visible)]="showCompanyUserModal" 
+    [modal]="true" [draggable]="false" (onHide)="onDialogClose()" [style]="{ width: '30rem' }">
+    <form [formGroup]="companyUserForm" (ngSubmit)="submitCompanyUserForm()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="userName">Username</label>
+                <input type="text" pInputText formControlName="userName" id="userName" />
+
+                @if (userName?.invalid && (userName?.dirty || userName?.touched)) {
+                    @if (userName?.hasError('required')) {
+                        <small class="required-field">Company User is required.</small>
+                    }
+                    @if (userName?.hasError('maxlength')) {
+                        <small class="required-field">Company User cannot exceed 50 characters.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" pInputText formControlName="email" id="email" class="validation-field" />
+
+                @if (email?.invalid && (email?.dirty || email?.touched)) {
+                    @if (email?.hasError('required')) {
+                        <small class="required-field">Email is required.</small>
+                    }
+                    @if (email?.hasError('pattern')) {
+                        <small class="required-field">Please Enter a valid Email Address.</small>
+                    }
+                    @if (email?.hasError('maxlength')) {
+                        <small class="required-field">Email cannot exceed 80 characters.</small>
+                    }
+                }
+            </div>
+        </div>
+        @if(selectedCompanyUser){
+        
+        <div class="status-card">
+        
+            <div>
+        
+                <div class="status-title">
+                    Company User Availability
+                </div>
+        
+                <div class="status-subtitle">
+        
+                    Keep this blade type active if it is still in use.
+        
+                    Turn it off if it is no longer required.
+        
+                </div>
+        
+            </div>
+        
+            <div class="status-toggle-wrap">
+        
+                <span class="status-label" [class.inactive]="!companyUserForm.get('status')?.value">
+        
+                    {{
+                        companyUserForm.get('status')?.value
+                        ? 'Active'
+                        : 'Inactive'
+                    }}
+        
+                </span>
+        
+                <p-toggleswitch formControlName="status">
+                </p-toggleswitch>
+        
+            </div>
+        
+        </div>
+        
+        }
+        <div class="create-btn">
+            <button pButton pRipple type="submit">Submit</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog [(visible)]="assignUserGroupModal" [modal]="true" [draggable]="false" (onHide)="onDialogClose()"
+    [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="ugm-header">
+            <div class="ugm-header-icon">
+                <i class="pi pi-users"></i>
+            </div>
+            <div class="ugm-header-titles">
+                <span class="ugm-title">User Group Mapping</span>
+                <span class="ugm-subtitle">Assign or remove user groups for this user</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="ugm-user-strip">
+        <div class="ugm-avatar">{{ getUserGroupInitials(selectedCompanyUser?.userName) }}</div>
+        <div class="ugm-user-meta">
+            <div class="ugm-user-name">{{ selectedCompanyUser?.userName }}</div>
+            <div class="ugm-user-email">{{ selectedCompanyUser?.email }}</div>
+        </div>
+        <div class="ugm-assigned-count">{{ assignedUserGroups.length }} of {{ userGroupList.length }} assigned</div>
+    </div>
+
+    <div class="ugm-search-row">
+        <div class="ugm-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="userGroupSearchQuery" placeholder="Search user groups..." />
+            @if (userGroupSearchQuery) {
+                <button type="button" class="ugm-search-clear" (click)="userGroupSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="ugm-body">
+        @if (userGroupModalLoading) {
+            <div class="ugm-section">
+                <div class="ugm-section-head ugm-assigned"><span class="ugm-dot"></span><span class="ugm-section-title">Assigned groups</span></div>
+                <div class="ugm-list">
+                    @for (n of [1, 2]; track n) {
+                        <div class="ugm-skeleton-row">
+                            <div class="ugm-skel ugm-skel-icon"></div>
+                            <div class="ugm-skel-lines">
+                                <div class="ugm-skel ugm-skel-line" style="width: 45%;"></div>
+                            </div>
+                            <div class="ugm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="ugm-section">
+                <div class="ugm-section-head ugm-available"><span class="ugm-dot"></span><span class="ugm-section-title">Available groups</span></div>
+                <div class="ugm-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="ugm-skeleton-row">
+                            <div class="ugm-skel ugm-skel-icon"></div>
+                            <div class="ugm-skel-lines">
+                                <div class="ugm-skel ugm-skel-line" style="width: 55%;"></div>
+                            </div>
+                            <div class="ugm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!userGroupList.length) {
+            <div class="ugm-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="ugm-empty-title">No user groups exist yet</div>
+                <div class="ugm-empty-sub">Create a user group first, then come back to assign it here.</div>
+            </div>
+        } @else if (userGroupSearchQuery && !filteredAssignedUserGroups().length && !filteredAvailableUserGroups().length) {
+            <div class="ugm-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="ugm-empty-title">No groups match "{{ userGroupSearchQuery }}"</div>
+                <div class="ugm-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="ugm-section">
+                <div class="ugm-section-head ugm-assigned">
+                    <span class="ugm-dot"></span>
+                    <span class="ugm-section-title">Assigned groups</span>
+                    <span class="ugm-section-count">{{ filteredAssignedUserGroups().length }}</span>
+                </div>
+                <div class="ugm-list">
+                    @for (usergroup of filteredAssignedUserGroups(); track usergroup.userGroupId) {
+                        <div class="ugm-row ugm-row-assigned">
+                            <div class="ugm-row-icon"><i class="pi pi-check"></i></div>
+                            <div class="ugm-row-name">{{ usergroup.groupName }}</div>
+                            <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                styleClass="ugm-btn ugm-btn-remove" (click)="toggleUserGroup(usergroup)" />
+                        </div>
+                    } @empty {
+                        <div class="ugm-empty-state ugm-empty-state-sm">
+                            <div class="ugm-empty-title">No groups assigned yet</div>
+                            <div class="ugm-empty-sub">Use "Assign" below to add this user to a group.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="ugm-section">
+                <div class="ugm-section-head ugm-available">
+                    <span class="ugm-dot"></span>
+                    <span class="ugm-section-title">Available groups</span>
+                    <span class="ugm-section-count">{{ filteredAvailableUserGroups().length }}</span>
+                </div>
+                <div class="ugm-list">
+                    @for (usergroup of filteredAvailableUserGroups(); track usergroup.userGroupId) {
+                        <div class="ugm-row">
+                            <div class="ugm-row-icon"><i class="pi pi-users"></i></div>
+                            <div class="ugm-row-name">{{ usergroup.groupName }}</div>
+                            <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                styleClass="ugm-btn ugm-btn-assign" (click)="toggleUserGroup(usergroup)" />
+                        </div>
+                    } @empty {
+                        <div class="ugm-empty-state ugm-empty-state-sm">
+                            <div class="ugm-empty-title">All groups assigned</div>
+                            <div class="ugm-empty-sub">This user belongs to every available group.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog>
+
+<!-- <p-dialog [(visible)]="showPlantMappingModal" [modal]="true" [draggable]="false"
+    (onHide)="onDialogClose()" [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="upm-header">
+            <div class="upm-header-icon">
+                <i class="pi pi-building"></i>
+            </div>
+            <div class="upm-header-titles">
+                <span class="upm-title">Plant Mapping</span>
+                <span class="upm-subtitle">Assign a single plant to this user</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="upm-user-strip">
+        <div class="upm-avatar">{{ getMappingInitials(selectedCompanyUser?.userName) }}</div>
+        <div class="upm-user-meta">
+            <div class="upm-user-name">{{ selectedCompanyUser?.userName }}</div>
+            <div class="upm-user-email">{{ selectedCompanyUser?.email }}</div>
+        </div>
+        @if (currentAssignedPlant(); as current) {
+            <div class="upm-assigned-count">{{ current.plant }}</div>
+        } @else {
+            <div class="upm-assigned-count upm-assigned-count-muted">No plant assigned</div>
+        }
+    </div>
+
+    <div class="upm-search-row">
+        <div class="upm-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="plantSearchQuery" placeholder="Search plants..." />
+            @if (plantSearchQuery) {
+                <button type="button" class="upm-search-clear" (click)="plantSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="upm-body">
+        @if (plantModalLoading) {
+            <div class="upm-section">
+                <div class="upm-section-head upm-assigned"><span class="upm-dot"></span><span class="upm-section-title">Currently assigned</span></div>
+                <div class="upm-list">
+                    <div class="upm-skeleton-row">
+                        <div class="upm-skel upm-skel-icon"></div>
+                        <div class="upm-skel-lines"><div class="upm-skel upm-skel-line" style="width: 45%;"></div></div>
+                        <div class="upm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="upm-section">
+                <div class="upm-section-head upm-available"><span class="upm-dot"></span><span class="upm-section-title">Available plants</span></div>
+                <div class="upm-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="upm-skeleton-row">
+                            <div class="upm-skel upm-skel-icon"></div>
+                            <div class="upm-skel-lines"><div class="upm-skel upm-skel-line" style="width: 55%;"></div></div>
+                            <div class="upm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!plantInfoList.length) {
+            <div class="upm-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="upm-empty-title">No plants exist yet</div>
+                <div class="upm-empty-sub">Create a plant first, then come back to assign it here.</div>
+            </div>
+        } @else if (plantSearchQuery && !currentPlantMatchesSearch() && !filteredAvailablePlants().length) {
+            <div class="upm-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="upm-empty-title">No plants match "{{ plantSearchQuery }}"</div>
+                <div class="upm-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="upm-section">
+                <div class="upm-section-head upm-assigned">
+                    <span class="upm-dot"></span>
+                    <span class="upm-section-title">Currently assigned</span>
+                </div>
+                <div class="upm-list">
+                    @if (currentAssignedPlant(); as current) {
+                        @if (currentPlantMatchesSearch()) {
+                            <div class="upm-row upm-row-assigned">
+                                <div class="upm-row-icon"><i class="pi pi-check"></i></div>
+                                <div class="upm-row-name-wrap">
+                                    <div class="upm-row-name">{{ current.plant }}</div>
+                                    @if (getPlantHint(current)) {
+                                        <div class="upm-row-hint">{{ getPlantHint(current) }}</div>
+                                    }
+                                </div>
+                                <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                    styleClass="upm-btn upm-btn-remove" (click)="confirmRemovePlant(current)" />
+                            </div>
+                        }
+                    } @else {
+                        <div class="upm-empty-state upm-empty-state-sm">
+                            <div class="upm-empty-title">No plant assigned yet</div>
+                            <div class="upm-empty-sub">Select a plant below to assign this user.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="upm-section">
+                <div class="upm-section-head upm-available">
+                    <span class="upm-dot"></span>
+                    <span class="upm-section-title">Available plants</span>
+                    <span class="upm-section-count">{{ filteredAvailablePlants().length }}</span>
+                </div>
+                <div class="upm-list">
+                    @for (plant of filteredAvailablePlants(); track plant.id) {
+                        <div class="upm-row">
+                            <div class="upm-row-icon"><i class="pi pi-building"></i></div>
+                            <div class="upm-row-name-wrap">
+                                <div class="upm-row-name">{{ plant.plant }}</div>
+                                @if (getPlantHint(plant)) {
+                                    <div class="upm-row-hint">{{ getPlantHint(plant) }}</div>
+                                }
+                            </div>
+                            @if (currentAssignedPlant()) {
+                                <p-button label="Switch to this plant" icon="pi pi-sync" size="small" severity="primary"
+                                    styleClass="upm-btn upm-btn-assign" (click)="confirmSwitchPlant(plant)" />
+                            } @else {
+                                <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                    styleClass="upm-btn upm-btn-assign" (click)="assignPlantToUser(plant)" />
+                            }
+                        </div>
+                    } @empty {
+                        <div class="upm-empty-state upm-empty-state-sm">
+                            <div class="upm-empty-title">No other plants available</div>
+                            <div class="upm-empty-sub">All remaining plants are already accounted for.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog> -->
+
+<p-dialog [(visible)]="showPlantMappingModal" [modal]="true" [draggable]="false" (onHide)="onDialogClose()"
+    [style]="{ width: '50rem' }">
+    <ng-template #header>
+        <div class="dialog-header">
+            <span class="dialog-title">Assign/Remove Plant</span>
+            <p-tag [value]="selectedCompanyUser?.userName" severity="info"></p-tag>
+            <p-tag [value]="selectedCompanyUser?.email" severity="warn"></p-tag>
+        </div>
+    </ng-template>
+
+    <p-table [value]="plantInfoList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+        <ng-template #header>
+            <tr>
+                <th>SL No</th>
+                <th>Plant Name</th>
+                <th>Location</th>
+                <th>Plant Manager</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-plant let-i="rowIndex">
+            <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ plant.plant }}</td>
+                <td>{{ plant.location }}</td>
+                <td>{{ plant.plantManager }}</td>
+                <td>
+                    <p-button [label]="isPlantAssigned(plant.id) ? 'Remove' : 'Assign'"
+                        [severity]="isPlantAssigned(plant.id) ? 'danger' : 'primary'" 
+                        [disabled]="isAssignDisabled(plant.id)"
+                        (click)="togglePlant(plant)" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+<p-dialog [(visible)]="showDepartmentModal" [modal]="true" [draggable]="false"
+    (onHide)="onDialogClose()" [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="udm-header">
+            <div class="udm-header-icon">
+                <i class="pi pi-sitemap"></i>
+            </div>
+            <div class="udm-header-titles">
+                <span class="udm-title">Department Mapping</span>
+                <span class="udm-subtitle">Assign or remove departments for this user</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="udm-user-strip">
+        <div class="udm-avatar">{{ getMappingInitials(selectedCompanyUser?.userName) }}</div>
+        <div class="udm-user-meta">
+            <div class="udm-user-name">{{ selectedCompanyUser?.userName }}</div>
+            <div class="udm-user-email">{{ selectedCompanyUser?.email }}</div>
+        </div>
+        <div class="udm-assigned-count">{{ assignedActiveDepartments.length }} of {{ departmentInfoList.length }} assigned</div>
+    </div>
+
+    <div class="udm-search-row">
+        <div class="udm-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="departmentSearchQuery" placeholder="Search departments..." />
+            @if (departmentSearchQuery) {
+                <button type="button" class="udm-search-clear" (click)="departmentSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="udm-body">
+        @if (departmentModalLoading) {
+            <div class="udm-section">
+                <div class="udm-section-head udm-assigned"><span class="udm-dot"></span><span class="udm-section-title">Assigned departments</span></div>
+                <div class="udm-list">
+                    @for (n of [1, 2]; track n) {
+                        <div class="udm-skeleton-row">
+                            <div class="udm-skel udm-skel-icon"></div>
+                            <div class="udm-skel-lines"><div class="udm-skel udm-skel-line" style="width: 45%;"></div></div>
+                            <div class="udm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="udm-section">
+                <div class="udm-section-head udm-available"><span class="udm-dot"></span><span class="udm-section-title">Available departments</span></div>
+                <div class="udm-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="udm-skeleton-row">
+                            <div class="udm-skel udm-skel-icon"></div>
+                            <div class="udm-skel-lines"><div class="udm-skel udm-skel-line" style="width: 55%;"></div></div>
+                            <div class="udm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!departmentInfoList.length) {
+            <div class="udm-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="udm-empty-title">No departments exist yet</div>
+                <div class="udm-empty-sub">Create a department first, then come back to assign it here.</div>
+            </div>
+        } @else if (departmentSearchQuery && !filteredAssignedDepartments().length && !filteredAvailableDepartments().length) {
+            <div class="udm-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="udm-empty-title">No departments match "{{ departmentSearchQuery }}"</div>
+                <div class="udm-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="udm-section">
+                <div class="udm-section-head udm-assigned">
+                    <span class="udm-dot"></span>
+                    <span class="udm-section-title">Assigned departments</span>
+                    <span class="udm-section-count">{{ filteredAssignedDepartments().length }}</span>
+                </div>
+                <div class="udm-list">
+                    @for (department of filteredAssignedDepartments(); track department.departmentId) {
+                        <div class="udm-row udm-row-assigned">
+                            <div class="udm-row-icon"><i class="pi pi-check"></i></div>
+                            <div class="udm-row-name">{{ department.departmentName }}</div>
+                            <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                styleClass="udm-btn udm-btn-remove" (click)="toggleDepartment(department)" />
+                        </div>
+                    } @empty {
+                        <div class="udm-empty-state udm-empty-state-sm">
+                            <div class="udm-empty-title">No departments assigned yet</div>
+                            <div class="udm-empty-sub">Use "Assign" below to add this user to a department.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="udm-section">
+                <div class="udm-section-head udm-available">
+                    <span class="udm-dot"></span>
+                    <span class="udm-section-title">Available departments</span>
+                    <span class="udm-section-count">{{ filteredAvailableDepartments().length }}</span>
+                </div>
+                <div class="udm-list">
+                    @for (department of filteredAvailableDepartments(); track department.departmentId) {
+                        <div class="udm-row">
+                            <div class="udm-row-icon"><i class="pi pi-sitemap"></i></div>
+                            <div class="udm-row-name">{{ department.departmentName }}</div>
+                            <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                styleClass="udm-btn udm-btn-assign" (click)="toggleDepartment(department)" />
+                        </div>
+                    } @empty {
+                        <div class="udm-empty-state udm-empty-state-sm">
+                            <div class="udm-empty-title">All departments assigned</div>
+                            <div class="udm-empty-sub">This user belongs to every available department.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="showClusterModal" [modal]="true" [draggable]="false"
+    (onHide)="onDialogClose()" [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="uclm-header">
+            <div class="uclm-header-icon">
+                <i class="pi pi-share-alt"></i>
+            </div>
+            <div class="uclm-header-titles">
+                <span class="uclm-title">Cluster Mapping</span>
+                <span class="uclm-subtitle">Assign or remove clusters for this user</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="uclm-user-strip">
+        <div class="uclm-avatar">{{ getMappingInitials(selectedCompanyUser?.userName) }}</div>
+        <div class="uclm-user-meta">
+            <div class="uclm-user-name">{{ selectedCompanyUser?.userName }}</div>
+            <div class="uclm-user-email">{{ selectedCompanyUser?.email }}</div>
+        </div>
+        <div class="uclm-assigned-count">{{ assignedActiveClusters.length }} of {{ clusterInfoList.length }} assigned</div>
+    </div>
+
+    <div class="uclm-search-row">
+        <div class="uclm-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="clusterSearchQuery" placeholder="Search clusters..." />
+            @if (clusterSearchQuery) {
+                <button type="button" class="uclm-search-clear" (click)="clusterSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="uclm-body">
+        @if (clusterModalLoading) {
+            <div class="uclm-section">
+                <div class="uclm-section-head uclm-assigned"><span class="uclm-dot"></span><span class="uclm-section-title">Assigned clusters</span></div>
+                <div class="uclm-list">
+                    @for (n of [1, 2]; track n) {
+                        <div class="uclm-skeleton-row">
+                            <div class="uclm-skel uclm-skel-icon"></div>
+                            <div class="uclm-skel-lines"><div class="uclm-skel uclm-skel-line" style="width: 45%;"></div></div>
+                            <div class="uclm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="uclm-section">
+                <div class="uclm-section-head uclm-available"><span class="uclm-dot"></span><span class="uclm-section-title">Available clusters</span></div>
+                <div class="uclm-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="uclm-skeleton-row">
+                            <div class="uclm-skel uclm-skel-icon"></div>
+                            <div class="uclm-skel-lines"><div class="uclm-skel uclm-skel-line" style="width: 55%;"></div></div>
+                            <div class="uclm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!clusterInfoList.length) {
+            <div class="uclm-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="uclm-empty-title">No clusters exist yet</div>
+                <div class="uclm-empty-sub">Create a cluster first, then come back to assign it here.</div>
+            </div>
+        } @else if (clusterSearchQuery && !filteredAssignedClusters().length && !filteredAvailableClusters().length) {
+            <div class="uclm-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="uclm-empty-title">No clusters match "{{ clusterSearchQuery }}"</div>
+                <div class="uclm-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="uclm-section">
+                <div class="uclm-section-head uclm-assigned">
+                    <span class="uclm-dot"></span>
+                    <span class="uclm-section-title">Assigned clusters</span>
+                    <span class="uclm-section-count">{{ filteredAssignedClusters().length }}</span>
+                </div>
+                <div class="uclm-list">
+                    @for (cluster of filteredAssignedClusters(); track cluster.clusterId) {
+                        <div class="uclm-row uclm-row-assigned">
+                            <div class="uclm-row-icon"><i class="pi pi-check"></i></div>
+                            <div class="uclm-row-name-wrap">
+                                <div class="uclm-row-name">{{ cluster.clusterName }}</div>
+                                @if (cluster.clusterCode) {
+                                    <div class="uclm-row-hint">{{ cluster.clusterCode }}</div>
+                                }
+                            </div>
+                            <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                styleClass="uclm-btn uclm-btn-remove" (click)="toggleCluster(cluster)" />
+                        </div>
+                    } @empty {
+                        <div class="uclm-empty-state uclm-empty-state-sm">
+                            <div class="uclm-empty-title">No clusters assigned yet</div>
+                            <div class="uclm-empty-sub">Use "Assign" below to add this user to a cluster.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="uclm-section">
+                <div class="uclm-section-head uclm-available">
+                    <span class="uclm-dot"></span>
+                    <span class="uclm-section-title">Available clusters</span>
+                    <span class="uclm-section-count">{{ filteredAvailableClusters().length }}</span>
+                </div>
+                <div class="uclm-list">
+                    @for (cluster of filteredAvailableClusters(); track cluster.clusterId) {
+                        <div class="uclm-row">
+                            <div class="uclm-row-icon"><i class="pi pi-share-alt"></i></div>
+                            <div class="uclm-row-name-wrap">
+                                <div class="uclm-row-name">{{ cluster.clusterName }}</div>
+                                @if (cluster.clusterCode) {
+                                    <div class="uclm-row-hint">{{ cluster.clusterCode }}</div>
+                                }
+                            </div>
+                            <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                styleClass="uclm-btn uclm-btn-assign" (click)="toggleCluster(cluster)" />
+                        </div>
+                    } @empty {
+                        <div class="uclm-empty-state uclm-empty-state-sm">
+                            <div class="uclm-empty-title">All clusters assigned</div>
+                            <div class="uclm-empty-sub">This user belongs to every available cluster.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="showComponentModal" [modal]="true" [draggable]="false"
+    (onHide)="onDialogClose()" [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="ucom-header">
+            <div class="ucom-header-icon">
+                <i class="pi pi-box"></i>
+            </div>
+            <div class="ucom-header-titles">
+                <span class="ucom-title">Component Mapping</span>
+                <span class="ucom-subtitle">Assign or remove components for this user</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="ucom-user-strip">
+        <div class="ucom-avatar">{{ getMappingInitials(selectedCompanyUser?.userName) }}</div>
+        <div class="ucom-user-meta">
+            <div class="ucom-user-name">{{ selectedCompanyUser?.userName }}</div>
+            <div class="ucom-user-email">{{ selectedCompanyUser?.email }}</div>
+        </div>
+        <div class="ucom-assigned-count">{{ assignedActiveComponents.length }} of {{ componentList.length }} assigned</div>
+    </div>
+
+    <div class="ucom-search-row">
+        <div class="ucom-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="componentSearchQuery" placeholder="Search components..." />
+            @if (componentSearchQuery) {
+                <button type="button" class="ucom-search-clear" (click)="componentSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="ucom-body">
+        @if (componentModalLoading) {
+            <div class="ucom-section">
+                <div class="ucom-section-head ucom-assigned"><span class="ucom-dot"></span><span class="ucom-section-title">Assigned components</span></div>
+                <div class="ucom-list">
+                    @for (n of [1, 2]; track n) {
+                        <div class="ucom-skeleton-row">
+                            <div class="ucom-skel ucom-skel-icon"></div>
+                            <div class="ucom-skel-lines"><div class="ucom-skel ucom-skel-line" style="width: 45%;"></div></div>
+                            <div class="ucom-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="ucom-section">
+                <div class="ucom-section-head ucom-available"><span class="ucom-dot"></span><span class="ucom-section-title">Available components</span></div>
+                <div class="ucom-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="ucom-skeleton-row">
+                            <div class="ucom-skel ucom-skel-icon"></div>
+                            <div class="ucom-skel-lines"><div class="ucom-skel ucom-skel-line" style="width: 55%;"></div></div>
+                            <div class="ucom-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!componentList.length) {
+            <div class="ucom-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="ucom-empty-title">No components exist yet</div>
+                <div class="ucom-empty-sub">Create a component first, then come back to assign it here.</div>
+            </div>
+        } @else if (componentSearchQuery && !filteredAssignedComponents().length && !filteredAvailableComponents().length) {
+            <div class="ucom-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="ucom-empty-title">No components match "{{ componentSearchQuery }}"</div>
+                <div class="ucom-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="ucom-section">
+                <div class="ucom-section-head ucom-assigned">
+                    <span class="ucom-dot"></span>
+                    <span class="ucom-section-title">Assigned components</span>
+                    <span class="ucom-section-count">{{ filteredAssignedComponents().length }}</span>
+                </div>
+                <div class="ucom-list">
+                    @for (component of filteredAssignedComponents(); track component.componentId) {
+                        <div class="ucom-row ucom-row-assigned">
+                            <div class="ucom-row-icon"><i class="pi pi-check"></i></div>
+                            <div class="ucom-row-name">{{ component.componentName }}</div>
+                            <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                styleClass="ucom-btn ucom-btn-remove" (click)="toggleComponent(component)" />
+                        </div>
+                    } @empty {
+                        <div class="ucom-empty-state ucom-empty-state-sm">
+                            <div class="ucom-empty-title">No components assigned yet</div>
+                            <div class="ucom-empty-sub">Use "Assign" below to add this user to a component.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="ucom-section">
+                <div class="ucom-section-head ucom-available">
+                    <span class="ucom-dot"></span>
+                    <span class="ucom-section-title">Available components</span>
+                    <span class="ucom-section-count">{{ filteredAvailableComponents().length }}</span>
+                </div>
+                <div class="ucom-list">
+                    @for (component of filteredAvailableComponents(); track component.componentId) {
+                        <div class="ucom-row">
+                            <div class="ucom-row-icon"><i class="pi pi-box"></i></div>
+                            <div class="ucom-row-name">{{ component.componentName }}</div>
+                            <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                styleClass="ucom-btn ucom-btn-assign" (click)="toggleComponent(component)" />
+                        </div>
+                    } @empty {
+                        <div class="ucom-empty-state ucom-empty-state-sm">
+                            <div class="ucom-empty-title">All components assigned</div>
+                            <div class="ucom-empty-sub">This user belongs to every available component.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

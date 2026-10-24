@@ -1,0 +1,581 @@
+<p-toast></p-toast>
+<div class="dpr-card">
+    <div class="dpr-toolbar">
+        <h2 class="dpr-title">Project Creation</h2>
+        <div class="dpr-toolbar-actions">
+            <p-iconfield iconPosition="left" class="dpr-search">
+                <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+                <input pInputText type="text" placeholder="Search keyword" class="dpr-search-input" />
+            </p-iconfield>
+            <button pButton icon="pi pi-plus" label="Add New Project" class="dpr-add-btn"
+                (click)="addNewProject()"></button>
+        </div>
+    </div>
+
+    <p-table #dt1 [value]="projectList" [paginator]="true" [rowsPerPageOptions]="[5, 10, 20]"
+        dataKey="id" [rows]="10" [rowHover]="true" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        responsiveLayout="scroll" styleClass="dpr-table">
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn="SlNo" style="min-width:3rem">Sl no <p-sortIcon field="SlNo"/></th>
+                <th pSortableColumn="Pcode" style="min-width:7rem">Project code <p-sortIcon field="Pcode"/></th>
+                <th style="min-width:7rem">Customer</th>
+                 <th style="min-width:7rem">Probability</th>
+                <th style="min-width:5rem">WTG qty</th>
+                <th style="min-width:6rem">Total Capacity</th>
+                <th style="min-width:6rem">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-row let-rowIndex="rowIndex">
+            <tr>
+                <td><span class="dpr-sl">{{ rowIndex + 1 }}</span></td>
+                <td><span class="dpr-pcode">{{ row.projectCode }}</span></td>
+                <td><span class="dpr-cust-badge">{{ row.customer?.customerName }}</span></td>
+                 <td>{{ row.probability }}</td>
+                <td><span class="dpr-qty-pill">{{ row.totalWtgs  }}</span></td>
+                 <td>{{ row.totalCapacity }}</td>
+                <td>
+                    <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                    <button pButton pRipple text rounded severity="secondary" type="button" (click)="projectMenu($event, menu, row)">
+                        <i pButtonIcon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                <rect width="24" height="24" fill="none" />
+                                <path fill="currentColor"
+                                    d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                            </svg>
+                        </i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="19" class="dpr-empty">
+                    <i class="pi pi-inbox" style="font-size:2rem;opacity:.3"></i>
+                    <p>No projects found.</p>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- ══ Add / Edit Project Dialog ══ -->
+<p-dialog header="{{projectHeader}}" [resizable]="true" [draggable]="false" [modal]="true"
+    [maximizable]="true" appendTo="body" [(visible)]="addProjectDialog"
+    [style]="{ width: '99vw' }" [contentStyle]="{ height: '80vh', overflowY: 'auto' }">
+
+    <p-fluid>
+
+        <!-- ══ STEP 1 — Compact 4-column form ══ -->
+        <div *ngIf="!isProjectCreated && step1" class="s1-wrap">
+
+            <!-- Section: Project Info -->
+            <div class="s1-section-title">Project Information</div>
+            <div class="s1-grid">
+                <div class="s1-field">
+                    <label class="s1-label">Project Code <span class="s1-req">*</span></label>
+                    <input pInputText type="text" class="s1-input" [(ngModel)]="pCode" maxlength="10" placeholder="Enter code" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Project Description <span class="s1-req">*</span></label>
+                    <input pInputText type="text" class="s1-input" [(ngModel)]="projectDescription" maxlength="100" placeholder="Enter description" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Customer <span class="s1-req">*</span></label>
+                    <!-- <input pInputText type="text" class="s1-input" [(ngModel)]="customerName" placeholder="Enter customer" /> -->
+                    <p-select appendTo="body" [filter]="true" filterBy="label" [(ngModel)]="customerName"
+                        placeholder="Select Customer" [options]="CustomerNameList" optionLabel="customerName" optionValue="customerId"
+                        styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">City Info <span class="s1-req">*</span></label>
+                    <input pInputText type="text" class="s1-input" [(ngModel)]="cityInfo"
+                         placeholder="Enter city" /><!-- (input)="onCityChange($event)" -->
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">State <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" filterBy="label" [(ngModel)]="selectedState"
+                        placeholder="Select State" [options]="states" optionLabel="clusterName" optionValue="clusterId"
+                        styleClass="s1-select"  /><!-- [disabled]="diableStateDD" -->
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Zone <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedZone" placeholder="Select Zone"
+                        [options]="zoneOptions" optionLabel="zone" optionValue="zoneId" styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Project QTY <span class="s1-req">*</span></label>
+                    <p-inputNumber [(ngModel)]="projectQTY" [min]="1" [max]="999" placeholder="Enter QTY"
+                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Project Total Capacity <span class="s1-req">*</span></label>
+                    <input pInputText type="text" class="s1-input" [(ngModel)]="projectTotalCapacity" placeholder="e.g. 300 MW" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Project Probability <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [options]="projectProbality" [(ngModel)]="projectProbalityValue"
+                        optionLabel="label" optionValue="value" styleClass="s1-select" placeholder="Select Contract Status"/>
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Contract Status</label>
+                    <input pInputText type="text" class="s1-input" [(ngModel)]="ContractStatusValue" placeholder="Enter Status" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Project Term <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [options]="projectTerm" [(ngModel)]="projectTermValue"
+                        optionLabel="label" optionValue="value" styleClass="s1-select" placeholder="Select Project Term"/>
+                </div>
+            </div>
+
+            <!-- Section: Team -->
+            <div class="s1-section-title">Team</div>
+            <div class="s1-grid">
+                <div class="s1-field">
+                    <label class="s1-label">Project Manager <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedProjectManager" placeholder="Select PM"
+                        [options]="PMOptions" optionLabel="userName" optionValue="userId" styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">BD Manager <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedBDManager" placeholder="Select BD Manager"
+                        [options]="PMOptions" optionLabel="userName" optionValue="userId" styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Solution Manager <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedSolutionManager"
+                        placeholder="Select Solution Manager" [options]="PMOptions" optionLabel="userName" optionValue="userId" styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">State Head <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedStateHead" placeholder="Select State Head"
+                        [options]="PMOptions" optionLabel="userName" optionValue="userId" styleClass="s1-select" />
+                </div>
+                <div class="s1-field">
+                    <label class="s1-label">Site Manager <span class="s1-req">*</span></label>
+                    <p-select appendTo="body" [filter]="true" [(ngModel)]="selectedSiteManager" placeholder="Select Site Manager"
+                        [options]="PMOptions" optionLabel="userName" optionValue="userId" styleClass="s1-select" />
+                </div>
+            </div>
+
+            <div class="s1-footer">
+                <button pButton label="Next: Add SPV Details" icon="pi pi-arrow-right"
+                    (click)="validateStep1()"></button>
+                <button pButton label="Cancel" class="p-button-outlined" icon="pi pi-times"
+                    severity="danger" (click)="addProjectDialog = false"></button>
+            </div>
+        </div>
+        
+        <!-- /step 1 -->
+        
+        <!-- ══ STEP 2 ══ -->
+        <div *ngIf="isProjectCreated && !step1">
+            <p-accordion [multiple]="true" [value]="['0','1']">
+                
+                <!-- Accordion 1 — Project Details (read-only summary, compact) -->
+                <p-accordion-panel value="0">
+                    <p-accordion-header>
+                        <span class="acc-header-title">
+                            <i class="pi pi-file-edit acc-icon"></i>
+                            Project Details
+                        </span>
+                    </p-accordion-header>
+                    <p-accordion-content>
+
+                        <!-- Project Info row -->
+                        <div class="s2-summary-section">
+                            <span class="s2-section-badge">Project Info</span>
+                            <div class="s2-kv-grid">
+                                <div class="s2-kv"><span class="s2-k">P-Code</span><span class="s2-v">{{ pCode || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Customer</span><span class="s2-v">{{ customerName || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">City Info</span><span class="s2-v">{{ cityInfo || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">State</span><span class="s2-v">{{ selectedState || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Zone</span><span class="s2-v">{{ selectedZone || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Project QTY</span><span class="s2-v">{{ projectQTY }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Total Capacity</span><span class="s2-v">{{ projectTotalCapacity || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Project Probability</span><span class="s2-v">{{ projectProbalityValue || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Contract Status</span><span class="s2-v">{{ ContractStatusValue || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Project Term</span><span class="s2-v">{{ projectTermValue || '—' }}</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Team row -->
+                        <div class="s2-summary-section">
+                            <span class="s2-section-badge">Team</span>
+                            <div class="s2-kv-grid">
+                                <div class="s2-kv"><span class="s2-k">Project Manager</span><span class="s2-v">{{ selectedProjectManager || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">BD Manager</span><span class="s2-v">{{ selectedBDManager || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Solution Manager</span><span class="s2-v">{{ selectedSolutionManager || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">State Head</span><span class="s2-v">{{ selectedStateHead || '—' }}</span></div>
+                                <div class="s2-kv"><span class="s2-k">Site Manager</span><span class="s2-v">{{ selectedSiteManager || '—' }}</span></div>
+                            </div>
+                        </div>
+
+                    </p-accordion-content>
+                </p-accordion-panel>
+                        <p-button label="Back to Step 1" icon="pi pi-save" (onClick)="step1 = true; isProjectCreated = false" />
+
+                <!-- Accordion 2 — SPV & WTG Configuration -->
+                <p-accordion-panel value="1">
+                    <p-accordion-header>
+                        <span class="acc-header-title">
+                            <i class="pi pi-wind acc-icon"></i>
+                            SPV &amp; WTG Configuration
+                        </span>
+                        <span class="acc-spv-count">{{ spvEntries.length }} SPV(s)</span>
+                    </p-accordion-header>
+                    <p-accordion-content>
+
+                        <!-- ── SPV Blocks ── -->
+                        <div *ngFor="let spvEntry of spvEntries; let si = index"
+                            class="spv-block">
+
+                            <!-- SPV Block Header -->
+                            <div class="spv-block-head">
+                                <div class="spv-block-title">
+                                    <span class="spv-idx">SPV {{ si + 1 }}</span>
+                                    <p-select appendTo="body" [filter]="true"
+                                        [options]="spvOptsList[si]"
+                                        [ngModel]="spvEntry.spv"
+                                        (onChange)="onSpvSelect(spvEntry, $event.value)"
+                                        optionLabel="label" optionValue="value"
+                                        optionDisabled="disabled"
+                                        [autoOptionFocus]="false"
+                                        placeholder="Select SPV" [style]="{'min-width':'160px'}" />
+                                </div>
+                                <button *ngIf="spvEntries.length > 1" class="spv-remove-btn"
+                                    (click)="removeSpvEntry(spvEntry.id)"
+                                    pTooltip="Remove SPV" tooltipPosition="top">
+                                    <i class="pi pi-times"></i>
+                                </button>
+                            </div>
+
+                            <!-- ── WTG Config Blocks ── -->
+                            <div *ngFor="let cfg of spvEntry.wtgConfigs; trackBy: trackById; let ci = index"
+                                class="wtg-config-block">
+
+                                <div class="wtg-config-head">
+                                    <span class="wtg-cfg-label">WTG Configuration {{ ci + 1 }}</span>
+                                    <button *ngIf="spvEntry.wtgConfigs.length > 1" class="wtg-remove-btn"
+                                        (click)="removeWtgConfig(spvEntry, cfg.id)"
+                                        pTooltip="Remove WTG Config" tooltipPosition="top">
+                                        <i class="pi pi-minus"></i> Remove
+                                    </button>
+                                </div>
+
+                                <!-- WTG fields row -->
+                                <div class="wtg-fields-row">
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">Shipment Address <span class="req">*</span></label>
+                                        <input pInputText type="text" [(ngModel)]="cfg.shipAddress"
+                                            placeholder="Enter address" style="width:100%" />
+                                    </div>
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">WTG Type <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="WTGOptions"
+                                            [(ngModel)]="cfg.wtgType[0]" optionLabel="wtgType" optionValue="wtgTypeId"
+                                            placeholder="Select WTG" [style]="{'width':'100%'}"
+                                             /><!-- (onChange)="onWtgTypeChange(cfg)" -->
+                                    </div>
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">Capacity/WTG (MW) <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="getCapacityOpts"
+                                            [(ngModel)]="cfg.capacity" optionLabel="capacity" optionValue="capacityId"
+                                            placeholder="Select Capacity"
+                                            [style]="{'width':'100%'}"
+                                             /><!-- (onChange)="onCapacityChange(cfg)" [disabled]="!cfg.wtgType[0]" -->
+                                    </div>
+
+                                    <div class="wtg-field" *ngIf="towerScopeChecked">
+                                        <label class="field-label">Tower Type <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="towerOptions"
+                                            [(ngModel)]="cfg.towerType" optionLabel="towerType" optionValue="towerTypeId"
+                                            placeholder="Select Tower" [style]="{'width':'100%'}" />
+                                    </div>
+                                    <div class="wtg-field" *ngIf="towerScopeChecked">
+                                        <label class="field-label">Blade Type <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="bladeOptions"
+                                            [(ngModel)]="cfg.bladeTypeId" optionLabel="bladeType" optionValue="bladeTypeId"
+                                            placeholder="Select Tower" [style]="{'width':'100%'}" />
+                                    </div>
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">Grid Connectivity <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="gridOptions"
+                                            [(ngModel)]="cfg.gridConnectivity" optionLabel="gridConnectivity" optionValue="gridConnectivityId"
+                                            placeholder="Select Grid" [style]="{'width':'100%'}" />
+                                    </div>
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">PPA Type <span class="req">*</span></label>
+                                        <p-select appendTo="body" [filter]="true" [options]="ppaOptions"
+                                            [(ngModel)]="cfg.ppaType" optionLabel="ppaType" optionValue="ppaTypeId"
+                                            placeholder="Select PPA" [style]="{'width':'100%'}" />
+                                    </div>
+
+                                    <div class="wtg-field">
+                                        <label class="field-label">WTG Qty <span class="req">*</span></label>
+                                        <p-inputNumber [(ngModel)]="cfg.wtgQty"
+                                            placeholder="Enter Qty"
+                                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                                            (onBlur)="onQtyBlur(cfg)" />
+                                    </div>
+
+                                    <!-- Auto-calculated read-only total -->
+                                    <div class="wtg-field">
+                                        <label class="field-label">Total Capacity (MW)</label>
+                                        <input pInputText type="text"
+                                            [value]="((cfg.capacity ? +cfg.capacity : 0) * (cfg.wtgQty ?? 0)) || ''"
+                                            placeholder="Auto" [disabled]="true" style="width:100%" />
+                                    </div>
+
+                                </div>
+
+                                <!-- Add WTG Config button — shown only on last config -->
+                                <div class="add-wtg-wrap" *ngIf="ci === spvEntry.wtgConfigs.length - 1">
+                                    <p-button label="Add More WTG Configuration" icon="pi pi-plus"
+                                        severity="secondary" size="small" [outlined]="true"
+                                        (onClick)="addWtgConfig(spvEntry)" />
+                                </div>
+
+                            </div>
+                            <!-- /wtg-config-block -->
+
+                            <p-divider *ngIf="si < spvEntries.length - 1" />
+                        </div>
+                        <!-- /spv-block -->
+
+                        <!-- Add SPV -->
+                        <div class="add-spv-wrap">
+                            <p-button label="Add Next SPV" icon="pi pi-plus-circle" severity="success"
+                                size="small" (onClick)="addSpvEntry()" pTooltip="No more SPVs are available for this customer"
+                                [disabled]="spvEntries.length >= spvOptions.length && spvOptions.length > 0" />
+                        </div>
+
+                        <!-- Overall total + Save -->
+                        <div class="spv-footer-bar">
+                            <span class="overall-capacity-label">
+                                Overall Total Capacity:
+                                <strong>{{ overallTotalCapacity | number:'1.2-2' }} MW</strong>
+                            </span>
+                            <p-button label="Save Project" icon="pi pi-save" (onClick)="saveSPV()" />
+                        </div>
+
+                    </p-accordion-content>
+                </p-accordion-panel>
+
+            </p-accordion>
+        </div>
+        <!-- /step 2 -->
+
+    </p-fluid>
+</p-dialog>
+
+<p-dialog header="Edit Project Details" [(visible)]="showEditProjectModal" [modal]="true" 
+    [draggable]="false" (onHide)="onDialogClose()" [style]="{ width: '60rem' }">
+    <form [formGroup]="projectForm" (ngSubmit)="updateProject()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="project-code">Project Code</label>
+                <input type="text" pInputText formControlName="projectId" id="project-code" />
+            </div>
+            <div class="form-field">
+                <label for="project-description">Project Description</label>
+                <input type="text" pInputText formControlName="projectDescription" id="project-description" />
+            </div>
+            <div class="form-field">
+                <label for="customer">Customer</label>
+                <p-select [options]="CustomerNameList" formControlName="customerId" optionLabel="customerName" 
+                    optionValue="customerId" [filter]="true"
+                    filterBy="customerName" [showClear]="true" placeholder="Select Customer" appendTo="body" />
+            </div>
+            <div class="form-field">
+                <label for="city">City</label>
+                <input type="text" pInputText formControlName="city" id="city" />
+            </div>
+            <div class="form-field">
+                <label for="cluster">Cluster</label>
+                <p-select [options]="states" formControlName="clusterId" optionLabel="clusterName" optionValue="clusterId"
+                    [filter]="true" filterBy="clusterName" [showClear]="true" 
+                    placeholder="Select Cluster" appendTo="body" inputId="cluster" />
+            </div>
+            <div class="form-field">
+                <label for="zone">Zone</label>
+                <p-select [options]="zoneOptions" formControlName="zoneId" optionLabel="zone" optionValue="zoneId" [filter]="true"
+                    filterBy="zone" [showClear]="true" placeholder="Select Zone" appendTo="body" inputId="zone" />
+            </div>
+            <div class="form-field">
+                <label for="country">Country</label>
+                <input type="text" pInputText formControlName="country" id="country" />
+            </div>
+            <div class="form-field">
+                <label for="qty">Project Total Qty</label>
+                <input type="text" pInputText id="qty" formControlName="projectTotalQty" />
+            </div>
+            <div class="form-field">
+                <label for="capacity">Project Total Capacity</label>
+                <input type="text" pInputText id="capacity" formControlName="projectTotalCapacity" />
+            </div>
+            <div class="form-field">
+                <label for="project-status">Project Status</label>
+                <p-select [options]="projectStatus" formControlName="projectStatus" optionLabel="label" optionValue="value"
+                    [filter]="true" filterBy="label" [showClear]="true" placeholder="Select Project Status" appendTo="body"
+                    inputId="project-status" />
+            </div>
+            <div class="form-field">
+                <label for="probability">Project Probability</label>
+                <p-select [options]="projectProbality" formControlName="probability" optionLabel="label" optionValue="value" 
+                    [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Probability" appendTo="body" inputId="probability" />
+            </div>
+            <div class="form-field">
+                <label for="contract-status">Contract Status</label>
+                <input type="text" pInputText formControlName="contractStatus" id="contract-status" />
+            </div>
+            <div class="form-field">
+                <label for="project-term">Project Term</label>
+                <p-select [options]="projectTerm" formControlName="projectTerm" optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Term" appendTo="body" inputId="project-term" />
+            </div>
+            <div class="form-field">
+                <label for="project-manager">Project Manager</label>
+                <p-select [options]="PMOptions" formControlName="projectManagerId" optionLabel="userName" optionValue="userId" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Manager" appendTo="body" inputId="project-manager" />
+            </div>
+            <div class="form-field">
+                <label for="bd-manager">BD Manager</label>
+                <p-select [options]="PMOptions" formControlName="bdManagerId" optionLabel="userName" optionValue="userId" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Manager" appendTo="body" inputId="bd-manager" />
+            </div>
+            <div class="form-field">
+                <label for="solution-manager">Solution Manager</label>
+                <p-select [options]="PMOptions" formControlName="siteManagerId" optionLabel="userName" optionValue="userId" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Manager" appendTo="body" inputId="solution-manager" />
+            </div>
+            <div class="form-field">
+                <label for="cluster-head">Cluster Head</label>
+                <p-select [options]="PMOptions" formControlName="clusterHeadId" optionLabel="userName" optionValue="userId" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Manager" appendTo="body" inputId="cluster-head" />
+            </div>
+            <div class="form-field">
+                <label for="site-manager">Site Manager</label>
+                <p-select [options]="PMOptions" formControlName="siteManagerId" optionLabel="userName" optionValue="userId" [filter]="true" filterBy="label"
+                    [showClear]="true" placeholder="Select Project Manager" appendTo="body" inputId="site-manager" />
+            </div>
+        </div>
+        <div class="submit-btn">
+            <button pButton pRipple type="submit">Update</button>
+        </div>
+    </form>
+
+    <form [formGroup]="projectSpvForm">
+        <h3>SPV & WTG Configuration</h3>
+        <ng-container formArrayName="spvs">
+            @for (spv of spvs.controls; track spv.get('projectSpvId')?.value; let i = $index) {
+                <ng-container [formGroupName]="i">
+                    <div class="spv-border">
+                        <div class="spv-header">
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label for="site-manager">Customer SPV</label>
+                                    <p-select [options]="customerSPVList" formControlName="customerSpvId" optionLabel="spvName" optionValue="customerSpvId"
+                                        [filter]="true" filterBy="label" [showClear]="true" placeholder="Select Customer SPV" appendTo="body"
+                                        inputId="site-manager" />
+                                </div>
+                                <div class="update-spv-btn">
+                                    <button pButton pRipple type="submit"
+                                        (click)="updateProjectSpv(i)">Update SPV</button>
+                                </div>
+                            </div>
+    
+                            <div>
+                                <p-button icon="pi pi-times" severity="danger" (onClick)="deleteProjectSpv(spv.get('projectSpvId')?.value)" />
+                            </div>
+                        </div>
+    
+                        <ng-container formArrayName="wtgConfigurations">
+                            @for (config of getWtgConfigurations(i).controls; track config?.get('wtgConfigId')?.value; 
+                                let j = $index; let last = $last) {
+                                <div class="wtg-border">
+                                    <div class="wtg-header">
+                                        <h4>WTG Configuration {{ j + 1 }}</h4>
+                                        <div>
+                                            <p-button icon="pi pi-times" label="Remove" severity="secondary" 
+                                                (onClick)="deletePrjSpvWtg(i, spv, config)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-grid" [formGroupName]="j">
+                                        <!-- <div class="form-field">
+                                            <label for="address">Shipment Address</label>
+                                            <input type="text" pInputText id="address" />
+                                        </div> -->
+                                        <div class="form-field">
+                                            <label for="wtg-type">WTG Type</label>
+                                            <p-select [options]="WTGOptions" formControlName="wtgTypeId" optionLabel="wtgType"
+                                                optionValue="wtgTypeId" [filter]="true" filterBy="wtgType" [showClear]="true"
+                                                placeholder="Select WTG Type" appendTo="body" inputId="wtg-type" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="wtg-type">Capacity/WTG (MW)</label>
+                                            <p-select [options]="getCapacityOpts" formControlName="capacityId" optionLabel="capacity" optionValue="capacityId" 
+                                                [filter]="true" filterBy="capacity" [showClear]="true" placeholder="Select Capacity" appendTo="body" inputId="wtg-type" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="tower-type">Tower Type</label>
+                                            <p-select [options]="towerOptions" formControlName="towerTypeId" optionLabel="towerType" optionValue="towerTypeId" [filter]="true"
+                                                filterBy="towerType" [showClear]="true" placeholder="Select Tower Type" appendTo="body" inputId="tower-type" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="blade-type">Blade Type</label>
+                                            <p-select [options]="bladeOptions" formControlName="bladeTypeId" optionLabel="bladeType" optionValue="bladeTypeId" [filter]="true"
+                                                filterBy="bladeType" [showClear]="true" placeholder="Select Blade Type" appendTo="body" inputId="blade-type" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="connectivity">Grid Connectivity</label>
+                                            <p-select [options]="gridOptions" formControlName="gridConnectivityId" optionLabel="gridConnectivity" optionValue="gridConnectivityId" [filter]="true"
+                                                filterBy="gridConnectivity" [showClear]="true" placeholder="Select Grid Connectivity" appendTo="body" 
+                                                inputId="connectivity" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="ppa-type">PPA Type</label>
+                                            <p-select [options]="ppaOptions" formControlName="ppaTypeId" optionLabel="ppaType" optionValue="ppaTypeId" [filter]="true"
+                                                filterBy="ppaType" [showClear]="true" placeholder="Select PPA Type" appendTo="body" inputId="ppa-type" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="wtg-qty">WTG Qty</label>
+                                            <input type="text" pInputText formControlName="wtgQty" id="wtg-qty" />
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="total-capacity">Total Capacity (MW)</label>
+                                            <input type="text" pInputText id="total-capacity" [value]="getTotalCapacity(config)" [disabled]="true" />
+                                        </div>
+                                    </div>
+                                    @if (last) {
+                                        <div class="add-wtg-btn">
+                                            <button pButton pRipple type="button" icon="pi pi-plus"
+                                                (click)="addMoreWtgConfig(i)" [outlined]="true" severity="secondary">
+                                                Add More WTG Configuration
+                                            </button>
+                                        </div>
+                                    }
+                                    <div class="submit-btn">
+                                        <button pButton pRipple type="button"
+                                            (click)="updateConfiguration(i, j)">Update Configuration</button>
+                                    </div>
+                                </div>
+                            }
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+            }
+        </ng-container>
+    </form>
+
+</p-dialog>
+
+<p-confirmdialog />

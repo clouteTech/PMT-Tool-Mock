@@ -1,0 +1,33 @@
+.accept-reject-btn{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.table-outside-border {
+    border: 1px solid #e2e8f0;
+    margin-top: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.form-grid{
+    display: grid;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.custom-container {
+    border: 1px solid var(--p-content-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 4px;
+}

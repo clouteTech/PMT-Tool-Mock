@@ -1,0 +1,189 @@
+<div class="card">
+    <h2>WTG Receiving</h2>
+
+    <!-- Project Info -->
+    <div class="project-info">
+        <p class="tag-pcode">P-8001</p>
+
+        <p class="project-desc">
+            India_TataPower_Chennai_TamilNadu_Phase1_250MW
+        </p>
+
+        <p class="project-state">Tamil Nadu</p>
+
+        <p class="tag-wtg">2 WTGs</p>
+    </div>
+
+    <!-- WTG Accordion -->
+    <p-accordion [multiple]="true">
+
+        @for (wtg of wtgList; track wtg.id; let wtgIndex = $index) {
+
+            <p-accordion-panel [value]="wtgIndex">
+
+                <!-- Accordion Header -->
+                <p-accordion-header>
+
+                    <div class="wtg-accordion-header">
+
+                        <div class="flex items-center gap-3">
+                            <span class="wtg-title">
+                                WTG {{ wtgIndex + 1 }}
+                            </span>
+
+                            <span class="tag-progress">
+                                {{ wtg.wtgCode }}
+                            </span>
+                        </div>
+
+                        <div class="wtg-summary">
+                            {{ wtg.componentDetails.length }} Components
+                        </div>
+
+                    </div>
+
+                </p-accordion-header>
+
+                <!-- Accordion Content -->
+                <p-accordion-content>
+
+                    <div class="custom-container">
+
+                        <p-table [value]="wtg.componentDetails" [rowHover]="true"
+                            [tableStyle]="{ 'min-width': 'max-content' }">
+
+                            <ng-template #header>
+                                <tr>
+                                    <th>SL NO</th>
+                                    <th>P-Code</th>
+                                    <th>Components</th>
+                                    <th>Sub Components</th>
+                                    <th>Receiving Plan</th>
+                                    <th>Receiving Actual</th>
+                                    <th>MVC Date</th>
+                                    <th>Endorsed MVC</th>
+                                    <th>Deemed MVC</th>
+                                    <th>Issuance of Deemed MVC Date</th>
+                                    <th>Unload Delay Reason</th>
+                                    <th>Location Id</th>
+                                    <th>Maximo Id</th>
+                                    <th>Set Number</th>
+                                    <th>Serial Number</th>
+                                    <th>Component Condition</th>
+                                    <th>Return Status</th>
+                                    <th>Nacelle Frame Return Date</th>
+                                    <th>Hub Frame Return Date</th>
+                                    <th>Blade Frame Return Date</th>
+                                    <th>Gearbox Rotation Gear Return Date</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template #body let-component let-i="rowIndex">
+                                <tr>
+
+                                    <td>{{ i + 1 }}</td>
+
+                                    <td>{{ component.pCode }}</td>
+
+                                    <td>{{ component.components }}</td>
+
+                                    <td>{{ component.subComponent }}</td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <input type="text" pInputText />
+                                    </td>
+
+                                    <td>
+                                        <input type="text" pInputText />
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <input type="text" pInputText />
+                                    </td>
+
+                                    <td>{{ component.locationId }}</td>
+
+                                    <td>{{ component.maximoId }}</td>
+
+                                    <td>
+                                        <input type="text" pInputText />
+                                    </td>
+
+                                    <td>
+                                        <input type="text" pInputText />
+                                    </td>
+
+                                    <td>
+                                        <p-select [options]="componentConditionList" class="width-full-field"
+                                            placeholder="Select" appendTo="body">
+                                        </p-select>
+                                    </td>
+
+                                    <td>
+                                        <p-select [options]="returnStatusList" class="width-full-field"
+                                            placeholder="Select" appendTo="body">
+                                        </p-select>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                    <td>
+                                        <p-datepicker [readonlyInput]="true" showIcon [iconDisplay]="'input'"
+                                            appendTo="body" placeholder="DD/MM/YYYY">
+                                        </p-datepicker>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+
+                    </div>
+
+                </p-accordion-content>
+
+            </p-accordion-panel>
+        }
+
+    </p-accordion>
+</div>

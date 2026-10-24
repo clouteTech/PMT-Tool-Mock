@@ -1,0 +1,134 @@
+<div class="card">
+    <div class="plant-header">
+        <h2>Plants</h2>
+        <p-button icon="pi pi-plus" label="Add Plant" (onClick)="openPlantModal()" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="plantList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Plant Name</th>
+                    <th>Location</th>
+                    <th>Plant Manager</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-plant let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ plant.plant }}</td>
+                    <td>{{ plant.location }}</td>
+                    <td>{{ plant.plantManager }}</td>
+                    <td>
+                        <p-tag [value]="plant.status ? 'Active' : 'Inactive'"
+                            [severity]="plant.status ? 'success' : 'danger'"></p-tag>
+                    </td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="plantMenu($event, menu, plant)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedPlant ? 'Update Plant' : 'Create Plant'" [modal]="true" [(visible)]="showPlantModal" [style]="{ width: '40rem' }"
+    [draggable]="false" (onHide)="onDialogClose()">
+    <form [formGroup]="plantForm" (ngSubmit)="submitPlantForm()">
+        <div class="form-grid">
+            <div>
+                <label for="plant-name">Plant</label>
+                <input type="text" pInputText formControlName="plant" id="plant-name" class="validation-field" />
+
+                @if (plant?.invalid && (plant?.dirty || plant?.touched)) {
+                    @if (plant?.hasError('required')) {
+                        <small class="required-field">Plant is required.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input type="text" pInputText formControlName="location" id="location" class="validation-field" />
+
+                @if (location?.invalid && (location?.dirty || location?.touched)) {
+                    @if (location?.hasError('required')) {
+                        <small class="required-field">Location is required.</small>
+                    }
+                }
+            </div>
+            <div class="form-field">
+                <label for="plant-manager">Plant Manager</label>
+                <p-select [options]="userList" optionLabel="user.userName" optionValue="user.userName" inputId="near-shore" 
+                    placeholder="Select Plant Manager" appendTo="body" [filter]="true" formControlName="plantManager" filterBy="label" />
+
+                @if (plantManager?.invalid && (plantManager?.dirty || plantManager?.touched)) {
+                    @if (plantManager?.hasError('required')) {
+                    <small class="required-field">Plant Manager is required.</small>
+                    }
+                }
+            </div>
+        </div>
+        @if(selectedPlant){
+        
+            <div class="status-card">
+            
+                <div>
+            
+                    <div class="status-title">
+                        Plant Availability
+                    </div>
+            
+                    <div class="status-subtitle">
+            
+                        Keep this Plant active if it is still in use.
+            
+                        Turn it off if it is no longer required.
+            
+                    </div>
+            
+                </div>
+            
+                <div class="status-toggle-wrap">
+            
+                    <span class="status-label" [class.inactive]="!plantForm.get('status')?.value">
+            
+                        {{
+                            plantForm.get('status')?.value
+                            ? 'Active'
+                            : 'Inactive'
+                        }}
+            
+                    </span>
+            
+                    <p-toggleswitch formControlName="status">
+                    </p-toggleswitch>
+            
+                </div>
+            
+            </div>
+        
+        }
+        <div class="submit-btn">
+            <button pButton pRipple type="submit">{{ actionName }}</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

@@ -1,0 +1,116 @@
+<p-toast></p-toast>
+<div class="card">
+    <div class="flex justify-content-between align-item-center">
+        <div>
+            <h2>Add Customer</h2>
+        </div>
+        <div>
+            <p-button label="Back" icon="pi pi-arrow-circle-left" routerLink="/customers"></p-button>
+        </div>
+    </div>
+    <h3 class="customer-heading">Customer Details</h3>
+    <div class="form-row">
+        <div class="form-field">
+            <label for="customer-code">Customer Code</label>
+            <input type="text" pInputText id="customer-code" [(ngModel)]="customerCode"/>
+        </div>
+        <div class="form-field">
+            <label for="customer-name">Customer Name</label>
+            <input type="text" pInputText id="customer-name" [(ngModel)]="customerName" />
+        </div>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="spv-header mb-2">
+        <div>
+            <h3>SPV Details</h3>
+            <p class="section-note">
+                You can add multiple SPVs for a single customer. Click "Add SPV" to include more.
+            </p>
+        </div>
+    </div>
+    
+    <form [formGroup]="spvForm">
+        <div class="spv-form-row">
+            <div class="form-field">
+                <label for="spv">
+                    <span>SPV </span>
+                    <span class="label-name">(Service Provider Vendor)</span>
+                </label>
+                <input type="text" pInputText formControlName="spvName" id="spv" />
+            </div>
+            
+            <div class="form-field">
+                <label for="spv-gst">SPV GST</label>
+                <input type="text" pInputText formControlName="spvGst" id="spv-gst" />
+            </div>
+            
+            <div class="form-field">
+                <label for="gst-address-line">GST Address Line</label>
+                <input type="text" pInputText formControlName="gstAddress" id="gst-address-line" />
+            </div>
+            
+            <div class="form-field">
+                <label for="city">City</label>
+                <input type="text" pInputText formControlName="city" id="city" />
+            </div>
+            
+            <div class="form-field">
+                <label for="state">State</label>
+                <input type="text" pInputText formControlName="state" id="state" />
+            </div>
+            
+            <div class="form-field">
+                <label for="country">Country</label>
+                <input type="text" pInputText formControlName="country" id="country" />
+            </div>
+            
+            <div class="form-field">
+                <label for="postal-code">Postal Code</label>
+                <p-inputnumber formControlName="postalCode" id="postal-code" [useGrouping]="false" />
+            </div>
+            <div>
+                <p-button label="Add SPV" icon="pi pi-plus" rounded (click)="addSpv()" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card mt-3">
+    <h3>SPV List</h3>
+    <p-table [value]="spvList" [rowHover]="true">
+        <ng-template #header>
+            <tr>
+                <th>SL No</th>
+                <th>SPV</th>
+                <th>SPV GST</th>
+                <th>GST Address Line</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Postal Code</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-spv let-i="rowIndex">
+            <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ spv.spvName }}</td>
+                <td>{{ spv.spvGst }}</td>
+                <td>{{ spv.gstAddress }}</td>
+                <td>{{ spv.city }}</td>
+                <td>{{ spv.state }}</td>
+                <td>{{ spv.country }}</td>
+                <td>{{ spv.postalCode }}</td>
+                <td>
+                    <p-button icon="pi pi-trash" severity="danger" rounded (onClick)="removeSpv(i)" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="submit-btn">
+        <button pButton pRipple type="submit" (click)="submitCustomer()">
+            Submit
+        </button>
+    </div>
+</div>

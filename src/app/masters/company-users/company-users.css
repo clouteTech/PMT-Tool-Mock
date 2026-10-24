@@ -1,0 +1,1863 @@
+.form-grid {
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
+    gap: 6px;
+}
+
+.form-field {
+    display: grid;
+}
+
+.create-btn {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.status-card {
+    margin-top: 1.5rem;
+
+    padding: 1rem 1.25rem;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+}
+
+.status-title {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #0f172a;
+
+    margin-bottom: .35rem;
+}
+
+.status-subtitle {
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #64748b;
+
+    max-width: 320px;
+}
+
+.status-toggle-wrap {
+    display: flex;
+
+    align-items: center;
+
+    gap: .75rem;
+}
+
+.status-label {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #16a34a;
+}
+
+.status-label.inactive {
+    color: #dc2626;
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dialog-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════
+   User Group Mapping modal (assignUserGroupModal)
+   Scoped to this modal only — do not reuse
+   these classes on other Assign/Remove modals.
+   ══════════════════════════════════════════════ */
+
+.ugm-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ugm-header-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, .3);
+}
+
+.ugm-header-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.ugm-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.ugm-subtitle {
+    font-size: 12.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+.ugm-user-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.ugm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ugm-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.ugm-user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.ugm-user-email {
+    font-size: 12px;
+    color: var(--text3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ugm-assigned-count {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--accent-lt);
+    color: var(--accent2);
+    border: 1px solid var(--accent-bd);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.ugm-search-row {
+    margin-bottom: 14px;
+}
+
+.ugm-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ugm-search-box i {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: var(--text3);
+    pointer-events: none;
+}
+
+.ugm-search-box input.p-inputtext {
+    width: 100%;
+    height: 38px;
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+}
+
+.ugm-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--surface);
+    border-radius: 50%;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.ugm-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.ugm-section {
+    margin-bottom: 18px;
+}
+
+.ugm-section:last-child {
+    margin-bottom: 0;
+}
+
+.ugm-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.ugm-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.ugm-section-head.ugm-assigned .ugm-dot {
+    background: var(--accent);
+}
+
+.ugm-section-head.ugm-available .ugm-dot {
+    background: var(--text4);
+}
+
+.ugm-section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.ugm-section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+
+.ugm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ugm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color .15s, background .15s;
+}
+
+.ugm-row:hover {
+    border-color: var(--border2);
+    background: var(--surface);
+}
+
+.ugm-row-assigned {
+    background: var(--accent-lt);
+    border-color: var(--accent-bd);
+}
+
+.ugm-row-assigned:hover {
+    background: #dcf3ea;
+}
+
+.ugm-row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.ugm-row-assigned .ugm-row-icon {
+    background: var(--accent2);
+    color: #fff;
+}
+
+.ugm-row:not(.ugm-row-assigned) .ugm-row-icon {
+    background: #eff6ff;
+    color: #3B82F6;
+}
+
+.ugm-row-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.ugm-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+}
+
+.ugm-skel {
+    background: linear-gradient(90deg, var(--surface) 25%, #eef1f5 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: ugm-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes ugm-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.ugm-skel-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.ugm-skel-lines {
+    flex: 1;
+}
+
+.ugm-skel-line {
+    height: 10px;
+}
+
+.ugm-empty-state {
+    text-align: center;
+    padding: 22px 16px;
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--r);
+    color: var(--text3);
+}
+
+.ugm-empty-state-sm {
+    padding: 14px 16px;
+}
+
+.ugm-empty-state i {
+    font-size: 22px;
+    color: var(--text4);
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.ugm-empty-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text2);
+}
+
+.ugm-empty-sub {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+/* p-button overrides scoped to this modal's Assign/Remove pills only */
+::ng-deep .ugm-list .ugm-btn-assign.p-button {
+    background: #fff !important;
+    border: 1.5px solid #bfdbfe !important;
+    color: #2563EB !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .ugm-list .ugm-btn-assign.p-button:hover {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+::ng-deep .ugm-list .ugm-btn-remove.p-button {
+    background: #fff !important;
+    border: 1.5px solid #fecaca !important;
+    color: var(--red) !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .ugm-list .ugm-btn-remove.p-button:hover {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+}
+/* ══════════════════════════════════════════════
+   Plant Mapping modal (showPlantMappingModal)
+   Scoped to this modal only — do not reuse
+   these classes on other Assign/Remove modals.
+   ══════════════════════════════════════════════ */
+
+.upm-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.upm-header-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, .3);
+}
+
+.upm-header-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.upm-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.upm-subtitle {
+    font-size: 12.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+.upm-user-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.upm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upm-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.upm-user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.upm-user-email {
+    font-size: 12px;
+    color: var(--text3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.upm-assigned-count {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--accent-lt);
+    color: var(--accent2);
+    border: 1px solid var(--accent-bd);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.upm-assigned-count-muted {
+    background: var(--surface);
+    color: var(--text3);
+    border-color: var(--border2);
+}
+
+.upm-search-row {
+    margin-bottom: 14px;
+}
+
+.upm-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.upm-search-box i {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: var(--text3);
+    pointer-events: none;
+}
+
+.upm-search-box input.p-inputtext {
+    width: 100%;
+    height: 38px;
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+}
+
+.upm-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--surface);
+    border-radius: 50%;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.upm-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.upm-section {
+    margin-bottom: 18px;
+}
+
+.upm-section:last-child {
+    margin-bottom: 0;
+}
+
+.upm-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.upm-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.upm-section-head.upm-assigned .upm-dot {
+    background: var(--accent);
+}
+
+.upm-section-head.upm-available .upm-dot {
+    background: var(--text4);
+}
+
+.upm-section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.upm-section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+
+.upm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.upm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color .15s, background .15s;
+}
+
+.upm-row:hover {
+    border-color: var(--border2);
+    background: var(--surface);
+}
+
+.upm-row-assigned {
+    background: var(--accent-lt);
+    border-color: var(--accent-bd);
+}
+
+.upm-row-assigned:hover {
+    background: #dcf3ea;
+}
+
+.upm-row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.upm-row-assigned .upm-row-icon {
+    background: var(--accent2);
+    color: #fff;
+}
+
+.upm-row:not(.upm-row-assigned) .upm-row-icon {
+    background: #eff6ff;
+    color: #3B82F6;
+}
+
+.upm-row-name-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.upm-row-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.upm-row-hint {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 1px;
+}
+
+.upm-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+}
+
+.upm-skel {
+    background: linear-gradient(90deg, var(--surface) 25%, #eef1f5 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: upm-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes upm-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.upm-skel-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.upm-skel-lines {
+    flex: 1;
+}
+
+.upm-skel-line {
+    height: 10px;
+}
+
+.upm-empty-state {
+    text-align: center;
+    padding: 22px 16px;
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--r);
+    color: var(--text3);
+}
+
+.upm-empty-state-sm {
+    padding: 14px 16px;
+}
+
+.upm-empty-state i {
+    font-size: 22px;
+    color: var(--text4);
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.upm-empty-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text2);
+}
+
+.upm-empty-sub {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+/* p-button overrides scoped to this modal's Assign/Remove pills only */
+::ng-deep .upm-list .upm-btn-assign.p-button {
+    background: #fff !important;
+    border: 1.5px solid #bfdbfe !important;
+    color: #2563EB !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .upm-list .upm-btn-assign.p-button:hover {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+::ng-deep .upm-list .upm-btn-remove.p-button {
+    background: #fff !important;
+    border: 1.5px solid #fecaca !important;
+    color: var(--red) !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .upm-list .upm-btn-remove.p-button:hover {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+}
+/* ══════════════════════════════════════════════
+   Department Mapping modal (showDepartmentModal)
+   Scoped to this modal only — do not reuse
+   these classes on other Assign/Remove modals.
+   ══════════════════════════════════════════════ */
+
+.udm-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.udm-header-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, .3);
+}
+
+.udm-header-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.udm-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.udm-subtitle {
+    font-size: 12.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+.udm-user-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.udm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.udm-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.udm-user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.udm-user-email {
+    font-size: 12px;
+    color: var(--text3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.udm-assigned-count {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--accent-lt);
+    color: var(--accent2);
+    border: 1px solid var(--accent-bd);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.udm-search-row {
+    margin-bottom: 14px;
+}
+
+.udm-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.udm-search-box i {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: var(--text3);
+    pointer-events: none;
+}
+
+.udm-search-box input.p-inputtext {
+    width: 100%;
+    height: 38px;
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+}
+
+.udm-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--surface);
+    border-radius: 50%;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.udm-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.udm-section {
+    margin-bottom: 18px;
+}
+
+.udm-section:last-child {
+    margin-bottom: 0;
+}
+
+.udm-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.udm-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.udm-section-head.udm-assigned .udm-dot {
+    background: var(--accent);
+}
+
+.udm-section-head.udm-available .udm-dot {
+    background: var(--text4);
+}
+
+.udm-section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.udm-section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+
+.udm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.udm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color .15s, background .15s;
+}
+
+.udm-row:hover {
+    border-color: var(--border2);
+    background: var(--surface);
+}
+
+.udm-row-assigned {
+    background: var(--accent-lt);
+    border-color: var(--accent-bd);
+}
+
+.udm-row-assigned:hover {
+    background: #dcf3ea;
+}
+
+.udm-row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.udm-row-assigned .udm-row-icon {
+    background: var(--accent2);
+    color: #fff;
+}
+
+.udm-row:not(.udm-row-assigned) .udm-row-icon {
+    background: #eff6ff;
+    color: #3B82F6;
+}
+
+.udm-row-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.udm-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+}
+
+.udm-skel {
+    background: linear-gradient(90deg, var(--surface) 25%, #eef1f5 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: udm-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes udm-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.udm-skel-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.udm-skel-lines {
+    flex: 1;
+}
+
+.udm-skel-line {
+    height: 10px;
+}
+
+.udm-empty-state {
+    text-align: center;
+    padding: 22px 16px;
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--r);
+    color: var(--text3);
+}
+
+.udm-empty-state-sm {
+    padding: 14px 16px;
+}
+
+.udm-empty-state i {
+    font-size: 22px;
+    color: var(--text4);
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.udm-empty-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text2);
+}
+
+.udm-empty-sub {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+/* p-button overrides scoped to this modal's Assign/Remove pills only */
+::ng-deep .udm-list .udm-btn-assign.p-button {
+    background: #fff !important;
+    border: 1.5px solid #bfdbfe !important;
+    color: #2563EB !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .udm-list .udm-btn-assign.p-button:hover {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+::ng-deep .udm-list .udm-btn-remove.p-button {
+    background: #fff !important;
+    border: 1.5px solid #fecaca !important;
+    color: var(--red) !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .udm-list .udm-btn-remove.p-button:hover {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+}
+/* ══════════════════════════════════════════════
+   Cluster Mapping modal (showClusterModal)
+   Scoped to this modal only — do not reuse
+   these classes on other Assign/Remove modals.
+   ══════════════════════════════════════════════ */
+
+.uclm-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.uclm-header-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, .3);
+}
+
+.uclm-header-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.uclm-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.uclm-subtitle {
+    font-size: 12.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+.uclm-user-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.uclm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uclm-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.uclm-user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.uclm-user-email {
+    font-size: 12px;
+    color: var(--text3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uclm-assigned-count {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--accent-lt);
+    color: var(--accent2);
+    border: 1px solid var(--accent-bd);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.uclm-search-row {
+    margin-bottom: 14px;
+}
+
+.uclm-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.uclm-search-box i {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: var(--text3);
+    pointer-events: none;
+}
+
+.uclm-search-box input.p-inputtext {
+    width: 100%;
+    height: 38px;
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+}
+
+.uclm-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--surface);
+    border-radius: 50%;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.uclm-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.uclm-section {
+    margin-bottom: 18px;
+}
+
+.uclm-section:last-child {
+    margin-bottom: 0;
+}
+
+.uclm-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.uclm-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.uclm-section-head.uclm-assigned .uclm-dot {
+    background: var(--accent);
+}
+
+.uclm-section-head.uclm-available .uclm-dot {
+    background: var(--text4);
+}
+
+.uclm-section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.uclm-section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+
+.uclm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.uclm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color .15s, background .15s;
+}
+
+.uclm-row:hover {
+    border-color: var(--border2);
+    background: var(--surface);
+}
+
+.uclm-row-assigned {
+    background: var(--accent-lt);
+    border-color: var(--accent-bd);
+}
+
+.uclm-row-assigned:hover {
+    background: #dcf3ea;
+}
+
+.uclm-row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.uclm-row-assigned .uclm-row-icon {
+    background: var(--accent2);
+    color: #fff;
+}
+
+.uclm-row:not(.uclm-row-assigned) .uclm-row-icon {
+    background: #eff6ff;
+    color: #3B82F6;
+}
+
+.uclm-row-name-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.uclm-row-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.uclm-row-hint {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 1px;
+}
+
+.uclm-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+}
+
+.uclm-skel {
+    background: linear-gradient(90deg, var(--surface) 25%, #eef1f5 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: uclm-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes uclm-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.uclm-skel-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.uclm-skel-lines {
+    flex: 1;
+}
+
+.uclm-skel-line {
+    height: 10px;
+}
+
+.uclm-empty-state {
+    text-align: center;
+    padding: 22px 16px;
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--r);
+    color: var(--text3);
+}
+
+.uclm-empty-state-sm {
+    padding: 14px 16px;
+}
+
+.uclm-empty-state i {
+    font-size: 22px;
+    color: var(--text4);
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.uclm-empty-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text2);
+}
+
+.uclm-empty-sub {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+/* p-button overrides scoped to this modal's Assign/Remove pills only */
+::ng-deep .uclm-list .uclm-btn-assign.p-button {
+    background: #fff !important;
+    border: 1.5px solid #bfdbfe !important;
+    color: #2563EB !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .uclm-list .uclm-btn-assign.p-button:hover {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+::ng-deep .uclm-list .uclm-btn-remove.p-button {
+    background: #fff !important;
+    border: 1.5px solid #fecaca !important;
+    color: var(--red) !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .uclm-list .uclm-btn-remove.p-button:hover {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+}
+
+/* ══════════════════════════════════════════════
+   Component Mapping modal (showComponentModal)
+   Scoped to this modal only — do not reuse
+   these classes on other Assign/Remove modals.
+   ══════════════════════════════════════════════ */
+
+.ucom-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ucom-header-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, .3);
+}
+
+.ucom-header-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.ucom-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.ucom-subtitle {
+    font-size: 12.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+.ucom-user-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.ucom-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ucom-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.ucom-user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.ucom-user-email {
+    font-size: 12px;
+    color: var(--text3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ucom-assigned-count {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--accent-lt);
+    color: var(--accent2);
+    border: 1px solid var(--accent-bd);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.ucom-search-row {
+    margin-bottom: 14px;
+}
+
+.ucom-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ucom-search-box i {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: var(--text3);
+    pointer-events: none;
+}
+
+.ucom-search-box input.p-inputtext {
+    width: 100%;
+    height: 38px;
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+}
+
+.ucom-search-clear {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--surface);
+    border-radius: 50%;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.ucom-body {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.ucom-section {
+    margin-bottom: 18px;
+}
+
+.ucom-section:last-child {
+    margin-bottom: 0;
+}
+
+.ucom-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.ucom-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.ucom-section-head.ucom-assigned .ucom-dot {
+    background: var(--accent);
+}
+
+.ucom-section-head.ucom-available .ucom-dot {
+    background: var(--text4);
+}
+
+.ucom-section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.ucom-section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+
+.ucom-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ucom-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color .15s, background .15s;
+}
+
+.ucom-row:hover {
+    border-color: var(--border2);
+    background: var(--surface);
+}
+
+.ucom-row-assigned {
+    background: var(--accent-lt);
+    border-color: var(--accent-bd);
+}
+
+.ucom-row-assigned:hover {
+    background: #dcf3ea;
+}
+
+.ucom-row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.ucom-row-assigned .ucom-row-icon {
+    background: var(--accent2);
+    color: #fff;
+}
+
+.ucom-row:not(.ucom-row-assigned) .ucom-row-icon {
+    background: #eff6ff;
+    color: #3B82F6;
+}
+
+.ucom-row-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.ucom-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+}
+
+.ucom-skel {
+    background: linear-gradient(90deg, var(--surface) 25%, #eef1f5 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: ucom-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes ucom-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.ucom-skel-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.ucom-skel-lines {
+    flex: 1;
+}
+
+.ucom-skel-line {
+    height: 10px;
+}
+
+.ucom-empty-state {
+    text-align: center;
+    padding: 22px 16px;
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--r);
+    color: var(--text3);
+}
+
+.ucom-empty-state-sm {
+    padding: 14px 16px;
+}
+
+.ucom-empty-state i {
+    font-size: 22px;
+    color: var(--text4);
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.ucom-empty-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text2);
+}
+
+.ucom-empty-sub {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 2px;
+}
+
+/* p-button overrides scoped to this modal's Assign/Remove pills only */
+::ng-deep .ucom-list .ucom-btn-assign.p-button {
+    background: #fff !important;
+    border: 1.5px solid #bfdbfe !important;
+    color: #2563EB !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .ucom-list .ucom-btn-assign.p-button:hover {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+::ng-deep .ucom-list .ucom-btn-remove.p-button {
+    background: #fff !important;
+    border: 1.5px solid #fecaca !important;
+    color: var(--red) !important;
+    border-radius: 20px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 13px !important;
+}
+
+::ng-deep .ucom-list .ucom-btn-remove.p-button:hover {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+}
+
+.validation-field {
+    display: block;
+    width: 100%;
+}

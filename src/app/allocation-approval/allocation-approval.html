@@ -1,0 +1,94 @@
+<p-toast />
+<div class="card">
+    <h2>Allocation Acceptance</h2>
+    <div class="custom-container">
+        <p-table [value]="allocationApprovalList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Allocation Initiated By</th>
+                    <th>Initiated On</th>
+                    <th>Plan Month</th>
+                    <th>Plant Name</th>
+                    <th>Plant Manager</th>
+                    <th>Status</th>
+                    <th>Reviewed By</th>
+                    <th>Reviewed On</th>
+                    <th>Approved By</th>
+                    <th>Approved On</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-allocation let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ allocation.initiatedBy }}</td>
+                    <td>{{ allocation.initiatedOn }}</td>
+                    <td>{{ allocation.planMonth }}</td>
+                    <td>{{ allocation.plantName }}</td>
+                    <td>{{ allocation.plantManager }}</td>
+                    <td>
+                        <p-tag [value]="allocation.status" [severity]="getSeverity(allocation.status)" />
+                    </td>
+                    <td>{{ allocation.reviewedBy || '-' }}</td>
+                    <td>{{ allocation.reviewedOn || '-' }}</td>
+                    <td>{{ allocation.approvedBy || '-' }}</td>
+                    <td>{{ allocation.approvedOn || '-' }}</td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body"></p-menu>
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="openMenu(menu, $event, allocation)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                        <!-- @if (allocation.status === 'Created') {
+                            <p-button label="Review" (click)="review(allocation)" />
+                        } @else {
+                            <p-button label="View" (onClick)="showAllocatedComponents = true" />
+                        } -->
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog header="View Allocated Components" [modal]="true" [(visible)]="showAllocatedComponents"
+    [style]="{ width: '40rem' }" [draggable]="false">
+    <div class="table-outside-border">
+        <p-table [value]="allocatedComponentList">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Component Name</th>
+                    <th>Qty</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-allocate let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ allocate.componentName }}</td>
+                    <td>{{ allocate.qty }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="accept-reject-btn">
+        <p-button label="Accept" icon="pi pi-check" rounded (onClick)="acceptAllocation()" />
+    </div>
+</p-dialog>
+
+<p-dialog header="Reason for Rejection" [modal]="true" [(visible)]="showRejectModal"
+    [style]="{ width: '30rem' }" [draggable]="false">
+    <div class="form-grid">
+        <label for="reason">Reason</label>
+        <textarea rows="3" cols="30" id="reason" pTextarea [(ngModel)]="rejectReason"></textarea>
+    </div>
+    <div class="accept-reject-btn">
+        <p-button label="Reject" severity="danger" icon="pi pi-times" rounded (onClick)="rejectAllocation()" />
+    </div>
+</p-dialog>

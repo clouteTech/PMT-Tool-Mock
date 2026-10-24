@@ -1,0 +1,521 @@
+/* ════════════════════════════════════════════════════════
+   ENVISION – Global Styles
+   Angular 20 · PrimeNG 20 · PrimeFlex 3
+   ════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #E0F2FE;
+  --sidebar:   #ffffff;
+  --card:      #ffffff;
+  --surface:   #f5f7fa;
+  --border:    #e2e6ed;
+  --border2:   #d1d9e2;
+  --accent:    #00a86b;
+  --accent2:   #00875a;
+  --accent-lt: #e6f7f1;
+  --accent-bd: #b3e6d3;
+  --blue:      #1a6fc4;
+  --blue-lt:   #e8f1fb;
+  --red:       #dc2626;
+  --red-lt:    #fef2f2;
+  --amber:     #d97706;
+  --text:      #1a2332;
+  --text2:     #4a5568;
+  --text3:     #8fa0b4;
+  --text4:     #c8d5e3;
+  --header-h:  56px;
+  --sidebar-w: 240px;
+  --r:         8px;
+  --r-sm:      6px;
+  --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,.14), 0 4px 16px rgba(0,0,0,.08);
+
+
+  --primary-color: #3B82F6;
+  --primary-color-text: #ffffff;
+
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3B82F6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+
+  --highlight-bg: #dbeafe;
+  --highlight-text-color: #1d4ed8;
+
+  --focus-ring: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ══ Top Nav ══ */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: #3B82F6;
+  color: #ffffff;
+  // border-bottom: 1px solid var(--border);
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+  z-index: 100;
+  // box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.nav-icon svg,
+.nav-menu-btn svg {
+  stroke: #ffffff;
+}
+
+.nav-icon svg:hover {
+  border-radius: 6px;
+  color: #e5e7eb;
+}
+
+.nav-menu-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  border: none; background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); transition: background .15s; flex-shrink: 0;
+}
+.nav-menu-btn:hover { background: rgba(255, 255, 255, 0.15); }
+.nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-logo-img { height: 32px; object-fit: contain; }
+.nav-brand { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -.3px; }
+.nav-spacer { flex: 1; }
+.nav-user-label {
+  font-size: 12px; font-weight: 600; color: var(--text2);
+  background: var(--accent-lt); padding: 4px 10px;
+  border-radius: 20px; margin-right: 6px; white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
+.nav-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: none; background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); transition: background .15s;
+}
+.nav-icon:hover { background: rgba(255, 255, 255, 0.15); }
+.nav-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; cursor: pointer;
+}
+
+/* ══ Layout ══ */
+.layout {
+  display: flex;
+  margin-top: var(--header-h);
+  min-height: calc(100vh - var(--header-h));
+  position: relative;
+}
+
+/* ══ Sidebar ══ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: #3B82F6;
+  border-right: 1px solid var(--border);
+  padding: 12px 10px 6px 10px;
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: width .25s cubic-bezier(.4,0,.2,1), min-width .25s cubic-bezier(.4,0,.2,1), padding .25s;
+  z-index: 90;
+}
+
+.sb-nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.sb-nav::-webkit-scrollbar {
+  width: 6px;
+}
+.sb-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sb-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+.sb-nav:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.layout.sidebar-collapsed .sidebar {
+  width: 0 !important; min-width: 0 !important;
+  padding-left: 0; padding-right: 0;
+  overflow: hidden; border-right: none;
+}
+
+.sb-label {
+  font-size: 10px; font-weight: 700; color: #fff;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 0 8px; margin-bottom: 6px;
+}
+.sb-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: var(--r-sm);
+  font-size: 13px; font-weight: 500; color: #E0F2FE;
+  cursor: pointer; transition: all .15s;
+  border: none; background: transparent; width: 100%; text-align: left;
+  white-space: nowrap; margin-bottom: 2px;
+}
+.sb-item:hover  { background: rgba(255, 255, 255, 0.15); color: #E0F2FE; }
+.sb-item.active { background: #fff; color: #2563EB; font-weight: 600; }
+
+.sb-item i {
+  font-size: 14px;
+}
+
+.sb-submenu {
+  display: grid;
+  gap: 2px;
+  margin-left: 28px;
+  margin-top: 4px;
+}
+
+.sb-sub-item{
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #E0F2FE;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.sb-sub-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #E0F2FE;
+}
+
+.sb-sub-item.active {
+  background: #fff;
+  color: #2563EB;
+  font-weight: 600;
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+.sb-exit {
+  flex-shrink: 0;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ══ Main ══ */
+.main {
+  flex: 1;
+  padding: 24px;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+/* ══ Mobile sidebar ══ */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35); z-index: 98;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed !important; top: var(--header-h) !important;
+    left: 0 !important; bottom: 0 !important;
+    height: calc(100vh - var(--header-h)) !important;
+    width: var(--sidebar-w) !important; min-width: var(--sidebar-w) !important;
+    transform: translateX(-100%); z-index: 99 !important;
+    transition: transform .25s cubic-bezier(.4,0,.2,1) !important;
+  }
+  .sidebar.sidebar-open { transform: translateX(0) !important; }
+  .layout.sidebar-collapsed .sidebar {
+    width: var(--sidebar-w) !important; min-width: var(--sidebar-w) !important;
+    transform: translateX(-100%) !important;
+  }
+  .main { margin-left: 0 !important; }
+  .sidebar-overlay { display: block; }
+}
+
+/* ══ Logout dialog ══ */
+.logout-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45); z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn .18s ease; backdrop-filter: blur(2px);
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.logout-dialog {
+  background: #fff; border-radius: 16px;
+  padding: 2rem 2rem 1.75rem; max-width: 380px; width: 90%;
+  box-shadow: 0 24px 64px rgba(0,0,0,.2); text-align: center;
+  animation: slideUp .22s ease;
+}
+@keyframes slideUp { from { transform:translateY(20px);opacity:0;} to {transform:translateY(0);opacity:1;} }
+.logout-dialog-icon {
+  width: 64px; height: 64px; background: #fef2f2; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.2rem; border: 3px solid #fee2e2;
+}
+.logout-dialog h3 { font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: .6rem; }
+.logout-dialog p  { font-size: 13.5px; color: var(--text2); line-height: 1.65; margin-bottom: 1.6rem; }
+.logout-dialog-actions { display: flex; gap: 10px; }
+.btn-cancel {
+  flex: 1; height: 44px; border: 1.5px solid var(--border2);
+  background: #fff; border-radius: 10px; font-size: 14px;
+  font-weight: 600; color: var(--text2); cursor: pointer;
+}
+.btn-cancel:hover { background: var(--surface); }
+.btn-confirm-logout {
+  flex: 1; height: 44px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #fff; border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.btn-confirm-logout:hover { opacity: .88; }
+
+/* ══ PrimeNG global fixes ══ */
+
+/* p-tag success */
+.p-tag.p-tag-success {
+  background: var(--accent-lt) !important;
+  color: var(--accent2) !important;
+}
+
+/* Compact status labels (p-tag) across all tables */
+.p-tag {
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  min-height: 0 !important;
+}
+.p-tag .p-tag-icon {
+  font-size: 10px !important;
+}
+
+/* p-select focus */
+.p-select:focus-within {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(0,168,107,.12) !important;
+}
+
+/* p-dialog */
+.p-dialog .p-dialog-header { border-bottom: 1px solid var(--border); }
+.p-dialog .p-dialog-footer { border-top: 1px solid var(--border); }
+
+/* Center modals within the page content area (right of the sidebar), not the full viewport.
+   AppComponent mirrors the sidebar's open/collapsed state onto <body>, so this covers
+   dialogs rendered inline as well as ones using appendTo="body" (which land elsewhere
+   under <body>, not necessarily as a sibling of .layout). */
+@media (min-width: 769px) {
+  body:not(.sidebar-collapsed) .p-dialog-mask {
+    padding-left: var(--sidebar-w);
+  }
+}
+
+/* pInputText styling */
+input.p-inputtext,
+textarea.p-inputtext,
+.p-inputtext {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text) !important;
+}
+input.p-inputtext:focus,
+textarea.p-inputtext:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(0,168,107,.12) !important;
+}
+
+/* ══ Compact, uniform PrimeNG tables (all p-table instances) ══ */
+.p-datatable-thead > tr > th {
+  padding: 10px 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+.p-datatable-tbody > tr > td {
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+}
+
+/* Sticky Action column (last column) in every table */
+.p-datatable-thead > tr > th:last-child {
+  position: sticky !important;
+  right: 0;
+  z-index: 3;
+  background: var(--surface);
+}
+.p-datatable-tbody > tr > td:last-child {
+  position: sticky !important;
+  right: 0;
+  z-index: 2;
+  background: #fff;
+}
+.p-datatable-tbody > tr:hover > td:last-child {
+  background: var(--surface);
+}
+
+/* Compact, uniform PrimeNG buttons across the app */
+.p-button:not(.p-button-icon-only) {
+  padding: 5px 12px !important;
+  font-size: 12.5px !important;
+  min-height: 30px !important;
+}
+.p-button .p-button-label {
+  font-size: 12.5px !important;
+}
+.p-button.p-button-icon-only {
+  width: 28px !important;
+  height: 28px !important;
+}
+.p-button-icon {
+  font-size: 12px !important;
+}
+.p-button-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Compact icons inside p-menu popup items (e.g. the "+" on "Create Component Serial") */
+.p-menu-item-icon {
+  font-size: 13px !important;
+}
+
+/* Dropdown/select trigger arrow everywhere (incl. table header controls & paginator) */
+.p-select-dropdown-icon,
+.p-select-dropdown .p-icon {
+  width: 14px !important;
+  height: 14px !important;
+}
+.p-select-label {
+  padding: 6px 10px !important;
+  font-size: 12.5px !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+option:disabled { color: #bbb !important; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .grid { grid-template-columns: 1fr; } }
+.flex-col  { display: flex; flex-direction: column; }
+.gap-2     { gap: 0.5rem; }
+.w-full    { width: 100%; }
+// + all other utility classes used in the dialog HTML
+
+
+/* 🔷 Only Primary Buttons */
+.p-button.p-button-primary {
+  background: #3B82F6 !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+/* 🔷 Hover */
+.p-button.p-button-primary:hover {
+  background: #2563EB !important;
+}
+
+/* 🔷 Active */
+.p-button.p-button-primary:active {
+  background: #1D4ED8 !important;
+}
+
+/* 🔷 Focus */
+.p-button.p-button-primary:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.custom-container {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.required-field {
+  color: oklch(63.7% 0.237 25.331);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Compact, uniform page headings across the app */
+.main h2 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+}
+
+/* Uniform gap between the heading/button row and the table below it,
+   applied to whatever the first child of a .card is (a lone h2, or a
+   header row wrapping the h2 + add button) so the heading and its
+   button always stay aligned on the same line */
+.card > *:first-child {
+  margin-bottom: 12px;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+}

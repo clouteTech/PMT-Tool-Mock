@@ -1,0 +1,375 @@
+<div class="card">
+    <div class="header">
+        <h2>Monthly Demand Plan</h2>
+        <div class="header-actions">
+            <button pButton pRipple type="button" severity="secondary" outlined (click)="toggleSummaryView()">
+                <span pButtonLabel>{{ showSummaryView ? 'View Grouped Plan' : 'View Plan Summary' }}</span>
+            </button>
+            <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" />
+            <button pButton pRipple type="button" (click)="menu.toggle($event)">
+                <span pButtonLabel>Action</span>
+                <i pButtonIcon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <rect width="24" height="24" fill="none" />
+                        <path fill="currentColor"
+                            d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71L8.46 9.17a1 1 0 0 0-1.41 0a1 1 0 0 0 0 1.42l4.24 4.24a1 1 0 0 0 1.42 0L17 10.59a1 1 0 0 0 0-1.42" />
+                    </svg>
+                </i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Grouped view: Customer -> Project (P-Code) -> SPV, matching the agreed "Demand Plan" Excel layout -->
+    <div class="custom-container" *ngIf="!showSummaryView">
+        <p-accordion [multiple]="true" *ngIf="groupedPlan.length; else emptyGrouped">
+            <p-accordion-panel *ngFor="let customer of groupedPlan; let ci = index" [value]="'c' + ci">
+                <p-accordion-header>
+                    <div class="header-chips">
+                        <span class="info-chip chip-customer">
+                            <span class="chip-label">Customer</span>
+                            <span class="chip-value">{{ customer.customerName || '-' }}<ng-container *ngIf="customer.customerCode"> ({{ customer.customerCode }})</ng-container></span>
+                        </span>
+                    </div>
+                </p-accordion-header>
+                <p-accordion-content>
+                    <div class="project-block" *ngFor="let project of customer.projects">
+                        <div class="project-title">
+                            <span class="info-chip chip-project">
+                                <span class="chip-label">Project</span>
+                                <span class="chip-value">{{ project.projectCode || '-' }}</span>
+                            </span>
+                        </div>
+
+                        <div class="spv-block" *ngFor="let spv of project.spvs">
+                            <div class="spv-header">
+                                <span class="spv-name">{{ spv.spvName || '-' }}</span>
+                                <button pButton pRipple type="button" text class="view-serial-btn"
+                                    (click)="viewComponentSerial(spv)">
+                                    <i class="pi pi-eye" pButtonIcon></i>
+                                    <span pButtonLabel>View Component Serial</span>
+                                </button>
+                            </div>
+
+                            <p-table [value]="spv.rows" [tableStyle]="{ 'min-width': 'max-content' }">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Wtg Type</th>
+                                        <th>Capacity</th>
+                                        <th>Tower Type</th>
+                                        <th>Blade Type</th>
+                                        <th>Qty</th>
+                                        <th *ngFor="let m of monthColumns">{{ m }}</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #body let-row>
+                                    <tr>
+                                        <td>{{ row.wtgType || '-' }}</td>
+                                        <td>{{ row.capMw || '-' }}MW</td>
+                                        <td>{{ row.towerType || '-' }}</td>
+                                        <td>{{ row.bladeType || '-' }}</td>
+                                        <td>{{ row.totalQty }}</td>
+                                        <td *ngFor="let m of monthColumns">{{ row.monthlyQty[m] || 0 }}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #footer>
+                                    <tr class="total-row">
+                                        <td colspan="4">Total Qty</td>
+                                        <td>{{ spv.totalQty }}</td>
+                                        <td *ngFor="let m of monthColumns">{{ spv.totalsByMonth[m] || 0 }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
+        <ng-template #emptyGrouped>
+            <div class="empty-state">No Records Found</div>
+        </ng-template>
+    </div>
+
+    <!-- Flat rollup view, mirroring the Excel's "View Plan Summary" sheet with a Sum row -->
+    <div class="custom-container" *ngIf="showSummaryView">
+        <p-table [value]="summaryRows" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL NO</th>
+                    <th>Plan Month</th>
+                    <th>Project Code</th>
+                    <th>Customer Code</th>
+                    <th>Customer Name</th>
+                    <th>SPV Name</th>
+                    <th>Tower Type</th>
+                    <th>Blade Type</th>
+                    <th>WTG Type</th>
+                    <th>Capacity</th>
+                    <th>WTG Count</th>
+                    <th>Status</th>
+                    <th>Created On</th>
+                    <th>Created By</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-monthlyPlan let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ monthlyPlan.planMonth || '-' }}</td>
+                    <td>{{ monthlyPlan.projectCode || '-' }}</td>
+                    <td>{{ monthlyPlan.customerCode || '-' }}</td>
+                    <td>{{ monthlyPlan.customerName || '-' }}</td>
+                    <td>{{ monthlyPlan.spvName || '-' }}</td>
+                    <td>{{ monthlyPlan.towerType || '-' }}</td>
+                    <td>{{ monthlyPlan.bladeType || '-' }}</td>
+                    <td>{{ monthlyPlan.wtgType || '-' }}</td>
+                    <td>{{ monthlyPlan.capMw || '-' }}MW</td>
+                    <td>{{ monthlyPlan.wtgCount || '-' }}</td>
+                    <td>
+                        <p-tag [value]="monthlyPlan?.status" [severity]="getSeverity(monthlyPlan?.status)" />
+                    </td>
+                    <td>{{ monthlyPlan.createdOn | date: 'medium' }}</td>
+                    <td>{{ monthlyPlan.createdByName || '-' }}</td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body">
+                        </p-menu>
+                        <button pButton pRipple text rounded severity="secondary" type="button"
+                            (click)="monthlyMenu($event, menu, monthlyPlan)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <!-- Flat rollup view, mirroring the Excel's "View Plan Summary" sheet with a Sum row -->
+    <div class="custom-container" *ngIf="showSummaryView">
+        <p-table [value]="summaryRows" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Project</th>
+                    <th>Spv</th>
+                    <th>WtgType</th>
+                    <th>Capacity</th>
+                    <th>Tower Type</th>
+                    <th>Blade Type</th>
+                    <th>Qty</th>
+                    <th *ngFor="let m of monthColumns">{{ m }}</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-row>
+                <tr>
+                    <td>{{ row.customerName || '-' }}</td>
+                    <td>{{ row.projectCode || '-' }}</td>
+                    <td>{{ row.spvName || '-' }}</td>
+                    <td>{{ row.wtgType || '-' }}</td>
+                    <td>{{ row.capMw || '-' }}MW</td>
+                    <td>{{ row.towerType || '-' }}</td>
+                    <td>{{ row.bladeType || '-' }}</td>
+                    <td>{{ row.totalQty }}</td>
+                    <td *ngFor="let m of monthColumns">{{ row.monthlyQty[m] || 0 }}</td>
+                </tr>
+            </ng-template>
+            <ng-template #footer>
+                <tr class="total-row">
+                    <td colspan="7">Sum</td>
+                    <td>{{ summaryGrandTotal }}</td>
+                    <td *ngFor="let m of monthColumns">{{ summaryTotals[m] || 0 }}</td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog header="Create Component Serial" [modal]="true" [(visible)]="showComponentSerialModal"
+    [style]="{ width: '75rem', 'max-width': '95vw' }" [draggable]="false" (onHide)="resetComponentSerialModal()">
+    <div class="modal-fixed-content">
+        <div class="form-grid">
+            <label for="month">Plan Month</label>
+            <p-datepicker view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="month" showIcon
+                [iconDisplay]="'input'" appendTo="body" placeholder="Select Month" (onSelect)="selectedMonth($event)" fluid />
+        </div>
+
+        @if(showComponentDetails && monthlyComponentDetails && monthlyComponentDetails.wtgModels && monthlyComponentDetails.wtgModels.length){
+            <div class="summary-card">
+                <div class="summary-item">
+                    <p>Total Plans</p>
+                    <h3>{{ monthlyComponentDetails.totalRecords }}</h3>
+                </div>
+
+                <div class="summary-item">
+                    <p>Total WTG</p>
+                    <h3>{{ monthlyComponentDetails.totalWtgCount }}</h3>
+                </div>
+                <div class="summary-item">
+                    <p>Total Components</p>
+                    <h3>{{ monthlyComponentDetails.totalComponentCount }}</h3>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span>Serial Creation Progress</span>
+                    <span>{{ totalCreatedQty() }} / {{ totalRequiredQty() }} Created</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" [style.width.%]="progressPercent()"></div>
+                </div>
+            </div>
+
+            @if(!hasPendingComponents()){
+                <div class="info-message info-message-success">
+                    <i class="pi pi-check-circle"></i>
+                    <span>All component serials have already been created for this plan month.</span>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="modal-scroll-content">
+        @if(isLoadingComponentDetails){
+            <div class="state-message">
+                <i class="pi pi-spin pi-spinner"></i>
+                <p>Loading component requirements...</p>
+            </div>
+        } @else if(componentDetailsError){
+            <div class="state-message state-message-error">
+                <p>Unable to fetch component requirements.</p>
+                <p>Please try again.</p>
+                <button pButton pRipple type="button" severity="secondary" [outlined]="true" (click)="retryFetch()">
+                    <span>Retry</span>
+                </button>
+            </div>
+        } @else if(showComponentDetails && monthlyComponentDetails){
+            @if(monthlyComponentDetails.wtgModels && monthlyComponentDetails.wtgModels.length){
+                <div class="wtg-section-heading">
+                    <span class="wtg-section-title">WTG Configurations</span>
+                    <span class="wtg-section-month">{{ selectedPlanMonthLabel }}</span>
+                </div>
+
+                @for (item of monthlyComponentDetails.wtgModels; track item.wtgConfigId ?? $index) {
+                    <div class="wtg-config-card">
+                        @if(monthlyComponentDetails.wtgModels.length > 1){
+                            <p class="wtg-config-label">WTG Configuration {{ formatConfigNumber($index) }}</p>
+                        }
+
+                        <div class="wtg-header">
+                            <h3>{{ item.wtgType || '-' }}</h3>
+                            <div class="wtg-capacity">
+                                <span>Capacity</span>
+                                <strong>{{ item.capMw ? (item.capMw + ' MW') : '-' }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="wtg-meta">
+                            <div>
+                                <span>Tower Type</span>
+                                <strong>{{ item.towerType }}</strong>
+                            </div>
+                            <div>
+                                <span>Blade Type</span>
+                                <strong>{{ item.bladeType }}</strong>
+                            </div>
+                            <div>
+                                <span>WTG Count</span>
+                                <strong>{{ item.wtgCount }}</strong>
+                            </div>
+                            <div>
+                                <span>Components</span>
+                                <strong>{{ item.componentCount }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Serial Progress</span>
+                                <span>{{ wtgCreatedQty(item) }} / {{ wtgRequiredQty(item) }}</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" [style.width.%]="wtgProgressPercent(item)"></div>
+                            </div>
+                        </div>
+
+                        <div class="component-section">
+                            <p class="component-section-header">Component Requirements</p>
+                            <div class="component-table-wrapper">
+                                <p-table [value]="item.components" [rowHover]="true" dataKey="componentMasterId"
+                                    [tableStyle]="{ 'min-width': 'max-content' }">
+                                    <ng-template #header>
+                                        <tr>
+                                            <th>SL No</th>
+                                            <th>Component Name</th>
+                                            <th>Required</th>
+                                            <th>Created</th>
+                                            <th>Remaining</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template #body let-component let-i="rowIndex">
+                                        <tr>
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ component.componentName }}</td>
+                                            <td>{{ component.requiredQty }}</td>
+                                            <td>{{ component.createdQty }}</td>
+                                            <td>{{ remainingQty(component) }}</td>
+                                            <td>
+                                                <p-tag [value]="componentStatus(component)" [severity]="componentSeverity(component)" />
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template #emptymessage>
+                                        <tr>
+                                            <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            } @else {
+                <div class="empty-state">
+                    <p class="empty-title">No Component Data</p>
+                    <p class="empty-subtitle">No component requirements were found for {{ selectedPlanMonthLabel }}.</p>
+                    <p class="empty-hint">Please select another plan month.</p>
+                </div>
+            }
+        } @else {
+            <div class="state-message">
+                <p>Select a plan month to view component requirements.</p>
+            </div>
+        }
+    </div>
+
+    <ng-template #footer>
+        <div class="create-btn">
+            <button pButton pRipple type="button" severity="secondary" [outlined]="true" (click)="showComponentSerialModal = false">
+                <span>Cancel</span>
+            </button>
+            <button pButton pRipple type="button" [disabled]="!canCreate()" (click)="confirmCreateComponentSerial()">
+                <span>Create</span>
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-confirmdialog />
+<p-toast />

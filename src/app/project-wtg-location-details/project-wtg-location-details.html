@@ -1,0 +1,181 @@
+<div class="card">
+    <div class="location-header">
+        <div class="wtg-header">
+            <h2>Project WTG Details</h2>
+            <p-tag severity="success" [value]="selectedProject?.projectCode" />
+            <p-tag severity="info" [value]="(selectedProject?.totalWtgs ?? 0) + ' WTGs'" />
+            <p-tag severity="warn" [value]="selectedProject?.customer?.customerName" />
+        </div>
+        <div>
+            <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" routerLink="/foundation1" />
+        </div>
+    </div>
+    <div class="custom-container">
+        <p-table [value]="prjWTGDetails" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }"
+            [scrollable]="true">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>WTG Code</th>
+                    <th>WTG Type</th>
+                    <th>Tower Type</th>
+                    <th>Execution Status</th>
+                    <th>Location Code</th>
+                    <th>Maximo ID</th>
+                    <th>Village</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Location Status</th>
+                    <th alignFrozen="right" pFrozenColumn>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-wtg let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ wtg?.projectWtg?.wtgCode }}</td>
+                    <td>{{ wtg?.projectWtg?.wtgType?.wtgType }}</td>
+                    <td>{{ wtg?.projectWtg?.towerType?.towerType }}</td>
+                    <td>
+                        <p-tag [value]="wtg?.executionStatus" [severity]="getSeverity(wtg?.executionStatus)" />
+                    </td>
+                    <td>{{ wtg?.location?.locationCode || '-' }}</td>
+                    <td>{{ wtg?.location?.maximoId || '-' }}</td>
+                    <td>{{ wtg?.location?.village || '-' }}</td>
+                    <td>{{ wtg?.location?.latitude || '-' }}</td>
+                    <td>{{ wtg?.location?.longitude || '-' }}</td>
+                    <td>
+                        <p-tag [value]="wtg?.location?.status ? 'Active' : 'Inactive'" 
+                            [severity]="wtg?.location?.status ? 'success' : 'danger'"
+                        ></p-tag>
+                    </td>
+                    <td alignFrozen="right" pFrozenColumn>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button"
+                            (click)="wtgLocationMenu($event, menu, wtg)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [modal]="true" [(visible)]="showLocationModal" [style]="{ width: '40rem' }" [draggable]="false" (onHide)="onDialogClose()">
+    <ng-template #header>
+        <div class="dialog-header">
+            <div class="dialog-title">
+                {{ selectPrjWTG?.location?.locationId ? 'Update Location' : 'Assign Location' }}
+            </div>
+    
+            <div class="dialog-tags">
+                <p-tag severity="success" [value]="selectedProject?.projectCode"></p-tag>
+                <p-tag severity="warn" [value]="selectedProject?.customer?.customerName"></p-tag>
+                <p-tag severity="info" [value]="selectPrjWTG?.projectWtg?.wtgCode"></p-tag>
+            </div>
+        </div>
+    </ng-template>
+    <form [formGroup]="locationForm" (ngSubmit)="submitLocationForm()">
+        <div class="form-grid">
+            <div>
+                <label for="location-code">Location Code</label>
+                <input type="text" pInputText formControlName="locationCode" id="location-code" class="validation-field" />
+
+                @if (locationCode?.invalid && (locationCode?.dirty || locationCode?.touched)) {
+                    @if (locationCode?.hasError('required')) {
+                        <small class="required-field">Location Code is required.</small>
+                    }
+                    @if (locationCode?.hasError('maxlength')) {
+                        <small class="required-field">Location Code cannot exceed 100 characters.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="maximo-id">Maximo ID</label>
+                <input type="text" pInputText formControlName="maximoId" id="maximo-id" class="validation-field" />
+                @if (maximoId?.invalid && (maximoId?.dirty || maximoId?.touched)) {
+                    @if (maximoId?.hasError('maxlength')) {
+                    <small class="required-field">Maximo ID cannot exceed 100 characters.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="village">Village</label>
+                <input type="text" pInputText formControlName="village" id="village" class="validation-field" />
+                @if (village?.invalid && (village?.dirty || village?.touched)) {
+                    @if (village?.hasError('maxlength')) {
+                    <small class="required-field">Village cannot exceed 100 characters.</small>
+                    }
+                }
+            </div>
+            <div class="form-field">
+                <label for="latitude">Latitude</label>
+                <p-inputnumber inputId="latitude" formControlName="latitude" [minFractionDigits]="1"
+                    [maxFractionDigits]="8" mode="decimal" [useGrouping]="false" [min]="0" [max]="99.99" />
+            </div>
+            <div class="form-field">
+                <label for="longitude">Longitude</label>
+                <p-inputnumber inputId="longitude" formControlName="longitude" [minFractionDigits]="1"
+                    [maxFractionDigits]="8" mode="decimal" [useGrouping]="false" [min]="0" [max]="99.99" />
+            </div>
+        </div>
+        @if(selectPrjWTG?.location?.locationId){
+        
+            <div class="status-card">
+            
+                <div>
+            
+                    <div class="status-title">
+                        Location Availability
+                    </div>
+            
+                    <div class="status-subtitle">
+            
+                        Keep this Location active if it is still in use.
+            
+                        Turn it off if it is no longer required.
+            
+                    </div>
+            
+                </div>
+            
+                <div class="status-toggle-wrap">
+            
+                    <span class="status-label" [class.inactive]="!locationForm.get('status')?.value">
+            
+                        {{
+                            locationForm.get('status')?.value
+                            ? 'Active'
+                            : 'Inactive'
+                        }}
+            
+                    </span>
+            
+                    <p-toggleswitch formControlName="status">
+                    </p-toggleswitch>
+            
+                </div>
+            
+            </div>
+        
+        }
+        <div class="submit-btn">
+            <button pButton pRipple type="submit">{{ actionName }}</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

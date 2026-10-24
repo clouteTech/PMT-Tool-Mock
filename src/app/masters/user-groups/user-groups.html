@@ -1,0 +1,271 @@
+<div class="card">
+    <div class="card-header">
+        <h2>User Groups</h2>
+        <p-button icon="pi pi-plus" label="Create User Group" (onClick)="openUserGroupModal()" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="userGroupList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }"
+            [paginator]="true" [rows]="size" [first]="first" [showCurrentPageReport]="true" [lazy]="true"
+            [totalRecords]="totalRecords"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            (onLazyLoad)="loadUser($event)"
+            [rowsPerPageOptions]="[10, 25, 50]">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                    <th>Assigned Roles</th>
+                    <th>Total Users</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-usergroup let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ usergroup.groupName || '-' }}</td>
+                    <td>{{ usergroup.description || '-' }}</td>
+                    <td>{{ usergroup.totalRoles || '-' }}</td>
+                    <td>{{ usergroup.totalUsers || '-' }}</td>
+                    <td>
+                        <p-tag [value]="usergroup.status ? 'Active' : 'Inactive'" [severity]="usergroup.status ? 'success' : 'danger'">
+                        </p-tag>
+                    </td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" 
+                            (click)="usergroupMenu($event, menu, usergroup)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedUsergroup ? 'Edit User Group' : 'Create User Group'" [modal]="true"
+    [(visible)]="showUserGroupModal" [style]="{ width: '30rem' }" [draggable]="false" (onHide)="onDialogClose()">
+    <form [formGroup]="userGroupForm" (ngSubmit)="submitUserGroupForm()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="user-group">User Group</label>
+                <input type="text" pInputText formControlName="groupName" class="w-full" id="user-group" />
+
+                @if (groupName?.invalid && (groupName?.dirty || groupName?.touched)) {
+                    @if (groupName?.hasError('required')) {
+                        <small class="required-field">Group Name is required.</small>
+                    }
+                    @if (groupName?.hasError('maxlength')) {
+                        <small class="required-field">Group Name cannot exceed 100 characters.</small>
+                    }
+                }
+            </div>
+            <div class="form-field">
+                <label for="description">Description</label>
+                <textarea rows="4" cols="30" pTextarea formControlName="description"></textarea>
+
+                @if (description?.invalid && (description?.dirty || description?.touched)) {
+                    @if (description?.hasError('maxlength')) {
+                        <small class="required-field">Description cannot exceed 255 characters.</small>
+                    }
+                }
+            </div>
+        </div>
+        @if(selectedUsergroup){
+        
+            <div class="status-card">
+            
+                <div>
+            
+                    <div class="status-title">
+                        User Group Availability
+                    </div>
+            
+                    <div class="status-subtitle">
+            
+                        Keep this blade type active if it is still in use.
+            
+                        Turn it off if it is no longer required.
+            
+                    </div>
+            
+                </div>
+            
+                <div class="status-toggle-wrap">
+            
+                    <span class="status-label" [class.inactive]="!userGroupForm.get('status')?.value">
+            
+                        {{
+                            userGroupForm.get('status')?.value
+                            ? 'Active'
+                            : 'Inactive'
+                        }}
+            
+                    </span>
+            
+                    <p-toggleswitch formControlName="status">
+                    </p-toggleswitch>
+            
+                </div>
+            
+            </div>
+        
+        }
+        <div class="create-btn">
+            <button pButton pRipple type="submit">Submit</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog [(visible)]="showRoleModal" [modal]="true" [draggable]="false"
+    (onHide)="onDialogClose()" [style]="{ width: '44rem' }">
+
+    <ng-template #header>
+        <div class="urm-header">
+            <div class="urm-header-icon">
+                <i class="pi pi-shield"></i>
+            </div>
+            <div class="urm-header-titles">
+                <span class="urm-title">Role Mapping</span>
+                <span class="urm-subtitle">Assign or remove roles for this user group</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="urm-user-strip">
+        <div class="urm-avatar">{{ getRoleMappingInitials(selectedUsergroup?.groupName) }}</div>
+        <div class="urm-user-meta">
+            <div class="urm-user-name">{{ selectedUsergroup?.groupName }}</div>
+        </div>
+        <div class="urm-assigned-count">{{ assignedRoles.length }} of {{ roleInfoList.length }} assigned</div>
+    </div>
+
+    <div class="urm-search-row">
+        <div class="urm-search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="roleSearchQuery" placeholder="Search roles..." />
+            @if (roleSearchQuery) {
+                <button type="button" class="urm-search-clear" (click)="roleSearchQuery = ''">
+                    <i class="pi pi-times"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="urm-body">
+        @if (roleModalLoading) {
+            <div class="urm-section">
+                <div class="urm-section-head urm-assigned"><span class="urm-dot"></span><span class="urm-section-title">Assigned roles</span></div>
+                <div class="urm-list">
+                    @for (n of [1, 2]; track n) {
+                        <div class="urm-skeleton-row">
+                            <div class="urm-skel urm-skel-icon"></div>
+                            <div class="urm-skel-lines"><div class="urm-skel urm-skel-line" style="width: 45%;"></div></div>
+                            <div class="urm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="urm-section">
+                <div class="urm-section-head urm-available"><span class="urm-dot"></span><span class="urm-section-title">Available roles</span></div>
+                <div class="urm-list">
+                    @for (n of [1, 2, 3]; track n) {
+                        <div class="urm-skeleton-row">
+                            <div class="urm-skel urm-skel-icon"></div>
+                            <div class="urm-skel-lines"><div class="urm-skel urm-skel-line" style="width: 55%;"></div></div>
+                            <div class="urm-skel" style="width: 72px; height: 26px; border-radius: 20px;"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else if (!roleInfoList.length) {
+            <div class="urm-empty-state">
+                <i class="pi pi-inbox"></i>
+                <div class="urm-empty-title">No roles exist yet</div>
+                <div class="urm-empty-sub">Create a role first, then come back to assign it here.</div>
+            </div>
+        } @else if (roleSearchQuery && !filteredAssignedRoles().length && !filteredAvailableRoles().length) {
+            <div class="urm-empty-state">
+                <i class="pi pi-search"></i>
+                <div class="urm-empty-title">No roles match "{{ roleSearchQuery }}"</div>
+                <div class="urm-empty-sub">Try a different search term.</div>
+            </div>
+        } @else {
+            <div class="urm-section">
+                <div class="urm-section-head urm-assigned">
+                    <span class="urm-dot"></span>
+                    <span class="urm-section-title">Assigned roles</span>
+                    <span class="urm-section-count">{{ filteredAssignedRoles().length }}</span>
+                </div>
+                <div class="urm-list">
+                    @for (role of filteredAssignedRoles(); track role.roleId) {
+                        <div class="urm-row urm-row-assigned">
+                            <div class="urm-row-icon"><i class="pi pi-check"></i></div>
+                            <div class="urm-row-name-wrap">
+                                <div class="urm-row-name">{{ role.roleKey }}</div>
+                                @if (role.description) {
+                                    <div class="urm-row-hint">{{ role.description }}</div>
+                                }
+                            </div>
+                            <p-button label="Remove" icon="pi pi-minus" size="small" severity="danger"
+                                styleClass="urm-btn urm-btn-remove" (click)="toggleRole(role)"
+                                [disabled]="role.roleId === 1"
+                                pTooltip="SUPER_ADMIN role can only be assigned to Super Admin group" />
+                        </div>
+                    } @empty {
+                        <div class="urm-empty-state urm-empty-state-sm">
+                            <div class="urm-empty-title">No roles assigned yet</div>
+                            <div class="urm-empty-sub">Use "Assign" below to add this user group to a role.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="urm-section">
+                <div class="urm-section-head urm-available">
+                    <span class="urm-dot"></span>
+                    <span class="urm-section-title">Available roles</span>
+                    <span class="urm-section-count">{{ filteredAvailableRoles().length }}</span>
+                </div>
+                <div class="urm-list">
+                    @for (role of filteredAvailableRoles(); track role.roleId) {
+                        <div class="urm-row">
+                            <div class="urm-row-icon"><i class="pi pi-shield"></i></div>
+                            <div class="urm-row-name-wrap">
+                                <div class="urm-row-name">{{ role.roleKey }}</div>
+                                @if (role.description) {
+                                    <div class="urm-row-hint">{{ role.description }}</div>
+                                }
+                            </div>
+                            <p-button label="Assign" icon="pi pi-plus" size="small" severity="primary"
+                                styleClass="urm-btn urm-btn-assign" (click)="toggleRole(role)"
+                                [disabled]="role.roleId === 1"
+                                pTooltip="SUPER_ADMIN role can only be assigned to Super Admin group" />
+                        </div>
+                    } @empty {
+                        <div class="urm-empty-state urm-empty-state-sm">
+                            <div class="urm-empty-title">All roles assigned</div>
+                            <div class="urm-empty-sub">This user group has every available role.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

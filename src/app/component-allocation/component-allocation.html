@@ -1,0 +1,50 @@
+<div class="card h-full">
+    <h2>Component Allocation</h2>
+    <div class="border border-(--surface-border) rounded-lg overflow-hidden mt-2">
+        <p-table [value]="componentAllocationList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Component</th>
+                    <th>Plant Name</th>
+                    <th>Plant Manager</th>
+                    <th>Project Code</th>
+                    <th>Allocated Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-allocation let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ allocation.component }}</td>
+                    <td>{{ allocation.plantName }}</td>
+                    <td>{{ allocation.plantManager }}</td>
+                    <td>{{ allocation.projectCode }}</td>
+                    <td>{{ allocation.allocatedQuantity }}</td>
+                    <td>
+                        <div class="flex gap-2">
+                            <button pButton pRipple type="button" rounded outlined severity="success" class="!border-2 !border-emerald-400 !w-8 !h-8 !p-0">
+                                <i pButtonIcon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <rect width="24" height="24" fill="none" />
+                                        <path fill="currentColor"
+                                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275t.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275z" />
+                                    </svg>
+                                </i>
+                            </button>
+                            <button pButton pRipple type="button" rounded outlined severity="danger" class="!border-2 !border-red-400 !w-8 !h-8 !p-0">
+                                <i pButtonIcon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <rect width="24" height="24" fill="none" />
+                                        <path fill="currentColor"
+                                            d="m12 13.4l-2.917 2.925q-.277.275-.704.275t-.704-.275q-.275-.275-.275-.7t.275-.7L10.6 12L7.675 9.108Q7.4 8.831 7.4 8.404t.275-.704q.275-.275.7-.275t.7.275L12 10.625L14.892 7.7q.277-.275.704-.275t.704.275q.3.3.3.713t-.3.687L13.375 12l2.925 2.917q.275.277.275.704t-.275.704q-.3.3-.712.3t-.688-.3z" />
+                                    </svg>
+                                </i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

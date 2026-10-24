@@ -1,0 +1,133 @@
+<div class="card">
+    <div class="serial-header">
+        <h2>Component Serial</h2>
+        <div class="serial-subHeader">
+            <p-button label="Back" icon="pi pi-arrow-circle-left" routerLink="/monthlyDemandPlan" />
+            <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" />
+            <button pButton pRipple type="button" (click)="menu.toggle($event)">
+                <span pButtonLabel>Action</span>
+                <i pButtonIcon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <rect width="24" height="24" fill="none" />
+                        <path fill="currentColor"
+                            d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71L8.46 9.17a1 1 0 0 0-1.41 0a1 1 0 0 0 0 1.42l4.24 4.24a1 1 0 0 0 1.42 0L17 10.59a1 1 0 0 0 0-1.42" />
+                    </svg>
+                </i>
+            </button>
+        </div>
+    </div>
+    <div class="border border-(--surface-border) rounded-lg overflow-hidden mt-2">
+        <p-table [value]="componentSerialList" [(selection)]="selectedComponents"
+            [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox />
+                    </th>
+                    <th>SL NO</th>
+                    <th pSortableColumn="componentName">
+                        <div class="serial-filter">
+                            <span>Component Name</span>
+                            <p-columnFilter type="text" field="componentName" display="menu" class="ml-auto"
+                                [showAddButton]="false" />
+                        </div>
+                    </th>
+                    <th>Serial Number</th>
+                    <th pSortableColumn="status">
+                        <div class="serial-filter">
+                            <span>Status</span>
+                            <p-columnFilter field="status" matchMode="equals" display="menu" class="ml-auto">
+                                <ng-template #filter let-value let-filter="filterCallback">
+                                    <p-select [options]="statuses" (onChange)="filter($event.value)"
+                                        placeholder="Select Status" class="w-full">
+                                        <ng-template let-option #item>
+                                            <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
+                                        </ng-template>
+                                    </p-select>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="plantName">
+                        <div class="serial-filter">
+                            <span>Plant Name</span>
+                            <p-columnFilter field="plantName" matchMode="equals" display="menu" class="ml-auto"
+                                [showAddButton]="false">
+                                <ng-template #filter let-value let-filter="filterCallback">
+                                    <p-select [options]="plantNameList" (onChange)="filter($event.value)"
+                                        placeholder="Select Plant Name" class="w-full" />
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th>Production Manager</th>
+                    <th>Production Plan Start</th>
+                    <th>Production Plan Finish</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-serial let-i="rowIndex">
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="serial" />
+                    </td>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ serial.componentName }}</td>
+                    <td>{{ serial.serialNumber }}</td>
+                    <td>
+                        <p-tag [value]="serial.status" [severity]="getSeverity(serial.status)" />
+                    </td>
+                    <td>{{ serial.plantName }}</td>
+                    <td>{{ serial.productionManager }}</td>
+                    <td>{{ serial.planStart }}</td>
+                    <td>{{ serial.planFinish }}</td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body">
+                            <ng-template #item let-item>
+                                <div class="menu-action gap-2 px-3 py-1 cursor-pointer">
+                                    <span [innerHTML]="getSafeSvg(item.svgIcon)"></span>
+                                    <span>{{ item.label }}</span>
+                                </div>
+                            </ng-template>
+                        </p-menu>
+                        <button pButton pRipple text rounded severity="secondary" type="button"
+                            (click)="menu.toggle($event)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog header="Plan Details" [modal]="true" [(visible)]="showPlanDetailsModal" [style]="{ width: '40rem' }"
+    [draggable]="false">
+    <div class="form-grid">
+        <div class="form-field">
+            <p-floatlabel variant="on">
+                <input type="text" pInputText id="production-plan" value="06/03/2026" class="w-full" disabled />
+                <label for="production-plan">Production Plan</label>
+            </p-floatlabel>
+        </div>
+        <div class="form-field">
+            <p-floatlabel variant="on">
+                <input type="text" pInputText id="tower-type" value="EN 156_3.3MW" class="w-full" disabled />
+                <label for="tower-type">Tower Type</label>
+            </p-floatlabel>
+        </div>
+        <div class="form-field">
+            <p-floatlabel variant="on">
+                <input type="text" pInputText id="blade-type" value="Big" class="w-full" disabled />
+                <label for="blade-type">Blade Type</label>
+            </p-floatlabel>
+        </div>
+    </div>
+</p-dialog>

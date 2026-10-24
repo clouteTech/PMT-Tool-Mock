@@ -1,0 +1,256 @@
+<p-toast></p-toast>
+
+<!-- ══ PAGE HEADER ══ -->
+<div class="flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+  <div>
+    <div class="text-2xl font-bold" style="color:var(--text)">Yearly Demand Plan</div>
+    <div class="text-sm mt-1" style="color:var(--text3)">Manage wind turbine demand entries by project and SPV</div>
+  </div>
+  <p-tag [value]="badgeText" [severity]="badgeSeverity" />
+</div>
+
+<form [formGroup]="yearlyDemandPlanForm">
+    <div class="filter-bar mb-4">
+      <div class="flex align-items-end gap-4 flex-wrap">
+        <div class="flex flex-column gap-2">
+          <label class="filter-label">Plan Year</label>
+          <p-select appendTo="body" [options]="yearOptions" formControlName="planYear" optionLabel="label" optionValue="value"
+            placeholder="Select Year" (onChange)="onYearChange($event.value)" [style]="{'min-width':'160px'}" />
+        </div>
+        <div class="flex flex-column gap-2">
+          <label class="filter-label">Customer</label>
+          <p-select appendTo="body" [options]="customerInfoList" formControlName="customerId" optionLabel="customerName"
+            optionValue="customerId" placeholder="Select Customer" (onChange)="onCustomerChange($event.value)"
+            [style]="{'min-width':'180px'}" />
+        </div>
+
+        <div class="flex-1"></div>
+        
+        <p-button label="Add More Project" icon="pi pi-plus" severity="secondary" size="small" [outlined]="true"
+          [disabled]="!filtersReady" (onClick)="addProject()" />
+        <p-button label="View Summary" icon="pi pi-table" size="small" (onClick)="openSummary()" />
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!filtersReady" class="project-card empty-state-card">
+      <div class="empty-st">
+        <div class="empty-icon"><i class="pi pi-inbox" style="font-size:2rem;color:var(--text4)"></i></div>
+        <h3>Select Year &amp; Customer to begin</h3>
+        <p>Use the filters above to start entering demand data.</p>
+      </div>
+    </div>
+
+    <div class="flex flex-column gap-2" *ngIf="filtersReady" formArrayName="projects">
+      @for (prj of projectsArray.controls; track prj; let i = $index) {
+        <ng-container [formGroupName]="i">
+          <div class="project-card">
+            <div class="card-head">
+              <div class="card-head-left">
+                <div class="idx-badge">{{ prj.get('entryNo')?.value }}</div>
+                <div class="card-head-title">Project Entry #{{ prj.get('entryNo')?.value }}</div>
+              </div>
+              <div class="card-head-right">
+
+                <!-- Project Code -->
+                <div class="sel-grp">
+                  <label>Project Code</label>
+                  <p-select appendTo="body" [options]="getProjectSelectOptions(i)" formControlName="projectId"
+                    optionLabel="projectCode" optionValue="projectId" optionDisabled="disabled"
+                    (onChange)="selectedProject($event.value, i)"
+                    placeholder="-- Select --" [style]="{'min-width':'148px','font-size':'12px'}" />
+                </div>
+
+                @if (isProjectSelected(i)) {
+                  <ng-container formArrayName="spvs">
+                    @for (spv of getSpvArray(i).controls; track spv; let j = $index) {
+                        <ng-container [formGroupName]="j">
+                          <!-- SPV -->
+                          <div class="sel-grp">
+                            <label>SPV</label>
+                            <p-select appendTo="body" [options]="getSpvSelectOptions(i, j)"
+                              (onChange)="selectedSpv($event.value, i, j)" formControlName="spvId"
+                              optionLabel="spvName" optionValue="customerSpvId" optionDisabled="disabled"
+                              placeholder="-- Select --" [style]="{'min-width':'148px','font-size':'12px'}" />
+                          </div>
+                        </ng-container>
+                    }
+                  </ng-container>
+                }
+
+                <!-- Remove Project -->
+                <p-button *ngIf="projectsArray.length > 1" icon="pi pi-trash" label="Remove Project" severity="danger"
+                  size="small" variant="outlined" class="ml-auto mt-3" (onClick)="removeProjectEntry(i)" />
+              </div>
+            </div>
+
+            @if (!isProjectSelected(i)) {
+              <div class="empty-hint">
+                <div class="empty-hint-icon"><i class="pi pi-arrow-up" style="font-size:2rem;color:var(--text4)" ></i></div>
+                <h3>Select a Project Code above to continue.</h3>
+                <p>Use the filters above to start entering demand data.</p>
+              </div>
+            } @else {
+              <ng-container formArrayName="spvs">
+                @for (spv of getSpvArray(i).controls; track spv; let j = $index) {
+                    <ng-container [formGroupName]="j">
+                      @if (!spv.get('spvId')?.value) {
+                        <div class="empty-hint">
+                          <div class="empty-hint-icon"><i class="pi pi-arrow-up" style="font-size:2rem;color:var(--text4)"></i></div>
+                          <h3>Select an SPV to load turbine data.</h3>
+                          <p>Use the filters above to start entering demand data.</p>
+                        </div>
+                      } @else {
+                      <ng-container formArrayName="wtgs">
+                        <div class="table-wrap">
+                          <p-table [value]="getWtgsArray(i, j).controls" [tableStyle]="{'min-width':'900px'}"
+                            styleClass="p-datatable-sm p-datatable-gridlines demand-table" [rowHover]="true">
+                            <ng-template #header>
+                              <tr>
+                                <th class="th-left">WTG Type</th>
+                                <th class="th-left">Cap (MW)</th>
+                                <th class="th-left">Tower Type</th>
+                                <th class="th-left">Blade Type</th>
+                                <th class="th-center">Total Qty</th>
+                                @for (month of monthFields; track $index) {
+                                  <th class="th-month">{{ getMonthLabel(month) }}</th>
+                                }
+                                <th class="th-total">Row Total</th>
+                              </tr>
+                            </ng-template>
+
+                            <ng-template #body let-wtg let-ri="rowIndex">
+                              <tr [formGroupName]="ri">
+                                <td>
+                                  <input pInputText formControlName="wtgType" class="n-inp" style="width:78px;text-align:left" />
+                                </td>
+                                <td>
+                                  <input pInputText formControlName="capMw" class="n-inp" style="width:78px;text-align:left" />
+                                </td>
+                                <td>
+                                  <input pInputText formControlName="towerType" [value]="wtg.towerType" class="n-inp" style="width:78px;text-align:left" />
+                                </td>
+                                <td>
+                                  <input pInputText formControlName="bladeType" class="n-inp" style="width:78px;text-align:left" />
+                                </td>
+                                <td>
+                                  <input pInputText formControlName="totalQty" class="n-inp" style="width:78px;text-align:left" />
+                                </td>
+                                @for (month of monthFields; track $index) {
+                                  <td class="n-inp">
+                                    <input pInputText [formControlName]="month.key" class="n-inp" style="width:78px;text-align:left" />
+                                  </td>
+                                }
+                                <td class="rt-cell">{{ rowTotal(wtg) }}</td>
+
+                              </tr>
+                            </ng-template>
+
+                            <ng-template #footer>
+                              <tr class="total-row">
+                                <td colspan="4" class="total-label">TOTAL</td>
+                                <td class="tv" style="text-align:center">{{ qtyTotal(getWtgsArray(i, j)) }}</td>
+                                @for (month of monthFields; track $index) {
+                                  <td class="tv" style="text-align:center">
+                                    {{ colTotal(getWtgsArray(i, j), month.key) }}</td>
+                                }
+                                <td class="tv rt-cell">{{ getGrandTotal(i, j) }}</td>
+                              </tr>
+                            </ng-template>
+                          </p-table>
+                        </div>
+                      </ng-container>
+                      }
+                    </ng-container>
+                }
+              </ng-container>
+            }
+          </div>
+        </ng-container>
+      }
+    </div>
+</form>
+
+
+<!-- ══ SUMMARY DIALOG ══ -->
+<p-dialog
+  [(visible)]="summaryVisible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  appendTo="body"
+  styleClass="summary-dialog"
+  header="Plan Summary"
+  [style]="{'width':'85vw','max-width':'980px','height':'85vh','max-height':'85vh'}"
+>
+  <!-- Plan-level info -->
+  <div class="sum-meta mb-3">
+    <span><strong>Plan Year:</strong> {{ selectedPlanYear || '—' }}</span>
+    <span><strong>Customer:</strong> {{ selectedCustomerName || '—' }}</span>
+  </div>
+
+  <!-- Stats tiles -->
+  <div class="sum-tiles mb-4">
+    <div class="s-tile"><div class="s-tile-lbl">Projects</div><div class="s-tile-val">{{ summaryProjectCount }}</div></div>
+    <div class="s-tile"><div class="s-tile-lbl">WTG Rows</div><div class="s-tile-val">{{ getTotalRows() }}</div></div>
+    <div class="s-tile"><div class="s-tile-lbl">Total Qty</div><div class="s-tile-val">{{ summaryGrandTotalQty }}</div></div>
+    <div class="s-tile" title="Units Planned = sum of the 12 monthly quantities entered, across every WTG row in the plan">
+      <div class="s-tile-lbl">Units Planned</div>
+      <div class="s-tile-val" style="color:var(--blue)">{{ summaryGrandTotal }}</div>
+    </div>
+  </div>
+
+  <div class="modal-section-label">Detailed Breakdown (Project → SPV → WTG)</div>
+
+  <p-table
+    [value]="summaryRows"
+    [tableStyle]="{'min-width':'900px'}"
+    styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped summary-table"
+    [scrollable]="true"
+    scrollHeight="360px"
+  >
+    <ng-template #header>
+      <tr>
+        <th>Project</th><th>SPV</th><th>WTG Type</th>
+        <th>Cap</th><th>Tower</th><th>Blade</th><th>Total Qty</th>
+        <th *ngFor="let month of monthFields; trackBy: trackByIdx"
+            style="font-size:10px;min-width:58px">{{ getMonthLabel(month) }}</th>
+        <th style="color:var(--accent2)" title="Units Planned = sum of monthly quantities entered for this WTG">Row Total</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-row>
+      <tr>
+        <td>{{row.project}}</td>
+        <td>{{row.spv}}</td>
+        <td>{{row.wtg}}</td>
+        <td>{{row.cap}}</td>
+        <td style="font-size:11px">{{row.tower}}</td>
+        <td>{{row.blade}}</td>
+        <td style="color:var(--blue);font-weight:600">{{row.qty}}</td>
+        <td *ngFor="let v of row.mon; trackBy: trackByIdx">{{v}}</td>
+        <td style="color:var(--accent2);font-weight:700">{{row.total}}</td>
+      </tr>
+    </ng-template>
+    <ng-template #footer>
+      <tr class="total-row">
+        <td colspan="6" class="total-label">GRAND TOTAL</td>
+        <td class="tv">{{ summaryGrandTotalQty }}</td>
+        <td *ngFor="let month of monthFields; let mi = index; trackBy: trackByIdx" class="tv">
+          {{ summaryColGrandTotal(mi) }}
+        </td>
+        <td class="tv">{{ summaryGrandTotal }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <ng-template #footer>
+    <div class="flex align-items-center justify-content-between w-full">
+      <span style="font-size:12px;color:var(--text3)">Review all entries before submitting.</span>
+      <div class="flex gap-2" style="margin-top: 8px;">
+        <p-button label="Close" severity="secondary" [outlined]="true" (onClick)="closeSummary()" [disabled]="isSubmitting" />
+        <p-button label="Submit Plan" icon="pi pi-check" (onClick)="submitPlan()" [loading]="isSubmitting" [disabled]="isSubmitting" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

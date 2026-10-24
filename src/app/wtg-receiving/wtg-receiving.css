@@ -1,0 +1,155 @@
+.width-full-field {
+    width: 100%;
+}
+
+.project-info{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.tag-pcode,
+.tag-wtg,
+.tag-progress,
+.project-desc,
+.project-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.tag-pcode {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+.tag-wtg {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.tag-progress {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.project-desc {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* Yellow */
+.project-state {
+    background: #fef9c3;
+    color: #a16207;
+}
+
+.wtg-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.wtg-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1D4ED8;
+}
+
+.wtg-summary {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748B;
+    background: #EFF6FF;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+}
+
+
+/* Accordion Wrapper */
+:host ::ng-deep .p-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Individual Accordion Panel */
+:host ::ng-deep .p-accordionpanel {
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.08);
+    transition: all 0.25s ease;
+}
+
+/* Hover Effect */
+:host ::ng-deep .p-accordionpanel:hover {
+    border-color: #60A5FA;
+    box-shadow: 0 4px 18px rgba(59, 130, 246, 0.12);
+}
+
+/* Accordion Header */
+:host ::ng-deep .p-accordionheader {
+    background: linear-gradient(to right, #EFF6FF, #F8FBFF);
+    border: none;
+    padding: 1rem 1.25rem;
+}
+
+/* Remove default border */
+:host ::ng-deep .p-accordionheader-link {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Active/Open Header */
+:host ::ng-deep .p-accordionpanel-active .p-accordionheader {
+    background: linear-gradient(to right, #DBEAFE, #EFF6FF);
+    border-bottom: 1px solid #BFDBFE;
+}
+
+/* Accordion Content */
+:host ::ng-deep .p-accordioncontent {
+    padding: 1rem;
+    background: #ffffff;
+}
+
+/* WTG Header Layout */
+.wtg-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* WTG Title */
+.wtg-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1D4ED8;
+}
+
+/* Component Count Tag */
+.wtg-summary {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2563EB;
+    background: #DBEAFE;
+    border: 1px solid #93C5FD;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+}
+
+/* Accordion Expand Icon */
+:host ::ng-deep .p-accordionheader-toggle-icon {
+    color: #2563EB;
+    font-size: 0.9rem;
+}

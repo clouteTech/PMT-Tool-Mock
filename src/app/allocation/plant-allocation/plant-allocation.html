@@ -1,0 +1,350 @@
+
+<div class="full-height">
+  <!-- Top Section -->
+  <div class="top-grid">
+
+    <div class="card-box">
+      <p class="title">Plant Allocation</p>
+
+      <div>
+        <label>Select Component</label>
+
+        <p-select
+          [options]="selectedComponents"
+          optionLabel="componentName"
+          styleClass="w-full"
+          appendTo="body"
+          placeholder="Select Component"
+          (onChange)="componentChange($event.value)">
+        </p-select>
+      </div>
+    </div>
+
+    <!-- Quantity Summary -->
+    <div class="card-box center-box">
+      <div>
+        <p class="sub-text">Total Selected Qty</p>
+        <p class="highlight-text">{{ selectedQty }}</p>
+      </div>
+
+      <div class="end-box">
+        <span class="sub-text">Remaining Qty</span>
+        <span class="highlight-text">{{ remainingQty }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Add Allocation Header -->
+  <div class="card-box">
+     <div class="allocation-header">
+    <p class="section-title">Add Allocation</p>
+
+    <button
+      pButton
+      type="button"
+      label="Add Limit"
+      (click)="showLimitForm = true">
+    </button>
+  </div>
+
+
+  <!-- Add Plant Manager Limit Dialog -->
+  <p-dialog
+    header="Add Plant Manager Limit"
+    [(visible)]="showLimitForm"
+    [modal]="true"
+    [style]="{ width: '400px' }"
+    [closable]="true">
+
+    <form [formGroup]="limitForm" (ngSubmit)="saveLimit()">
+<div class="field">
+  <label for="limitManager">Plant Managers</label>
+
+  <p-multiselect
+    inputId="limitManager"
+    [options]="plantManagerList1"
+    optionLabel="label"
+    optionValue="name"
+    placeholder="Select Plant Managers"
+    formControlName="plantManager"
+    [style]="{ width: '100%' }"
+    display="chip"
+    appendTo="body">
+  </p-multiselect>
+
+  @if (
+    limitForm.get('plantManager')?.invalid &&
+    limitForm.get('plantManager')?.touched
+  ) {
+    <small class="error-message">
+      Please select at least one Plant Manager.
+    </small>
+  }
+  
+</div>
+      <div class="field">
+        <label for="limitQty">Qty Limit</label>
+
+        <input
+          pInputText
+          id="limitQty"
+          type="number"
+          formControlName="qty"
+          placeholder="Enter quantity limit"
+          min="1"
+          style="width: 100%">
+        
+        @if (
+          limitForm.get('qty')?.invalid &&
+          limitForm.get('qty')?.touched
+        ) {
+          <small class="error-message">
+            Enter a quantity greater than zero.
+          </small>
+        }
+      </div>
+
+      <div class="dialog-actions">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          severity="secondary"
+          (click)="cancelLimit()">
+        </button>
+
+        <button
+          pButton
+          type="submit"
+          label="Save Limit">
+        </button>
+      </div>
+
+    </form>
+  </p-dialog>
+
+  <!-- Success Confirmation Dialog -->
+<p-dialog
+  header="Success"
+  [(visible)]="showSuccessDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '400px' }">
+
+  <div class="success-content">
+    <i class="pi pi-check-circle success-icon"></i>
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button
+      pButton
+      type="button"
+      label="OK"
+      (click)="showSuccessDialog = false">
+    </button>
+  </div>
+
+</p-dialog>
+
+  <!-- Allocation Form -->
+  <div class="card-box">
+
+    <form [formGroup]="allocationForm" (ngSubmit)="addAllocations()">
+
+      <div class="form-grid">
+
+        <!-- Plant Manager -->
+        <p-floatlabel variant="on">
+<p-select
+  [options]="plantManagerList"
+  formControlName="plantManager"
+  optionLabel="label"
+  optionValue="value"
+  optionDisabled="disabled"
+  styleClass="w-full"
+  appendTo="body">
+</p-select>
+
+          <label>Plant Manager</label>
+        </p-floatlabel>
+
+        <!-- Plant -->
+        <p-floatlabel variant="on">
+          <p-select
+            [options]="plantNameList"
+            formControlName="plantName"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+            appendTo="body">
+          </p-select>
+
+          <label>Plant</label>
+        </p-floatlabel>
+
+        <!-- Quantity and Limit Message -->
+     <div class="qty-container">
+
+          <p-floatlabel variant="on">
+            <input
+              type="number"
+              pInputText
+              formControlName="qty"
+              class="w-full"
+              min="1">
+            <label>Qty</label>
+          </p-floatlabel>
+
+          @if (qtyLimitError) {
+            <div class="error-message">
+              <i class="pi pi-exclamation-circle"></i>
+
+              <span>
+                Entered quantity exceeds the selected manager's limit.
+
+               <a
+  href="#"
+  (click)="$event.preventDefault(); viewPlantManagers($event)">
+  View limits
+</a>
+              </span>
+            </div>
+            
+          }
+
+          <!-- Quantity Limit Popover -->
+
+<p-popover #op>
+  <div class="limit-popup">
+    <h4>Plant Manager Quantity Limits</h4>
+
+    @if (selectedPlantManager) {
+ 
+      <p>Available Plant Managers for this quantity:</p>
+
+      @for (manager of getSuggestedManagers(); track manager.value) {
+        <div class="manager-limit-row">
+          <strong>{{ manager.value }}</strong>
+          <span>(limit {{ manager.limit }})</span>
+        </div>
+      }
+
+      @if (getSuggestedManagers().length === 0) {
+        <p>No other Plant Manager has enough available capacity.</p>
+      }
+    }
+  </div>
+</p-popover>
+
+
+        </div>
+        <!-- Add Allocation Button -->
+        
+    @if (canAddAllocation()) {
+  <button
+    pButton
+    label="Add"
+    type="submit"
+    class="plus-btn"
+    aria-label="Submit All"
+    style="width: 100px; right: 50px;">
+  </button>
+}
+          
+      </div>
+
+    </form>
+
+  </div>
+<br>
+  <!-- Allocation List -->
+  <div class="card-box">
+
+    <p class="section-title">Allocation List</p>
+
+    <p-table [value]="allocations">
+
+      <ng-template #header>
+        <tr>
+          <th>Plant</th>
+          <th>Manager</th>
+          <th>Qty</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-allocate let-i="rowIndex">
+        <tr>
+          <td>{{ allocate.plantName.label }}</td>
+          <td>{{ allocate.plantManager.label }}</td>
+          <td>{{ allocate.qty }}</td>
+
+          <td>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-trash"
+              severity="danger"
+              size="small"
+              aria-label="Delete allocation"
+              (click)="removeAllocation(i, allocate)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="4" style="text-align: center; padding: 1rem 0;">
+            No Records Found
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+    <!-- Submit All -->
+    <div class="footer-row">
+      <button
+        pButton
+        type="button"
+        label="Submit All"
+        (click)="submitAll()">
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Delete Confirmation Dialog -->
+  <p-dialog
+    header="Confirm Delete"
+    [(visible)]="showDeleteDialog"
+    [modal]="true"
+    [style]="{ width: '350px' }"
+    [closable]="true">
+
+    <p>Are you sure you want to delete this allocation?</p>
+
+    <div class="dialog-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        (click)="cancelDelete()">
+      </button>
+
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        severity="danger"
+        (click)="confirmDelete()">
+      </button>
+    </div>
+
+  </p-dialog>
+
+</div>

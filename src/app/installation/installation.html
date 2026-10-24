@@ -1,0 +1,855 @@
+<p-toast position="top-right" />
+
+<div class="foundation-wrapper">
+
+  <!-- ══ PAGE HEADER ══ -->
+  <div class="page-header">
+    <div class="page-title-row">
+      <h2 class="page-title">Installation Tracker</h2>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+    
+      <div class="summary-card total-projects">
+        <div class="card-icon">
+          <i class="pi pi-briefcase"></i>
+        </div>
+    
+        <div class="card-content">
+          <span class="card-label">Total Projects</span>
+          <h3 class="card-value">{{ projectList.length }}</h3>
+        </div>
+      </div>
+    
+      <div class="summary-card total-wtg">
+        <div class="card-icon">
+          <i class="pi pi-bolt"></i>
+        </div>
+    
+        <div class="card-content">
+          <span class="card-label">Total WTG Count</span>
+          <h3 class="card-value">{{ getTotalWtgCount() }}</h3>
+        </div>
+      </div>
+    
+      <!-- <div class="summary-card completed">
+        <div class="card-icon">
+          <i class="pi pi-check-circle"></i>
+        </div>
+    
+        <div class="card-content">
+          <span class="card-label">Installation Completed</span>
+          <h3 class="card-value">5</h3>
+        </div>
+      </div>
+    
+      <div class="summary-card pending">
+        <div class="card-icon">
+          <i class="pi pi-clock"></i>
+        </div>
+    
+        <div class="card-content">
+          <span class="card-label">Installation Pending</span>
+          <h3 class="card-value">4</h3>
+        </div>
+      </div> -->
+    
+    </div>
+  </div>
+
+  <!-- ══ SUMMARY TABLE ══ -->
+  <div class="summary-table-card">
+    <div class="summary-table-header">
+      <div class="summary-table-title-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+        </svg>
+        <span class="summary-table-title">Project Summary</span>
+      </div>
+      <span class="summary-table-count">{{ projectList.length }} Records</span>
+    </div>
+    <div class="summary-table-wrap">
+    
+      <p-table [value]="projectList" responsiveLayout="scroll" styleClass="summary-p-table">
+    
+        <!-- Header -->
+        <ng-template #header>
+          <tr>
+            <th class="summary-th">S.No</th>
+            <!-- <th class="summary-th">Open WTG</th> -->
+            <th class="summary-th">
+              <div class="summary-th-content">
+                <span>Project Code</span>
+                <p-columnFilter type="text" field="projectCode" display="menu" [showMatchModes]="false" [showOperator]="false" />
+              </div>
+            </th>
+            <th class="summary-th">
+              <div class="summary-th-content">
+                <span>Customer Name</span>
+                <p-columnFilter type="text" field="customer.customerName" display="menu" [showAddButton]="false" 
+                  [showMatchModes]="false" [showOperator]="false" />
+              </div>     
+            </th>
+            <th class="summary-th">WTG Count</th>
+            <th class="summary-th">Action</th>
+          </tr>
+        </ng-template>
+    
+        <!-- Body -->
+        <ng-template #body let-row let-i="rowIndex">
+          <tr class="summary-tr">
+    
+            <!-- S.No -->
+            <td class="summary-td summary-td-sno">
+              {{ i + 1 }}
+            </td>
+    
+            <!-- Open WTG -->
+            <!-- <td class="summary-td summary-td-btn">
+              <button class="open-wtg-btn" (click)="openWtgPopup(row)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+    
+                </svg>
+    
+                Open WTG
+              </button>
+            </td> -->
+    
+            <!-- Project Code -->
+            <td class="summary-td">
+              <!-- <span class="summary-pcode-badge">
+                {{ row.projectCode }}
+              </span> -->
+              <p-button [label]="row.projectCode" [link]="true" (click)="openWtgPopup(row)" />
+            </td>
+    
+            <!-- Project Name -->
+            <td class="summary-td">
+              {{ row.customer.customerName }}
+            </td>
+    
+            <!-- WTG Count -->
+            <td class="summary-td">
+              <span class="summary-wtg-count">
+                {{ row.totalWtgs }}
+              </span>
+            </td>
+    
+            <!-- Action -->
+            <td class="summary-td">
+              <p-menu #menu [model]="items" [popup]="true" appendTo="body">
+              </p-menu>
+    
+              <button pButton pRipple text rounded severity="secondary" type="button" (click)="openMenu(menu, $event, row)">
+    
+                <i pButtonIcon>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+    
+                    <rect width="24" height="24" fill="none" />
+    
+                    <path fill="currentColor"
+                      d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+    
+                  </svg>
+                </i>
+    
+              </button>
+            </td>
+    
+          </tr>
+        </ng-template>
+    
+        <!-- Empty Message -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center py-4 text-gray-500">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+    
+      </p-table>
+    
+    </div>
+  </div>
+
+
+<!-- ══ VIEW ALL DATA POPUP ══ -->
+<p-dialog [(visible)]="viewVisible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false" styleClass="view-popup-dialog" [style]="{ width: '96vw', maxWidth: '96vw', height: '90vh' }" (onHide)="closeViewPopup()">
+  <ng-template pTemplate="header">
+    <div class="view-popup-header">
+      <div class="view-popup-title-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" style="flex-shrink:0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="view-popup-title">Installation Data Overview</span>
+        <span class="view-popup-subtitle">
+          <span class="tag-pcode">{{ selectedProject?.projectCode }}</span>
+          <span class="tag-wtg">{{ selectedProject?.totalWtgs }} WTGs</span>
+          <span class="tag-location">{{ selectedProject?.customer?.customerName }}</span>
+          <span class="tag-progress">{{ getCompletedCount() }} / {{ steps.length }} Steps</span>
+        </span>
+      </div>
+      <span class="view-popup-readonly-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Read-only View
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="view-popup-body">
+      <div class="view-table-container">
+  
+        <p-table [value]="installationActivityDetails" [scrollable]="true" scrollHeight="70vh" responsiveLayout="scroll"
+          styleClass="view-data-table p-datatable-gridlines">
+  
+          <!-- Group Header -->
+          <ng-template #header>
+            <tr class="view-group-header-row">
+              <th class="view-th-fixed view-th-frozen view-th-col1" rowspan="2" style="min-width:90px">
+                WTG ID
+              </th>
+  
+              <th class="view-th-fixed view-th-frozen view-th-col2" rowspan="2" style="min-width:110px">
+                Location No.
+              </th>
+  
+              <th class="view-th-fixed view-th-frozen view-th-col3" rowspan="2" style="min-width:110px">
+                Maximo ID
+              </th>
+  
+              <th class="view-th-fixed view-th-frozen view-th-col4" rowspan="2" style="min-width:100px">
+                WTG Type
+              </th>
+  
+              <th class="view-th-fixed view-th-frozen view-th-col5" rowspan="2" style="min-width:130px">
+                Tower Type
+              </th>
+  
+              <th class="view-th-fixed view-th-frozen view-th-col6" rowspan="2" style="min-width:110px">
+                Main Crane Supplier
+              </th>
+  
+              <th *ngFor="let grp of getViewStepGroups()" [attr.colspan]="grp.colCount" class="view-th-step-group"
+                [class]="'step-group-' + (grp.stepIdx % 8)">
+                {{ grp.label }}
+              </th>
+            </tr>
+  
+            <tr class="view-field-header-row">
+              <ng-container *ngFor="let grp of getViewStepGroups()">
+                <th *ngFor="let col of stepColumnDefs[grp.stepIdx]" class="view-th-field"
+                  [class]="'step-field-' + (grp.stepIdx % 8)">
+                  {{ col.header }}
+                </th>
+              </ng-container>
+            </tr>
+          </ng-template>
+  
+          <!-- Body -->
+          <ng-template #body let-wtg let-rowIndex="rowIndex">
+  
+            <tr class="view-data-row" [class.view-row-even]="rowIndex % 2 === 0">
+              
+              <td class="view-td-fixed view-td-frozen view-td-col1">
+                <span class="wtg-badge">
+                  {{ wtg.projectWtgs[rowIndex]?.wtgCode }}
+                </span>
+              </td>     
+              
+  
+              <td class="view-td-fixed view-td-frozen view-td-col2">
+                {{ wtg.projectLocation.locationCode }}
+              </td>
+  
+              <td class="view-td-fixed view-td-frozen view-td-col3">
+                {{ wtg.projectLocation.maximoId }}
+              </td>
+
+              <td class="view-td-fixed view-td-frozen view-td-col4">
+                <span class="wtg-badge">
+                  {{ wtg.projectWtgs[rowIndex]?.wtgType?.wtgType }}
+                </span>
+              </td>
+
+              <td class="view-td-fixed view-td-frozen view-td-col5">
+                {{ wtg.projectWtgs[rowIndex]?.towerType?.towerType }}
+              </td>
+  
+              <td class="view-td-fixed view-td-frozen view-td-col6">
+                {{ wtg?.projectCraneDetail?.supplier?.supplierName || '-' }}
+              </td>
+              <td>
+                {{ wtg?.projectCraneDetail?.crane?.craneModel || '-' }}
+              </td>
+
+              <td>{{ wtg.craneMobilization }}</td>
+              <td>{{ wtg.craneAssemblyStart }}</td>
+              <td>{{ wtg.craneAssemblyFinish }}</td>
+              <td>{{ wtg.bottomPlatformAssembly }}</td>
+              <td>{{ wtg.craneBoomUp }}</td>
+              <td>{{ wtg.converterPanelInstallation }}</td>
+              <td>{{ wtg.installationPlanStart }}</td>
+              <td>{{ wtg.installationActualStart }}</td>
+              <td>{{ wtg.installationForeCastStart }}</td>
+              <td>{{ wtg.installationStartDelayReason }}</td>
+              <ng-container *ngFor="let tower of wtg.towerInstallations">
+                <td>{{ tower.installationDate }}</td>
+              </ng-container>
+
+              @if (wtg.towerInstallations.length === 5) {
+                <td>-</td>
+              }
+              <td>{{ wtg.nacelleInstallation }}</td>
+              <td>{{ wtg.assemblyMethod || '-' }}</td>
+              <td>{{ wtg.rotorAssemblyDate || '-' }}</td>
+              <td>{{ wtg.hubAssemblyDate || '-' }}</td>
+              <ng-container *ngFor="let blade of wtg.bladeInstallations">
+                <td>{{ blade.installationDate || '-' }}</td>
+              </ng-container>
+              <td>-</td>
+              <td>{{ wtg.rotorInstallationDate || '-' }}</td>
+              <td>{{ wtg.installationPlanFinish || '-' }}</td>
+              <td>{{ wtg.installationActualFinish || '-' }}</td>
+              <td>{{ wtg.installationForeCastFinish || '-' }}</td>
+              <td>{{ wtg.installationFinishDelayReason || '-' }}</td>
+              <td>{{ wtg.craneBoomDown || '-' }}</td>
+              <td>{{ wtg.anchorBolt10PercentTorqueCheck || '-' }}</td>
+              <ng-container *ngFor="let tower of wtg.towerInstallations">
+                <td>{{ tower.torqueCheckDate }}</td>
+              </ng-container>
+              @if (wtg.towerInstallations.length === 5) {
+                <td>-</td>
+              }
+              <td>{{ wtg.towerNacelle10PercentTorqueCheck || '-' }}</td>
+              <td>{{ wtg.nacelleHub10PercentTorqueCheck || '-' }}</td>
+
+              <ng-container *ngFor="let blade of wtg.bladeInstallations">
+                <td>{{ blade.torqueCheckDate || '-' }}</td>
+              </ng-container>
+              <td>{{ wtg.rotorBolt10PercentTorqueCheck || '-' }}</td>
+              <td>{{ wtg.final10PercentTorqueCheck || '-' }}</td>
+              <td>{{ wtg.generatorAlignment || '-' }}</td>
+              <td>{{ wtg.cableLaying || '-' }}</td>
+              <td>{{ wtg.mechanicalCompletion || '-' }}</td>
+              <td>{{ wtg.electricalCompletion || '-' }}</td>
+              <td>{{ wtg.liftInstallation || '-' }}</td>
+              <td>{{ wtg.qaInspectionFinish || '-' }}</td>
+              <td>{{ wtg.mccPlan || '-' }}</td>
+              <td>{{ wtg.mccActual || '-' }}</td>
+              <td>{{ wtg.mccForecast || '-' }}</td>
+              <td>{{ wtg.mccDelayReason || '-' }}</td>
+              <td>{{ wtg.mccSignOff || '-' }}</td>
+  
+              <!-- <ng-container *ngFor="let grp of getViewStepGroups()">
+  
+                <td *ngFor="let col of stepColumnDefs[grp.stepIdx]" class="view-td-value"
+                  [class.view-td-filled]="hasViewValue(grp.stepIdx, rowIndex, col.field)"
+                  [class]="'step-cell-' + (grp.stepIdx % 8)">
+  
+                  {{ getViewValue(grp.stepIdx, rowIndex, col.field, col.type) }}
+  
+                </td>
+  
+              </ng-container> -->
+  
+            </tr>
+  
+          </ng-template>
+  
+        </p-table>
+  
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="view-popup-footer">
+      <span class="view-popup-footer-info">
+        <i class="pi pi-info-circle" style="color:#6366f1;margin-right:0.3rem"></i>
+        Showing {{ selectedProject?.totalWtgs }} WTG records for <strong style="margin: 0 4px 0;">{{ selectedProject?.projectCode }}</strong> — {{ selectedProject?.customer?.customerName }}. This is a read-only view.
+      </span>
+      <button pButton type="button" class="view-close-btn" (click)="closeViewPopup()">Close</button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- ══ OPEN WTG POPUP ══ -->
+<p-dialog [(visible)]="wtgPopupVisible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false" 
+  styleClass="wtg-popup-dialog" [style]="{ width: '80vw', maxWidth: '80vw', height: '92vh' }" (onHide)="closeWtgPopup()">
+  <ng-template pTemplate="header">
+    <div class="view-popup-header">
+      <div class="view-popup-title-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" style="flex-shrink:0">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+        </svg>
+        <span class="view-popup-title">Installation Tracker</span>
+        <span class="view-popup-subtitle">
+          <span class="tag-pcode">{{ selectedProject?.projectCode }}</span>
+          <span class="tag-wtg">{{ selectedProject?.totalWtgs }} WTGs</span>
+          <span class="tag-location">{{ selectedProject?.customer?.customerName }}</span>
+          <span class="tag-progress">{{ getCompletedCount() }} / {{ steps.length }} Steps Completed</span>
+        </span>
+      </div>
+      <span class="view-popup-readonly-badge wtg-popup-live-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Live View
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="wtg-popup-body">
+      <div class="wtg-popup-progress-wrap">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" [style.width.%]="(getCompletedCount() / steps.length) * 100"></div>
+        </div>
+        <span class="progress-label">{{ ((getCompletedCount() / steps.length) * 100).toFixed(0) }}%</span>
+      </div>
+      <div class="steps-container wtg-popup-steps">
+        <ng-container *ngFor="let step of steps; let stepIdx = index; trackBy: trackByIndex">
+          <div class="step-card"
+               [class.step-completed]="stepCompleted[stepIdx]"
+               [class.step-active]="isStepEnabled(stepIdx) && !stepCompleted[stepIdx]"
+               [class.step-disabled]="!isStepEnabled(stepIdx)">
+            <div class="step-header" (click)="isStepEnabled(stepIdx) && (wtgPopupActiveStep = wtgPopupActiveStep === stepIdx ? -1 : stepIdx)">
+              <div class="step-left">
+                <div class="step-badge"
+                     [class.badge-completed]="stepCompleted[stepIdx]"
+                     [class.badge-active]="isStepEnabled(stepIdx) && !stepCompleted[stepIdx]"
+                     [class.badge-disabled]="!isStepEnabled(stepIdx)">
+                  <svg *ngIf="stepCompleted[stepIdx]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span *ngIf="!stepCompleted[stepIdx]">{{ step.id }}</span>
+                </div>
+                <div>
+                  <div class="step-title">Step {{ step.id }}: {{ step.label }}</div>
+                  <div class="step-meta" *ngIf="stepCompleted[stepIdx]">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Completed
+                  </div>
+                  <div class="step-meta locked" *ngIf="!isStepEnabled(stepIdx)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    Fill all fields in Step {{ step.id - 1 }} row to unlock
+                  </div>
+                </div>
+              </div>
+              <svg *ngIf="isStepEnabled(stepIdx)" [class.chevron-open]="wtgPopupActiveStep === stepIdx" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+            <div class="step-body" *ngIf="wtgPopupActiveStep === stepIdx && isStepEnabled(stepIdx)">
+              <div class="table-scroll-wrap">
+                <p-table [value]="prjWTGDetails" [scrollable]="true" scrollHeight="380px" 
+                  styleClass="p-datatable-sm foundation-ptable" 
+                  [frozenColumns]="[{field:'wtgId'},{field:'locationNo'},{field:'maximoId'}]">
+                  <ng-template pTemplate="caption">
+                    <div class="table-caption">
+                      <span class="table-caption-label"><i class="pi pi-table" style="margin-right:0.4rem"></i>{{ step.label }} — Enter all fields for each WTG</span>
+                      <span class="table-row-count">{{ selectedProject?.totalWtgs }} WTGs</span>
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="col-frozen col-wtg" pFrozenColumn>WTG ID</th>
+                      <th class="col-frozen col-location" pFrozenColumn>
+                        <div class="filter-header">
+                            <span>Location No.</span>
+                            <p-columnFilter field="locationNo" matchMode="in" display="menu" [showAddButton]="false">
+                              <ng-template #filter let-value let-filter="filterCallback">
+                                <p-multiselect [options]="getLocationOptions()" (onChange)="filter($event.value)" 
+                                  placeholder="Select Locations" optionLabel="label" optionValue="value"
+                                  class="w-full">
+                                </p-multiselect>
+                              </ng-template>
+                            </p-columnFilter>
+                        </div>
+                      </th>
+                      <th class="col-frozen col-maximo" pFrozenColumn>
+                        <div class="filter-header">
+                          <span>Maximo ID</span>
+                          <p-columnFilter field="maximoId" matchMode="in" display="menu" [showAddButton]="false">
+                            <ng-template #filter let-value let-filter="filterCallback">
+                              <p-multiselect [options]="getMaximoOptions()" (onChange)="filter($event.value)" 
+                                placeholder="Select Maximo ID"
+                                optionLabel="label" optionValue="value" class="w-full">
+                              </p-multiselect>
+                            </ng-template>
+                          </p-columnFilter>
+                        </div>
+                      </th>
+                      <th class="col-wtgtype">WTG Type</th>
+                      <th *ngIf="shouldShowTowerFields()" class="col-towertype">Tower Type</th>
+                      <th *ngIf="shouldShowTowerFields()" class="col-sectionCount">Section Count</th>
+                      <th class="col-cranesupplier">Main Crane Supplier</th>
+                      <th *ngFor="let col of stepColumnDefs[stepIdx]" class="col-field">{{ col.header }}</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-wtg let-rowIdx="rowIndex">
+                    <tr [class.row-even]="rowIdx % 2 === 0" [class.row-disabled]="!isRowEnabled(stepIdx, rowIdx)">
+                      <td class="col-frozen col-wtg wtg-cell" pFrozenColumn>
+                        <span class="wtg-badge">{{ wtg?.projectWtg?.wtgCode }}</span>
+                        <span class="row-lock-icon" *ngIf="!isRowEnabled(stepIdx, rowIdx)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+                      </td>
+                      <td class="col-frozen col-location" pFrozenColumn>{{ wtg?.location?.locationCode || '-' }}</td>
+                      <td class="col-frozen col-maximo" pFrozenColumn>{{ wtg?.location?.maximoId || '-' }}</td>
+                      <td class="col-wtgtype">{{ wtg?.projectWtg?.wtgType?.wtgType }}</td>
+                      <td *ngIf="shouldShowTowerFields()" class="col-towertype">{{ wtg?.projectWtg?.towerType?.towerType }}</td>
+                      <td *ngIf="shouldShowTowerFields()" class="col-sectionCount">{{ wtg?.projectWtg?.towerType?.sectionCount }}</td>
+                      <td class="col-cranesupplier crane-supplier-cell">
+                        <!-- P-8002 rows: fixed 0, no dropdown -->
+                        <span *ngIf="isCraneSupplierFixed(rowIdx)" class="crane-supplier-badge crane-zero">0</span>
+                        <!-- Other projects: supplier dropdown, restored from installation data -->
+                        <p-select *ngIf="!isCraneSupplierFixed(rowIdx)"
+                          appendTo="body"
+                          [options]="prjCraneDetails"
+                          [ngModel]="getCraneSupplierDisplay(rowIdx)"
+                          (ngModelChange)="onCraneSupplierChange(rowIdx, $event)"
+                          optionLabel="supplier.supplierName" optionValue="supplier.supplierId"
+                          placeholder="Select Supplier" (onChange)="selectedSupplier(rowIdx, $event.value)" />
+                      </td>
+                      <ng-container *ngFor="let col of stepColumnDefs[stepIdx]">
+                        <!-- Hidden when field is not applicable (tower section count / assembly method) -->
+                        <td *ngIf="isFieldVisible(stepIdx, rowIdx, col.field)"
+                            class="col-field-cell"
+                            [class.cell-disabled]="!isRowEnabled(stepIdx, rowIdx)"
+                            [class.col-rotor-field]="isRotorField(col.field)"
+                            [class.col-hub-field]="isHubField(col.field)">
+
+                          <!-- Date picker -->
+                          <p-datepicker *ngIf="col.type === 'date'"
+                            [ngModel]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (ngModelChange)="setStepFormValue(stepIdx, rowIdx, col.field, $event)"
+                            (onBlur)="stepForms[stepIdx][rowIdx].get(col.field)?.markAsTouched()"
+                            dateFormat="dd-mm-yy" placeholder="DD-MM-YYYY" [maxDate]="maxDate" 
+                            [styleClass]="
+                              stepForms[stepIdx][rowIdx].get(col.field)?.invalid &&
+                              stepForms[stepIdx][rowIdx].get(col.field)?.touched
+                                ? 'table-datepicker border-red'
+                                : 'table-datepicker'
+                            " 
+                            appendTo="body"
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)" />
+
+                          <!-- Number input -->
+                          <p-inputNumber *ngIf="col.type === 'number'"
+                            [ngModel]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (ngModelChange)="setStepFormValue(stepIdx, rowIdx, col.field, $event)"
+                            placeholder="0.00" [minFractionDigits]="0" [maxFractionDigits]="2"
+                            styleClass="table-inputnumber"
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)" />
+
+                          <!-- Text input -->
+                          <!-- <input *ngIf="col.type === 'text'" type="text" pInputText
+                            [ngModel]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (ngModelChange)="setStepFormValue(stepIdx, rowIdx, col.field, $event)"
+                            [ngModelOptions]="{standalone:true}"
+                            placeholder="Enter reason..."
+                            class="table-input table-input-text"
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)" /> -->
+
+                          <input *ngIf="col.type === 'text'" type="text" [value]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (input)="setStepFormValue(stepIdx, rowIdx, col.field, $any($event.target).value)" placeholder="Enter reason..."
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)"
+                            class="table-input table-input-text" />
+
+                          <!-- Main Crane Model dropdown -->
+                          <p-select *ngIf="col.type === 'select' && col.field === 'mainCraneModel'"
+                            appendTo="body"
+                            [options]="rowSupplierCraneList[rowIdx]"
+                            [ngModel]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (ngModelChange)="setStepFormValue(stepIdx, rowIdx, col.field, $event)"
+                            optionLabel="craneModel" optionValue="craneId"
+                            placeholder="Select Model..."
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)"
+                            styleClass="table-select" />
+
+                          <!-- Assembly Method dropdown (special: triggers conditional logic) -->
+                          <p-select *ngIf="col.type === 'select' && col.field === 'assemblyMethod'"
+                            appendTo="body"
+                            [options]="assemblyMethodOptions"
+                            [ngModel]="getStepFormValue(stepIdx, rowIdx, col.field)"
+                            (ngModelChange)="onAssemblyMethodChange(stepIdx, rowIdx, $event)"
+                            (onBlur)="stepForms[stepIdx][rowIdx].get(col.field)?.markAsTouched()"
+                            optionLabel="label" optionValue="value"
+                            placeholder="Select Method..."
+                            [disabled]="!isRowEnabled(stepIdx, rowIdx)"
+                            styleClass="table-select"
+                            [ngClass]="{
+                              'border-red':
+                                stepForms[stepIdx][rowIdx].get(col.field)?.invalid &&
+                                stepForms[stepIdx][rowIdx].get(col.field)?.touched
+                            }" />
+
+                          <small class="p-error" *ngIf="
+                              isFieldRequired(stepIdx, rowIdx, col.field) &&
+                              stepForms[stepIdx][rowIdx].get(col.field)?.invalid &&
+                              stepForms[stepIdx][rowIdx].get(col.field)?.touched
+                            ">
+                            This field is required.
+                          </small>
+                        </td>
+                        <!-- Collapsed cell shown when field is hidden (keeps table structure) -->
+                        <td *ngIf="!isFieldVisible(stepIdx, rowIdx, col.field)"
+                            class="col-field-cell col-field-hidden">
+                          <span class="field-na">N/A</span>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr><td [attr.colspan]="6 + stepColumnDefs[stepIdx].length" class="empty-msg">No WTG rows available.</td></tr>
+                  </ng-template>
+                </p-table>
+              </div>
+              <div class="step-footer">
+                <span class="step-footer-hint">
+                  <i class="pi pi-info-circle" style="margin-right:0.3rem;color:#6366f1"></i>
+                  Fill all fields for each WTG row. Click Save when done.
+                </span>
+                <button pButton type="button" class="save-step-btn" (click)="markStepComplete(stepIdx)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="view-popup-footer">
+      <span class="view-popup-footer-info">
+        <i class="pi pi-info-circle" style="color:#6366f1;margin-right:0.3rem"></i>
+          Viewing Installation Tracker for <strong style="margin: 0 4px 0;">
+          {{ selectedProject?.projectCode }}</strong> — {{ selectedProject?.totalWtgs }} WTGs at {{ selectedProject?.customer?.customerName }}
+      </span>
+      <div style="display:flex;gap:0.6rem;align-items:center;">
+        <button pButton type="button" class="view-btn" (click)="openViewAllDataFromWtg()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          View All Data
+        </button>
+        <!-- <button pButton type="button" class="submit-btn-bottom" (click)="onSubmit()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Submit All
+        </button> -->
+        <button pButton type="button" class="view-close-btn" (click)="closeWtgPopup()">Close</button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Download Excel" [(visible)]="chooseDownloadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+  [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+  }">
+  <div class="flex justify-content-center gap-5 py-4">
+
+    <div class="dl-item" (click)="downloadTemplate()">
+      <div class="dl-icon" style="background: #dbeafe; color: #1d4ed8;">
+        <i class="pi pi-download"></i>
+      </div>
+      <span class="dl-label">Installation Template</span>
+    </div>
+
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Upload Excel" [(visible)]="chooseUploadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+  [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+    }">
+  <div class="flex justify-content-center gap-5 py-4">
+
+    <!-- Location -->
+    <div class="dl-item" (click)="uploadTemplate()">
+      <div class="dl-icon" style="background: #ede9fe; color: #6d28d9;">
+        <i class="pi pi-upload"></i>
+      </div>
+      <span class="dl-label">Installation Template</span>
+    </div>
+
+  </div>
+</p-dialog>
+
+<p-dialog header="Upload Document" [(visible)]="displayImportDialog" [modal]="true" [style]="{ width: '40rem' }">
+
+  <p-fileUpload name="file" mode="advanced" [multiple]="false" accept=".xlsx,.xls,.pdf,.doc,.docx"
+    chooseLabel="Choose File" uploadLabel="Upload" cancelLabel="Cancel" [customUpload]="true"
+    (uploadHandler)="onUpload($event)" [auto]="false">
+
+    <!-- Empty State -->
+    <ng-template pTemplate="empty">
+
+      <div class="flex flex-column align-items-center justify-content-center p-5">
+        <i class="pi pi-cloud-upload text-5xl text-primary mb-3"></i>
+
+        <span class="text-lg">
+          Drag and drop file here
+        </span>
+      </div>
+
+    </ng-template>
+
+  </p-fileUpload>
+
+</p-dialog>
+
+<p-dialog header="Edit Installation" [(visible)]="showEditInstallationModal" [modal]="true" [draggable]="false"
+  (onHide)="onDialogClose()" [style]="{ width: '60rem' }">
+  <!-- <h3>Step 1: Installation</h3> -->
+  <ng-template #header>
+    <div class="view-popup-header">
+      <div class="view-popup-title-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"
+          style="flex-shrink:0">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18M9 21V9" />
+        </svg>
+        <span class="view-popup-title">Edit Installation</span>
+        <span class="view-popup-subtitle">
+          <span class="tag-pcode">{{ selectedProject?.projectCode }}</span>
+          <span class="tag-wtg">{{ selectedProject?.totalWtgs }} WTGs</span>
+          <span class="tag-location">{{ selectedProject?.customer?.customerName }}</span>
+          <!-- <span class="tag-progress">{{ getCompletedCount() }} / {{ steps.length }} Steps Completed</span> -->
+        </span>
+      </div>
+      <span class="view-popup-readonly-badge wtg-popup-live-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        Live View
+      </span>
+    </div>
+  </ng-template>
+  <ng-container *ngFor="let step of steps; let stepIdx = index; trackBy: trackByIndex">
+    <p-table [value]="installationActivityDetails" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+      <ng-template #header>
+        <tr>
+          <th>SL No</th>
+          <th>WTG Code</th>
+          <th>Location No</th>
+          <th>Maximo ID</th>
+          <th>WTG Type</th>
+          <th>Tower Type</th>
+          <th>Section Count</th>
+          <th>Main Crane Supplier</th>
+          @for (column of stepColumnDefs[stepIdx]; track column.field) {
+            <th>{{ column.header }}</th>
+          }
+        </tr>
+      </ng-template>
+      <ng-template #body let-installation let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ installation?.projectWtgs?.[0]?.wtgCode || '-'}}</td>
+          <td>{{ installation?.projectLocation?.locationCode || '-' }}</td>
+          <td>{{ installation?.projectLocation?.maximoId || '-' }}</td>
+          <td>{{ installation?.projectWtgs?.[0]?.wtgType?.wtgType || '-' }}</td>
+          <td>{{ installation?.projectWtgs?.[0]?.towerType?.towerType || '-' }}</td>
+          <td>{{ installation?.projectWtgs?.[0]?.towerType?.sectionCount || '-' }}</td>
+          <td>
+            <p-select *ngIf="!isCraneSupplierFixed(i)" appendTo="body" [options]="prjCraneDetails"
+              optionLabel="supplier.supplierName" optionValue="supplier.supplierId" 
+              [ngModel]="getCraneSupplierDisplay(i)" (ngModelChange)="onCraneSupplierChange(i, $event)"
+              placeholder="Select Supplier" [filter]="true" filterBy="supplier.supplierName" 
+              (onChange)="selectedSupplier(i, $event.value)" />
+          </td>
+          @for (column of stepColumnDefs[stepIdx]; track column.field) {
+            <td *ngIf="isEditFieldVisible(stepIdx, i, column.field)"
+                class="col-field-cell"
+                [class.cell-disabled]="!isRowEnabled(stepIdx, i)"
+                [class.col-rotor-field]="isRotorField(column.field)"
+                [class.col-hub-field]="isHubField(column.field)">
+              @if (column.type === 'date') {
+                <p-datepicker dateFormat="dd/mm/yy"
+                  placeholder="DD-MM-YYYY" [maxDate]="maxDate" appendTo="body"
+                  [ngModel]="getStepFormValue(stepIdx, i, column.field)"
+                  (ngModelChange)="setStepFormValue(stepIdx, i, column.field, $event)"
+                  [styleClass]="
+                    stepForms[stepIdx][i].get(column.field)?.invalid &&
+                    stepForms[stepIdx][i].get(column.field)?.touched
+                      ? 'table-datepicker border-red'
+                      : 'table-datepicker'
+                  " 
+                  appendTo="body"
+                  [disabled]="!isRowEnabled(stepIdx, i)"></p-datepicker>
+              }
+  
+              @if (column.type === 'text') {
+                <input type="text" pInputText placeholder="Enter reason"
+                  [value]="getStepFormValue(stepIdx, i, column.field)"
+                  (input)="setStepFormValue(stepIdx, i, column.field, $any($event.target).value)" />
+              }
+  
+              @if (column.type === 'number') {
+                <p-inputNumber 
+                  placeholder="0.00" [minFractionDigits]="0"
+                  [maxFractionDigits]="2" styleClass="table-inputnumber"
+                  [ngModel]="getStepFormValue(stepIdx, i, column.field)"
+                  (ngModelChange)="setStepFormValue(stepIdx, i, column.field, $event)" />
+              }
+  
+              @if (column.type === 'select' && column.field === 'mainCraneModel') {
+                <p-select [options]="rowSupplierCraneList[i]"
+                  [ngModel]="getStepFormValue(stepIdx, i, column.field)"
+                  (ngModelChange)="setStepFormValue(stepIdx, i, column.field, $event)" 
+                  optionLabel="craneModel" optionValue="craneId" placeholder="Select Crane Model"
+                  [filter]="true" filterBy="craneModel" appendTo="body">
+                </p-select>
+              }
+  
+              @if (column.type === 'select' && column.field === 'assemblyMethod') {
+                <p-select [options]="assemblyMethodOptions"
+                  [ngModel]="getStepFormValue(stepIdx, i, column.field)"
+                  (ngModelChange)="onAssemblyMethodChange(stepIdx, i, $event)"
+                  (onBlur)="stepForms[stepIdx][i].get(column.field)?.markAsTouched()"
+                  optionLabel="label" optionValue="value"
+                  placeholder="Select Assembly Method" appendTo="body"
+                  [ngClass]="{
+                    'border-red':
+                      stepForms[stepIdx][i].get(column.field)?.invalid &&
+                      stepForms[stepIdx][i].get(column.field)?.touched
+                  }">
+                </p-select>
+              }
+              <small class="p-error" *ngIf="
+                  isFieldRequired(stepIdx, i, column.field) &&
+                  stepForms[stepIdx][i].get(column.field)?.invalid &&
+                  stepForms[stepIdx][i].get(column.field)?.touched
+                ">
+                This field is required.
+              </small>
+            </td>
+            <td *ngIf="!isEditFieldVisible(stepIdx, i, column.field)" class="col-field-cell col-field-hidden">
+              <span class="field-na">N/A</span>
+            </td>
+          }
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template #footer>
+      <div class="view-popup-footer">
+        <span class="view-popup-footer-info">
+          <i class="pi pi-info-circle" style="color:#6366f1;margin-right:0.3rem"></i>
+          Showing {{ selectedProject?.totalWtgs }} WTG records for <strong style="margin: 0 4px 0;">{{
+            selectedProject?.projectCode }}</strong> — {{ selectedProject?.customer?.customerName }}
+        </span>
+        <button pButton type="button" (click)="updateInstallation(stepIdx)">Update Installation</button>
+      </div>
+    </ng-template>
+  </ng-container>
+</p-dialog>

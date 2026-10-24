@@ -1,0 +1,155 @@
+<div class="card">
+    <h2 class="title">Quality Configuration</h2>
+    <div class="customer-info">
+        <div class="info-box">
+            <div class="info-row">
+                <div class="icon-box">
+                    <i class="pi pi-id-card"></i>
+                </div>
+                <div>
+                    <p class="label">Customer Code</p>
+                    <p class="value">CUST001</p>
+                </div>
+            </div>
+        </div>
+        <div class="info-box">
+            <div class="info-row">
+                <div class="icon-box">
+                    <i class="pi pi-building"></i>
+                </div>
+                <div>
+                    <p class="label">Customer Name</p>
+                    <p class="value">Reliance Power Ltd</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3 class="section-title mb-sm">Add Quality Configuration</h3>
+    <form [formGroup]="qualityConfigurationForm" (ngSubmit)="addConfiguration()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="component">Component</label>
+                <p-select formControlName="componentName" [options]="componentList" appendTo="body" placeholder="Select Component" 
+                    [filter]="true" filterBy="label" inputId="component"></p-select>
+            </div>
+            <div class="form-field">
+                <label for="inspection-lag-days" class="label-with-icon">
+                    Inspection Lag Days
+                    <i class="pi pi-info-circle info-icon" pTooltip="Days after production final QC to inspection"
+                        tooltipPosition="top">
+                    </i>
+                </label>
+                <p-inputnumber formControlName="inspectionLagDays" inputId="inspection-lag-days" [useGrouping]="false" />
+            </div>
+            <div class="form-field">
+                <label for="mdcc-lag-days" class="label-with-icon">
+                    MDCC Lag Days
+                    <i class="pi pi-info-circle info-icon" pTooltip="Days after inspection for MDCC" tooltipPosition="top">
+                    </i>
+                </label>
+                <p-inputnumber formControlName="mdccLagDays" inputId="mdcc-lag-days" [useGrouping]="false" />
+            </div>
+        </div>
+        <div class="quality-form-action">
+            <button pButton type="submit" label="Add Configuration" icon="pi pi-plus"></button>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <div class="table-header">
+        <h3 class="section-title">Quality Configuration List</h3>
+    </div>
+
+    <div class="custom-container">
+        <p-table [value]="qualityConfigList" [rowHover]="true" stripedRows>
+    
+            <ng-template #header>
+                <tr class="table-head">
+                    <th>SL No</th>
+                    <th>Component</th>
+                    <th>Inspection Lag Days</th>
+                    <th>MDCC Lag Days</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+    
+            <ng-template #body let-row let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ row.componentName }}</td>
+                    <td>{{ row.inspectionLagDays }}</td>
+                    <td>{{ row.mdccLagDays }}</td>
+                    <td>
+                        <p-button icon="pi pi-trash" rounded severity="danger" (onClick)="removeQualityConfig(i)" />
+                    </td>
+                </tr>
+            </ng-template>
+    
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="6" class="empty-msg">
+                        No Records Found
+                    </td>
+                </tr>
+            </ng-template>
+    
+        </p-table>
+    </div>
+    <div class="form-action">
+    
+        <!-- 🔹 Status Message -->
+        <div class="progress-container">
+
+            <p class="progress-label">Configuration Progress</p>
+            <div class="progress-wrapper">
+            
+                <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="
+                            (qualityConfigList.length / 
+                            (qualityConfigList.length + componentList.length)) * 100
+                        "
+                        [ngStyle]="{
+                        'background': componentList.length === 0 ? '#16a34a' : '#f59e0b'
+                    }">
+                    </div>
+                </div>
+            
+                <span class="progress-text">
+                
+                    <ng-container *ngIf="componentList.length === 0; else pendingTpl">
+                        {{ qualityConfigList.length }} /
+                        {{ qualityConfigList.length + componentList.length }}
+                
+                        <span class="status complete">
+                            <i class="pi pi-check-circle"></i>
+                            All components configured
+                        </span>
+                    </ng-container>
+                
+                    <ng-template #pendingTpl>
+                        {{ qualityConfigList.length }} /
+                        {{ qualityConfigList.length + componentList.length }}
+                
+                        <span class="status pending">
+                            <i class="pi pi-info-circle"></i>
+                            {{ componentList.length }} to configure
+                        </span>
+                    </ng-template>
+                
+                </span>
+            </div>
+        </div>
+    
+        <!-- 🔹 Submit Button -->
+        <button pButton type="button" (click)="submitAllConfigurations()">
+            Submit
+        </button>
+    
+    </div>
+</div>
+
+<p-toast />

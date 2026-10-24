@@ -1,0 +1,175 @@
+<div class="card">
+    <div class="card-header">
+        <div class="card-sub-header">
+            <h2>Project Crane Details</h2>
+            <p-tag severity="success" [value]="selectedProject?.projectCode" />
+            <p-tag severity="info" [value]="(selectedProject?.totalWtgs ?? 0) + ' WTGs'" />
+            <p-tag severity="warn" [value]="selectedProject?.customer?.customerName" />
+        </div>
+        <div class="card-sub-header">
+            <p-button label="Assign Crane Detail" icon="pi pi-link" (onClick)="openCraneDetail()" />
+            <p-button label="Back" icon="pi pi-arrow-left" routerLink="/installation" />
+        </div>
+    </div>
+    <div class="custom-container">
+        <p-table [value]="projectCraneList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }" 
+            [scrollable]="true">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Crane Type</th>
+                    <th>Crane Model</th>
+                    <th>Crane Make</th>
+                    <th>Supplier Name</th>
+                    <th>Registration Number</th>
+                    <th>Status</th>
+                    <th alignFrozen="right" pFrozenColumn>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-crane let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ crane?.crane?.craneType }}</td>
+                    <td>{{ crane?.crane?.craneModel }}</td>
+                    <td>{{ crane?.crane?.craneMake }}</td>
+                    <td>{{ crane?.supplier?.supplierName }}</td>
+                    <td>{{ crane?.registrationNumber }}</td>
+                    <td>
+                        <p-tag [value]="crane?.status ? 'Active' : 'Inactive'"
+                            [severity]="crane?.status ? 'success' : 'danger'"></p-tag>
+                    </td>
+                    <td alignFrozen="right" pFrozenColumn>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button"
+                            (click)="prjCraneMenu($event, menu, crane)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedPrjCrane ? 'Update Crane Detail' : 'Assign Crane Detail'" [modal]="true" [(visible)]="showPrjCraneDetail" [style]="{ width: '40rem' }" [draggable]="false"
+    (onHide)="onDialogClose()">
+    <form [formGroup]="prjCraneForm" (ngSubmit)="submitPrjCraneForm()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="crane-type">Crane Type</label>
+                <p-select [options]="craneInfoList" formControlName="craneType" optionLabel="craneType" optionValue="craneId"
+                    [filter]="true" filterBy="craneType" [showClear]="true" placeholder="Select Crane Type" appendTo="body"
+                    inputId="crane-type" (onChange)="selectedCrane($event.value)" />
+
+                    <small class="required-field" *ngIf="isCraneInvalid">
+                        Please select a Crane Type, Model, or Make.
+                    </small>
+            </div>
+            <div class="form-field">
+                <label for="crane-model">Crane Model</label>
+                <p-select [options]="craneInfoList" formControlName="craneModel" optionLabel="craneModel" optionValue="craneId"
+                    [filter]="true" filterBy="craneModel" [showClear]="true" placeholder="Select Crane Model" appendTo="body"
+                    inputId="crane-model" (onChange)="selectedCrane($event.value)" />
+
+                    <small class="required-field" *ngIf="isCraneInvalid">
+                        Please select a Crane Type, Model, or Make.
+                    </small>
+            </div>
+            <div>
+                <label for="crane-make">Crane Make</label>
+                <p-select [options]="craneInfoList" formControlName="craneMake" optionLabel="craneMake" optionValue="craneId"
+                    [filter]="true" filterBy="craneMake" [showClear]="true" placeholder="Select Crane Make" appendTo="body"
+                    inputId="crane-make" (onChange)="selectedCrane($event.value)"
+                    class="validation-field" />
+
+                    <small class="required-field" *ngIf="isCraneInvalid">
+                        Please select a Crane Type, Model, or Make.
+                    </small>
+            </div>
+            <div>
+                <label for="supplier">Supplier</label>
+                <p-select [options]="supplierList" formControlName="supplierId" optionLabel="supplierName" optionValue="supplierId"
+                    [filter]="true" filterBy="supplierName" [showClear]="true" placeholder="Select Supplier" appendTo="body"
+                    inputId="supplier" class="validation-field"  />
+
+                @if (supplierId?.invalid && (supplierId?.dirty || supplierId?.touched)) {
+                    @if (supplierId?.hasError('required')) {
+                        <small class="required-field">Supplier Name is required.</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="registration-number">Registration Number</label>
+                <input type="text" pInputText formControlName="registrationNumber" 
+                    id="registration-number" class="validation-field" />
+
+                @if (registrationNumber?.invalid && (registrationNumber?.dirty || registrationNumber?.touched)) {
+                    @if (registrationNumber?.hasError('required')) {
+                    <small class="required-field">Registration Number is required.</small>
+                    }
+                    @if (registrationNumber?.hasError('maxlength')) {
+                    <small class="required-field">Registration Number cannot exceed 50 characters.</small>
+                    }
+                }
+            </div>
+        </div>
+        @if(selectedPrjCrane){
+
+        <div class="status-card">
+
+            <div>
+
+                <div class="status-title">
+                    Crane Detail Availability
+                </div>
+
+                <div class="status-subtitle">
+
+                    Keep this Crane Detail active if it is still in use.
+
+                    Turn it off if it is no longer required.
+
+                </div>
+
+            </div>
+
+            <div class="status-toggle-wrap">
+
+                <span class="status-label" [class.inactive]="!prjCraneForm.get('status')?.value">
+
+                    {{
+                        prjCraneForm.get('status')?.value
+                        ? 'Active'
+                        : 'Inactive'
+                    }}
+
+                </span>
+
+                <p-toggleswitch formControlName="status">
+                </p-toggleswitch>
+
+            </div>
+
+        </div>
+
+        }
+        <div class="submit-btn">
+            <button pButton pRipple type="submit">{{ actionName }}</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

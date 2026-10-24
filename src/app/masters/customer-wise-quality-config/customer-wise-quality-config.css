@@ -1,0 +1,192 @@
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.customer-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.info-box {
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-box {
+    width: 36px;
+    height: 36px;
+    background: #e0f2fe;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box i {
+    font-size: 16px;
+    color: #3b82f6;
+}
+
+/* better typography */
+.label {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.value {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.mb-sm {
+    margin-bottom: 10px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.form-field {
+    display: grid;
+}
+
+.label-with-icon {
+    display: flex;
+    gap: 6px;
+}
+
+.info-icon {
+    font-size: 16px;
+    color: #9ca3af;
+    cursor: pointer;
+    margin-top: 1px;
+}
+
+.quality-form-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.form-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.custom-container {
+    border: 1px solid var(--p-content-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 16px 0;
+    color: #9ca3af;
+}
+
+.progress-container {
+    display: grid;
+    gap: 2px;
+}
+
+.progress-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    width: 120px;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #374151;
+}
+
+/* Common status style */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ✅ Completed */
+.status.complete {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* ⏳ Pending */
+.status.pending {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+/* Icon styling */
+.status i {
+    font-size: 12px;
+}

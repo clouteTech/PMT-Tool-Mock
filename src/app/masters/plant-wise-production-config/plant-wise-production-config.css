@@ -1,0 +1,183 @@
+.card-box {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--surface-border);
+    background: var(--card);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.form-field {
+    display: grid;
+}
+
+.container {
+    padding: 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Titles */
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
+.card-instruction {
+    display: flex;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.card-instruction i {
+    margin-right: 6px;
+}
+
+.step {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 16px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+
+}
+
+.mb-sm {
+    margin-bottom: 10px;
+}
+
+/* Plant Info */
+.plant-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.info-box {
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+/* 🔥 main fix */
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* better icon container */
+.icon-box {
+    width: 36px;
+    height: 36px;
+    background: #e0f2fe;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box i {
+    font-size: 16px;
+    color: #3b82f6;
+}
+
+/* better typography */
+.label {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.value {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Form */
+.first-step-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.form-field {
+    display: grid;
+}
+
+.form-field label {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.first-step-form-action {
+    margin-top: 16px;
+}
+
+.full-width-btn {
+    width: 100%;
+}
+
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+/* Table */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-container {
+    border: 1px solid var(--p-content-border-color);
+    border-radius: 8px;
+    /* rounded-lg */
+    overflow: hidden;
+}
+
+.table-head {
+    background: #f3f4f6;
+    font-size: 14px;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 16px 0;
+    color: #9ca3af;
+}

@@ -1,0 +1,13 @@
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.customer-info .customer-name {
+  font-weight: 600;
+}
+
+.customer-info small {
+  color: var(--text3, #6b7280);
+}

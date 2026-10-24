@@ -1,0 +1,125 @@
+<div class="card">
+    <div class="dispatch-header">
+        <h2 class="title">Dispatch Plan & Configuration</h2>
+        <p-button label="Back" icon="pi pi-arrow-circle-left" routerLink="/wtg-dispatch" />
+    </div>
+    <div class="project-select">
+        <label for="p-code">Project Code</label>
+        <p-select [options]="pCodeList" inputId="p-code" placeholder="Select Project Code" 
+            (onChange)="projectChange($event)" [filter]="true" filterBy="label">
+        </p-select>
+    </div>
+
+    @if (showDetails) {
+        <div class="wtg-details-card">
+            <div class="detail-item">
+                <p>WTG Type</p>
+                <h4>{{ wtgDetails.wtgType }}</h4>
+            </div>
+        
+            <div class="detail-item">
+                <p>Capacity</p>
+                <h4>{{ wtgDetails.capacity }}</h4>
+            </div>
+        
+            <div class="detail-item">
+                <p>Tower Type</p>
+                <h4>{{ wtgDetails.towerType }}</h4>
+            </div>
+        
+            <div class="detail-item">
+                <p>Blade Type</p>
+                <h4>{{ wtgDetails.bladeType }}</h4>
+            </div>
+        
+            <div class="detail-item">
+                <p>Total Qty</p>
+                <h4>{{ wtgDetails.totalQty }}</h4>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="card">
+    <h3 class="section-title mb-sm">Add Dispatch Configuration</h3>
+    <form [formGroup]="dispatchConfigForm" (ngSubmit)="addConfiguration()">
+        <div class="form-row">
+            <div class="form-field">
+                <label for="component">Component</label>
+                <p-select formControlName="componentName" [options]="componentList" placeholder="Select Component" inputId="component" 
+                    [filter]="true" filterBy="label" />
+            </div>
+            <div class="form-field">
+                <label for="dispatch-plan-start-date">Dispatch Plan Start Date</label>
+                <p-datepicker formControlName="planStartDate" showIcon [iconDisplay]="'input'" [readonlyInput]="true"
+                    inputId="dispatch-plan-start-date" placeholder="Select Date" fluid appendTo="body" />
+            </div>
+            <div class="form-field">
+                <label for="vehicle-count">No. of Vehicles</label>
+                <p-inputnumber formControlName="vehiclesCount" inputId="vehicle-count" [useGrouping]="false" />
+            </div>
+            <div class="form-field">
+                <label for="delivery-duration">Delivery Duration</label>
+                <p-inputnumber formControlName="deliveryDuration" inputId="delivery-duration" [useGrouping]="false" />
+            </div>
+            <div class="form-field">
+                <label for="unload-duration">Unload Duration</label>
+                <p-inputnumber formControlName="unloadDuration" inputId="unload-duration" [useGrouping]="false" />
+            </div>
+        </div>
+        <div class="submit-btn">
+            <button pButton type="submit" label="Add Configuration" icon="pi pi-plus">
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <div class="table-header">
+        <h3 class="section-title">Dispatch Configuration List</h3>
+    </div>
+
+    <div class="custom-container">
+        <p-table [value]="dispatchConfigList" [rowHover]="true">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Component</th>
+                    <th>Dispatch Plan Start Date</th>
+                    <th>No. of Vehicles</th>
+                    <th>Delivery Duration</th>
+                    <th>Unload Duration</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-dispatch let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ dispatch.componentName }}</td>
+                    <td>{{ dispatch.planStartDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ dispatch.vehiclesCount }}</td>
+                    <td>{{ dispatch.deliveryDuration }}</td>
+                    <td>{{ dispatch.unloadDuration }}</td>
+                    <td>
+                        <p-button icon="pi pi-trash" rounded severity="danger" (onClick)="removeConfiguration(i)" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="7" class="empty-msg">
+                        No Records Found
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="form-action">
+        <button pButton type="button">
+            Submit
+        </button>
+    </div>
+</div>
+
+<p-toast />

@@ -1,0 +1,92 @@
+<div class="card">
+    <h2>Project Summary</h2>
+    <div class="custom-container">
+        <p-table [value]="wtgProjects" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL NO</th>
+                    <th>Open WTG</th>
+                    <th>
+                        <div class="summary-th-content">
+                            <span>Project Code</span>
+                            <p-columnFilter type="text" field="projectCode" display="menu" [showMatchModes]="false" [showOperator]="false" />
+                        </div>
+                    </th>
+                    <th>Project Name</th>
+                    <th>WTG Count</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-receiving let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <button class="open-wtg-btn" routerLink="/wtg-receiving/view">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            Open WTG
+                        </button>
+                    </td>
+                    <td>{{ receiving.projectCode }}</td>
+                    <td>{{ receiving.projectName }}</td>
+                    <td>{{ receiving.wtgCount }}</td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="receivingMenu($event, menu, receiving)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog header="Upload Excel" [(visible)]="chooseUploadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+    [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+    }">
+    <div class="flex justify-content-center gap-5 py-4">
+        <div class="dl-item" (click)="uploadTemplate()">
+            <div class="dl-icon" style="background: #ede9fe; color: #6d28d9;">
+                <i class="pi pi-upload"></i>
+            </div>
+            <span class="dl-label">Receiving Template</span>
+        </div>
+
+    </div>
+</p-dialog>
+
+<p-dialog header="Download Excel" [(visible)]="chooseDownloadTemplate" [modal]="true" [style]="{ width: '40vw' }"
+    [breakpoints]="{
+      '960px': '60vw',
+      '640px': '90vw'
+  }">
+    <div class="flex justify-content-center gap-5 py-4">
+
+        <div class="dl-item" (click)="downloadTemplate()">
+            <div class="dl-icon" style="background: #dbeafe; color: #1d4ed8;">
+                <i class="pi pi-download"></i>
+            </div>
+            <span class="dl-label">Receiving Template</span>
+        </div>
+
+    </div>
+</p-dialog>
+
+<p-toast />

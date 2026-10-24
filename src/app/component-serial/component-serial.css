@@ -1,0 +1,35 @@
+.serial-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.serial-subHeader {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.serial-filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.menu-action {
+    display: flex;
+    align-items: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

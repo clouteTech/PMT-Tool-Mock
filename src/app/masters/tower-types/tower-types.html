@@ -1,0 +1,130 @@
+<div class="card">
+    <div class="tower-type-header">
+        <h2>Tower Types</h2>
+        <p-button icon="pi pi-plus" label="Create Tower Type" (onClick)="openTowerTypeModal()" />
+    </div>
+    <div class="custom-container">
+        <p-table [value]="towerTypeList" [rowHover]="true" [tableStyle]="{ 'min-width': 'max-content' }">
+            <ng-template #header>
+                <tr>
+                    <th>SL No</th>
+                    <th>Tower Type</th>
+                    <th>Section Count</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-tower let-i="rowIndex">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ tower.towerType }}</td>
+                    <td>{{ tower.sectionCount }}</td>
+                    <td>
+                        <p-tag [value]="tower.status ? 'Active' : 'Inactive'" [severity]="tower.status ? 'success' : 'danger'">
+                        </p-tag>
+                    </td>
+                    <td>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body" />
+                        <button pButton pRipple text rounded severity="secondary" type="button" (click)="towerTypeMenu($event, menu, tower)">
+                            <i pButtonIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-gray-500">
+                                    <rect width="24" height="24" fill="none" />
+                                    <path fill="currentColor"
+                                        d="M12 7a2 2 0 1 0-2-2a2 2 0 0 0 2 2m0 10a2 2 0 1 0 2 2a2 2 0 0 0-2-2m0-7a2 2 0 1 0 2 2a2 2 0 0 0-2-2" />
+                                </svg>
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="100%" style="text-align: center; padding: 1rem 0;">No Records Found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedTowerType ? 'Edit Tower Type' : 'Create Tower Type'" [modal]="true" [(visible)]="showTowerTypeModal"
+    [style]="{ width: '40rem' }" [draggable]="false" (onHide)="onDialogClose()">
+    <form [formGroup]="towerTypeForm" (ngSubmit)="submitTowerTypeForm()">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="tower-type">Tower Type</label>
+                <input type="text" pInputText formControlName="towerType" class="w-full" id="tower-type" />
+
+                @if (towerType?.invalid && (towerType?.dirty || towerType?.touched)) {
+                    @if (towerType?.hasError('required')) {
+                        <small class="required-field">Tower Type is required.</small>
+                    }
+                    @if (towerType?.hasError('maxlength')) {
+                        <small class="required-field">Tower Type cannot exceed 50 characters.</small>
+                    }
+                }
+            </div>
+            <div class="form-field">
+                <label for="section-count">Section Count</label>
+                <p-inputnumber formControlName="sectionCount" inputId="section-count" [useGrouping]="false" styleClass="input-full" />
+
+                @if (sectionCount?.invalid && (sectionCount?.dirty || sectionCount?.touched)) {
+                    @if (sectionCount?.hasError('required')) {
+                        <small class="required-field">Section Count is required.</small>
+                    }
+                    @if (sectionCount?.hasError('min')) {
+                        <small class="required-field">
+                            Section Count must be greater than zero.
+                        </small>
+                    }
+                }
+            </div>
+        </div>
+
+        @if(selectedTowerType){
+        
+        <div class="status-card">
+        
+            <div>
+        
+                <div class="status-title">
+                    Tower Type Availability
+                </div>
+        
+                <div class="status-subtitle">
+        
+                    Keep this blade type active if it is still in use.
+        
+                    Turn it off if it is no longer required.
+        
+                </div>
+        
+            </div>
+        
+            <div class="status-toggle-wrap">
+        
+                <span class="status-label" [class.inactive]="!towerTypeForm.get('status')?.value">
+        
+                    {{
+                    towerTypeForm.get('status')?.value
+                    ? 'Active'
+                    : 'Inactive'
+                    }}
+        
+                </span>
+        
+                <p-toggleswitch formControlName="status">
+                </p-toggleswitch>
+        
+            </div>
+        
+        </div>
+        
+        }
+        <div class="create-btn">
+            <button pButton pRipple type="submit">{{ actionName }}</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-toast />
+<p-confirmdialog />

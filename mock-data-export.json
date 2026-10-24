@@ -1,0 +1,7371 @@
+{
+  "src/app/allocation-approval/allocation-approval.ts": {
+    "allocationApprovalList": [
+      {
+        "initiatedBy": "Ravi Kumar",
+        "initiatedOn": "2026-03-25",
+        "planMonth": "Apr 2026",
+        "plantName": "Chennai",
+        "plantManager": "Suresh Reddy",
+        "status": "Created"
+      },
+      {
+        "initiatedBy": "Meena Iyer",
+        "initiatedOn": "2026-03-20",
+        "planMonth": "Apr 2026",
+        "plantName": "Chennai",
+        "plantManager": "Lakshmi Devi",
+        "status": "Created"
+      },
+      {
+        "initiatedBy": "Arjun Naik",
+        "initiatedOn": "2026-03-18",
+        "planMonth": "May 2026",
+        "plantName": "Trichy",
+        "plantManager": "Manjunath H",
+        "status": "Reviewed",
+        "reviewedBy": "Ajith Kumar",
+        "reviewedOn": "2026-03-19"
+      },
+      {
+        "initiatedBy": "Kiran Patel",
+        "initiatedOn": "2026-03-22",
+        "planMonth": "Apr 2026",
+        "plantName": "Pune",
+        "plantManager": "Anitha Rao",
+        "status": "Created"
+      },
+      {
+        "initiatedBy": "Divya Menon",
+        "initiatedOn": "2026-03-15",
+        "planMonth": "May 2026",
+        "plantName": "Chennai",
+        "plantManager": "Suresh Reddy",
+        "status": "Reviewed",
+        "reviewedBy": "Mohan",
+        "reviewedOn": "2026-03-16"
+      },
+      {
+        "initiatedBy": "Ravi Kumar",
+        "initiatedOn": "2026-03-27",
+        "planMonth": "May 2026",
+        "plantName": "Trichy",
+        "plantManager": "Manjunath H",
+        "status": "Created"
+      },
+      {
+        "initiatedBy": "Suresh Reddy",
+        "initiatedOn": "2026-03-12",
+        "planMonth": "Mar 2026",
+        "plantName": "Pune",
+        "plantManager": "Anitha Rao",
+        "status": "Reviewed",
+        "reviewedBy": "Ajith Kumar",
+        "reviewedOn": "2026-03-13"
+      },
+      {
+        "initiatedBy": "Meena Iyer",
+        "initiatedOn": "2026-03-28",
+        "planMonth": "Jun 2026",
+        "plantName": "Chennai",
+        "plantManager": "Lakshmi Devi",
+        "status": "Created"
+      },
+      {
+        "initiatedBy": "Arjun Naik",
+        "initiatedOn": "2026-03-08",
+        "planMonth": "Mar 2026",
+        "plantName": "Trichy",
+        "plantManager": "Manjunath H",
+        "status": "Reviewed",
+        "reviewedBy": "Mohan",
+        "reviewedOn": "2026-03-09"
+      }
+    ],
+    "allocatedComponentList": [
+      {
+        "componentName": "Nacelle",
+        "qty": "30"
+      },
+      {
+        "componentName": "Hub",
+        "qty": "2"
+      },
+      {
+        "componentName": "Tower",
+        "qty": "2"
+      }
+    ],
+    "productionManagerList": [
+      {
+        "label": "Ajith Kumar",
+        "value": "Ajith Kumar"
+      },
+      {
+        "label": "Surya",
+        "value": "Surya"
+      },
+      {
+        "label": "Karan",
+        "value": "Karan"
+      },
+      {
+        "label": "Siva",
+        "value": "Siva"
+      }
+    ]
+  },
+  "src/app/assign-project-crane-details/assign-project-crane-details.ts": {
+    "MOCK_PROJECT_CRANE_LIST": [
+      {
+        "projectCraneDetailId": 1,
+        "crane": {
+          "craneId": 1,
+          "craneType": "Crawler Crane",
+          "craneModel": "LR 1750/2",
+          "craneMake": "Liebherr"
+        },
+        "supplier": {
+          "supplierId": 1,
+          "supplierName": "Sarens Heavy Lift India"
+        },
+        "registrationNumber": "GJ-05-AB-1234",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 2,
+        "crane": {
+          "craneId": 2,
+          "craneType": "Crawler Crane",
+          "craneModel": "CC 2800-1",
+          "craneMake": "Terex"
+        },
+        "supplier": {
+          "supplierId": 2,
+          "supplierName": "ALE Heavylift"
+        },
+        "registrationNumber": "RJ-14-CD-5678",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 3,
+        "crane": {
+          "craneId": 3,
+          "craneType": "Mobile Crane",
+          "craneModel": "GMK 6400",
+          "craneMake": "Grove"
+        },
+        "supplier": {
+          "supplierId": 3,
+          "supplierName": "Mammoet India"
+        },
+        "registrationNumber": "TN-09-EF-4321",
+        "status": false
+      },
+      {
+        "projectCraneDetailId": 4,
+        "crane": {
+          "craneId": 5,
+          "craneType": "Crawler Crane",
+          "craneModel": "SCC8300",
+          "craneMake": "Sany"
+        },
+        "supplier": {
+          "supplierId": 4,
+          "supplierName": "Sanghvi Movers Ltd"
+        },
+        "registrationNumber": "KA-03-GH-8765",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 5,
+        "crane": {
+          "craneId": 6,
+          "craneType": "Mobile Crane",
+          "craneModel": "AC 500-2",
+          "craneMake": "Demag"
+        },
+        "supplier": {
+          "supplierId": 5,
+          "supplierName": "Tiger Crane Services"
+        },
+        "registrationNumber": "GJ-05-IJ-3456",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 6,
+        "crane": {
+          "craneId": 8,
+          "craneType": "Mobile Crane",
+          "craneModel": "LTM 1750-9.1",
+          "craneMake": "Liebherr"
+        },
+        "supplier": {
+          "supplierId": 8,
+          "supplierName": "GMMCO Cranes"
+        },
+        "registrationNumber": "RJ-14-KL-6543",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 7,
+        "crane": {
+          "craneId": 9,
+          "craneType": "Crawler Crane",
+          "craneModel": "CKE2500",
+          "craneMake": "Kobelco"
+        },
+        "supplier": {
+          "supplierId": 9,
+          "supplierName": "Perfect Lifting Solutions"
+        },
+        "registrationNumber": "TN-09-MN-7890",
+        "status": false
+      },
+      {
+        "projectCraneDetailId": 8,
+        "crane": {
+          "craneId": 10,
+          "craneType": "Mobile Crane",
+          "craneModel": "RT9130E-4",
+          "craneMake": "Terex"
+        },
+        "supplier": {
+          "supplierId": 10,
+          "supplierName": "National Crane Corporation"
+        },
+        "registrationNumber": "KA-03-OP-2109",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 9,
+        "crane": {
+          "craneId": 4,
+          "craneType": "Tower Crane",
+          "craneModel": "MD 485",
+          "craneMake": "Potain"
+        },
+        "supplier": {
+          "supplierId": 6,
+          "supplierName": "Bothra Shipping & Logistics"
+        },
+        "registrationNumber": "GJ-05-QR-5432",
+        "status": true
+      },
+      {
+        "projectCraneDetailId": 10,
+        "crane": {
+          "craneId": 7,
+          "craneType": "Crawler Crane",
+          "craneModel": "QUY260",
+          "craneMake": "XCMG"
+        },
+        "supplier": {
+          "supplierId": 7,
+          "supplierName": "ACME Crane Rentals"
+        },
+        "registrationNumber": "RJ-14-ST-9876",
+        "status": true
+      }
+    ],
+    "MOCK_CRANE_INFO_LIST": [
+      {
+        "craneId": 1,
+        "craneType": "Crawler Crane",
+        "craneModel": "LR 1750/2",
+        "craneMake": "Liebherr"
+      },
+      {
+        "craneId": 2,
+        "craneType": "Crawler Crane",
+        "craneModel": "CC 2800-1",
+        "craneMake": "Terex"
+      },
+      {
+        "craneId": 3,
+        "craneType": "Mobile Crane",
+        "craneModel": "GMK 6400",
+        "craneMake": "Grove"
+      },
+      {
+        "craneId": 4,
+        "craneType": "Tower Crane",
+        "craneModel": "MD 485",
+        "craneMake": "Potain"
+      },
+      {
+        "craneId": 5,
+        "craneType": "Crawler Crane",
+        "craneModel": "SCC8300",
+        "craneMake": "Sany"
+      },
+      {
+        "craneId": 6,
+        "craneType": "Mobile Crane",
+        "craneModel": "AC 500-2",
+        "craneMake": "Demag"
+      },
+      {
+        "craneId": 7,
+        "craneType": "Crawler Crane",
+        "craneModel": "QUY260",
+        "craneMake": "XCMG"
+      },
+      {
+        "craneId": 8,
+        "craneType": "Mobile Crane",
+        "craneModel": "LTM 1750-9.1",
+        "craneMake": "Liebherr"
+      },
+      {
+        "craneId": 9,
+        "craneType": "Crawler Crane",
+        "craneModel": "CKE2500",
+        "craneMake": "Kobelco"
+      },
+      {
+        "craneId": 10,
+        "craneType": "Mobile Crane",
+        "craneModel": "RT9130E-4",
+        "craneMake": "Terex"
+      }
+    ],
+    "MOCK_CRANE_SUPPLIER_LIST": [
+      {
+        "supplierId": 1,
+        "supplierName": "Sarens Heavy Lift India"
+      },
+      {
+        "supplierId": 2,
+        "supplierName": "ALE Heavylift"
+      },
+      {
+        "supplierId": 3,
+        "supplierName": "Mammoet India"
+      },
+      {
+        "supplierId": 4,
+        "supplierName": "Sanghvi Movers Ltd"
+      },
+      {
+        "supplierId": 5,
+        "supplierName": "Tiger Crane Services"
+      }
+    ]
+  },
+  "src/app/commisioning1/commisioning1.ts": {
+    "MOCK_COMMISSIONING1_PROJECTS": [
+      {
+        "projectId": 1,
+        "projectCode": "ENV-P301",
+        "projectName": "Kutch Wind Farm Phase 1",
+        "totalWtgs": 12,
+        "wtgCount": 12,
+        "customer": {
+          "customerId": 1,
+          "customerName": "Adani Green Energy Ltd"
+        }
+      },
+      {
+        "projectId": 2,
+        "projectCode": "ENV-P302",
+        "projectName": "Jaisalmer Cluster Phase 2",
+        "totalWtgs": 8,
+        "wtgCount": 8,
+        "customer": {
+          "customerId": 2,
+          "customerName": "ReNew Power Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 3,
+        "projectCode": "ENV-P303",
+        "projectName": "Bhuj Coastal Wind Project",
+        "totalWtgs": 15,
+        "wtgCount": 15,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Tata Power Renewable Energy"
+        }
+      },
+      {
+        "projectId": 4,
+        "projectCode": "ENV-P304",
+        "projectName": "Kayathar Wind Farm",
+        "totalWtgs": 6,
+        "wtgCount": 6,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Suzlon Energy Ltd"
+        }
+      },
+      {
+        "projectId": 5,
+        "projectCode": "ENV-P305",
+        "projectName": "Chitradurga Wind Corridor",
+        "totalWtgs": 10,
+        "wtgCount": 10,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Greenko Energies Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 6,
+        "projectCode": "ENV-P306",
+        "projectName": "Kutch Bhuj Extension Phase 3",
+        "totalWtgs": 9,
+        "wtgCount": 9,
+        "customer": {
+          "customerId": 6,
+          "customerName": "CleanMax Enviro Energy"
+        }
+      },
+      {
+        "projectId": 7,
+        "projectCode": "ENV-P307",
+        "projectName": "Rajkot Wind Energy Park",
+        "totalWtgs": 7,
+        "wtgCount": 7,
+        "customer": {
+          "customerId": 7,
+          "customerName": "Sembcorp Green Infra"
+        }
+      },
+      {
+        "projectId": 8,
+        "projectCode": "ENV-P308",
+        "projectName": "Tuticorin Coastal Cluster",
+        "totalWtgs": 11,
+        "wtgCount": 11,
+        "customer": {
+          "customerId": 8,
+          "customerName": "Vestas Wind Technology India"
+        }
+      },
+      {
+        "projectId": 9,
+        "projectCode": "ENV-P309",
+        "projectName": "Anantapur Wind Complex",
+        "totalWtgs": 14,
+        "wtgCount": 14,
+        "customer": {
+          "customerId": 9,
+          "customerName": "Torrent Power Ltd"
+        }
+      },
+      {
+        "projectId": 10,
+        "projectCode": "ENV-P310",
+        "projectName": "Dhule Wind Energy Farm",
+        "totalWtgs": 5,
+        "wtgCount": 5,
+        "customer": {
+          "customerId": 10,
+          "customerName": "Continuum Green Energy"
+        }
+      }
+    ]
+  },
+  "src/app/component-allocation/component-allocation.ts": {
+    "componentAllocationList": [
+      {
+        "slNo": 1,
+        "component": "Blade",
+        "plantName": "Plant A",
+        "plantManager": "Ravi Kumar",
+        "projectCode": "P-8001",
+        "allocatedQuantity": 25
+      },
+      {
+        "slNo": 2,
+        "component": "Nacelle",
+        "plantName": "Plant B",
+        "plantManager": "Suresh Reddy",
+        "projectCode": "P-8002",
+        "allocatedQuantity": 15
+      },
+      {
+        "slNo": 3,
+        "component": "Hub",
+        "plantName": "Plant C",
+        "plantManager": "Manjunath H",
+        "projectCode": "P-8003",
+        "allocatedQuantity": 10
+      },
+      {
+        "slNo": 4,
+        "component": "Tower",
+        "plantName": "Plant D",
+        "plantManager": "Lakshmi Devi",
+        "projectCode": "P-8004",
+        "allocatedQuantity": 30
+      },
+      {
+        "slNo": 5,
+        "component": "Converter Panel",
+        "plantName": "Plant E",
+        "plantManager": "Arjun Naik",
+        "projectCode": "P-8005",
+        "allocatedQuantity": 20
+      },
+      {
+        "slNo": 6,
+        "component": "Blade",
+        "plantName": "Plant B",
+        "plantManager": "Suresh Reddy",
+        "projectCode": "P-8006",
+        "allocatedQuantity": 18
+      },
+      {
+        "slNo": 7,
+        "component": "Nacelle",
+        "plantName": "Plant C",
+        "plantManager": "Manjunath H",
+        "projectCode": "P-8007",
+        "allocatedQuantity": 12
+      },
+      {
+        "slNo": 8,
+        "component": "Hub",
+        "plantName": "Plant A",
+        "plantManager": "Ravi Kumar",
+        "projectCode": "P-8008",
+        "allocatedQuantity": 22
+      },
+      {
+        "slNo": 9,
+        "component": "Tower",
+        "plantName": "Plant D",
+        "plantManager": "Lakshmi Devi",
+        "projectCode": "P-8009",
+        "allocatedQuantity": 16
+      },
+      {
+        "slNo": 10,
+        "component": "Converter Panel",
+        "plantName": "Plant E",
+        "plantManager": "Arjun Naik",
+        "projectCode": "P-8010",
+        "allocatedQuantity": 24
+      }
+    ]
+  },
+  "src/app/component-serial/component-serial.ts": {
+    "MOCK_COMPONENT_SERIAL_LIST": [
+      {
+        "slNo": 1,
+        "componentName": "Topflange",
+        "serialNumber": "-",
+        "status": "CREATED",
+        "plantName": "-",
+        "productionManager": "-",
+        "planStart": "-",
+        "planFinish": "-"
+      },
+      {
+        "slNo": 2,
+        "componentName": "Bottomflange",
+        "serialNumber": "-",
+        "status": "CREATED",
+        "plantName": "-",
+        "productionManager": "-",
+        "planStart": "-",
+        "planFinish": "-"
+      },
+      {
+        "slNo": 3,
+        "componentName": "Blade",
+        "serialNumber": "B-001",
+        "status": "ASSIGNED",
+        "plantName": "Chennai",
+        "productionManager": "PM-1",
+        "planStart": "2026-03-01",
+        "planFinish": "2026-03-02"
+      },
+      {
+        "slNo": 4,
+        "componentName": "Blade",
+        "serialNumber": "B-002",
+        "status": "ASSIGNED",
+        "plantName": "Chennai",
+        "productionManager": "PM-1",
+        "planStart": "2026-03-01",
+        "planFinish": "2026-03-02"
+      },
+      {
+        "slNo": 5,
+        "componentName": "Nacelle",
+        "serialNumber": "N-001",
+        "status": "IN_PROGRESS",
+        "plantName": "Chennai",
+        "productionManager": "PM-1",
+        "planStart": "2026-03-02",
+        "planFinish": "2026-03-05"
+      },
+      {
+        "slNo": 6,
+        "componentName": "Hub",
+        "serialNumber": "-",
+        "status": "CREATED",
+        "plantName": "-",
+        "productionManager": "-",
+        "planStart": "-",
+        "planFinish": "-"
+      },
+      {
+        "slNo": 7,
+        "componentName": "Tower",
+        "serialNumber": "T-001",
+        "status": "COMPLETED",
+        "plantName": "Trichy",
+        "productionManager": "PM-2",
+        "planStart": "2026-02-20",
+        "planFinish": "2026-02-28"
+      },
+      {
+        "slNo": 8,
+        "componentName": "Converter Panel",
+        "serialNumber": "-",
+        "status": "CREATED",
+        "plantName": "-",
+        "productionManager": "-",
+        "planStart": "-",
+        "planFinish": "-"
+      },
+      {
+        "slNo": 9,
+        "componentName": "Site Accessories",
+        "serialNumber": "-",
+        "status": "CREATED",
+        "plantName": "-",
+        "productionManager": "-",
+        "planStart": "-",
+        "planFinish": "-"
+      },
+      {
+        "slNo": 10,
+        "componentName": "SCADA",
+        "serialNumber": "S-001",
+        "status": "IN_PROGRESS",
+        "plantName": "Chennai",
+        "productionManager": "PM-1",
+        "planStart": "2026-03-04",
+        "planFinish": "2026-03-06"
+      },
+      {
+        "slNo": 11,
+        "componentName": "Blade",
+        "serialNumber": "B-003",
+        "status": "ASSIGNED",
+        "plantName": "Trichy",
+        "productionManager": "PM-2",
+        "planStart": "2026-03-01",
+        "planFinish": "2026-03-02"
+      },
+      {
+        "slNo": 12,
+        "componentName": "Tower",
+        "serialNumber": "T-002",
+        "status": "COMPLETED",
+        "plantName": "Trichy",
+        "productionManager": "PM-2",
+        "planStart": "2026-02-21",
+        "planFinish": "2026-03-01"
+      }
+    ]
+  },
+  "src/app/create-project/create-project.component.ts": {
+    "MOCK_PROJECT_LIST": [
+      {
+        "projectId": 1,
+        "projectCode": "P-8001",
+        "customer": {
+          "customerId": 1,
+          "customerName": "ReNew Power"
+        },
+        "probability": "P90",
+        "totalWtgs": 24,
+        "totalCapacity": 79.2
+      },
+      {
+        "projectId": 2,
+        "projectCode": "P-8002",
+        "customer": {
+          "customerId": 2,
+          "customerName": "Adani Green Energy"
+        },
+        "probability": "P50",
+        "totalWtgs": 18,
+        "totalCapacity": 59.4
+      },
+      {
+        "projectId": 3,
+        "projectCode": "P-8003",
+        "customer": {
+          "customerId": 3,
+          "customerName": "Suzlon Energy"
+        },
+        "probability": "P100",
+        "totalWtgs": 30,
+        "totalCapacity": 99
+      },
+      {
+        "projectId": 4,
+        "projectCode": "P-8004",
+        "customer": {
+          "customerId": 4,
+          "customerName": "Greenko"
+        },
+        "probability": "P90",
+        "totalWtgs": 12,
+        "totalCapacity": 39.6
+      },
+      {
+        "projectId": 5,
+        "projectCode": "P-8005",
+        "customer": {
+          "customerId": 5,
+          "customerName": "Tata Power Renewable"
+        },
+        "probability": "P75",
+        "totalWtgs": 20,
+        "totalCapacity": 66
+      },
+      {
+        "projectId": 6,
+        "projectCode": "P-8006",
+        "customer": {
+          "customerId": 6,
+          "customerName": "JSW Energy"
+        },
+        "probability": "P50",
+        "totalWtgs": 15,
+        "totalCapacity": 49.5
+      },
+      {
+        "projectId": 7,
+        "projectCode": "P-8007",
+        "customer": {
+          "customerId": 1,
+          "customerName": "ReNew Power"
+        },
+        "probability": "P90",
+        "totalWtgs": 28,
+        "totalCapacity": 92.4
+      },
+      {
+        "projectId": 8,
+        "projectCode": "P-8008",
+        "customer": {
+          "customerId": 3,
+          "customerName": "Suzlon Energy"
+        },
+        "probability": "P100",
+        "totalWtgs": 10,
+        "totalCapacity": 33
+      },
+      {
+        "projectId": 9,
+        "projectCode": "P-8009",
+        "customer": {
+          "customerId": 2,
+          "customerName": "Adani Green Energy"
+        },
+        "probability": "P75",
+        "totalWtgs": 22,
+        "totalCapacity": 72.6
+      },
+      {
+        "projectId": 10,
+        "projectCode": "P-8010",
+        "customer": {
+          "customerId": 4,
+          "customerName": "Greenko"
+        },
+        "probability": "P90",
+        "totalWtgs": 16,
+        "totalCapacity": 52.8
+      }
+    ],
+    "MOCK_ZONE_LIST": [
+      {
+        "zoneId": 1,
+        "zone": "North"
+      },
+      {
+        "zoneId": 2,
+        "zone": "South"
+      },
+      {
+        "zoneId": 3,
+        "zone": "East"
+      },
+      {
+        "zoneId": 4,
+        "zone": "West"
+      }
+    ],
+    "MOCK_WTG_TYPE_LIST": [
+      {
+        "wtgTypeId": 1,
+        "wtgType": "EN132"
+      },
+      {
+        "wtgTypeId": 2,
+        "wtgType": "EN156"
+      },
+      {
+        "wtgTypeId": 3,
+        "wtgType": "EN182"
+      },
+      {
+        "wtgTypeId": 4,
+        "wtgType": "EN156(NS)"
+      },
+      {
+        "wtgTypeId": 5,
+        "wtgType": "EN182(NS)"
+      }
+    ],
+    "MOCK_CAPACITY_LIST": [
+      {
+        "capacityId": 1,
+        "capacity": 2.1
+      },
+      {
+        "capacityId": 2,
+        "capacity": 2.4
+      },
+      {
+        "capacityId": 3,
+        "capacity": 2.5
+      },
+      {
+        "capacityId": 4,
+        "capacity": 3
+      },
+      {
+        "capacityId": 5,
+        "capacity": 3.3
+      },
+      {
+        "capacityId": 6,
+        "capacity": 3.5
+      },
+      {
+        "capacityId": 7,
+        "capacity": 5
+      },
+      {
+        "capacityId": 8,
+        "capacity": 5.5
+      }
+    ],
+    "MOCK_TOWER_TYPE_LIST": [
+      {
+        "towerTypeId": 1,
+        "towerType": "120HH-304T"
+      },
+      {
+        "towerTypeId": 2,
+        "towerType": "130HH-420T"
+      },
+      {
+        "towerTypeId": 3,
+        "towerType": "140HH-474T"
+      },
+      {
+        "towerTypeId": 4,
+        "towerType": "140HH-353T"
+      }
+    ],
+    "MOCK_BLADE_TYPE_LIST": [
+      {
+        "bladeTypeId": 1,
+        "bladeType": "Small"
+      },
+      {
+        "bladeTypeId": 2,
+        "bladeType": "Big"
+      }
+    ],
+    "MOCK_GRID_LIST": [
+      {
+        "gridConnectivityId": 1,
+        "gridConnectivity": "STU"
+      },
+      {
+        "gridConnectivityId": 2,
+        "gridConnectivity": "CTU"
+      }
+    ],
+    "MOCK_PPA_LIST": [
+      {
+        "ppaTypeId": 1,
+        "ppaType": "Auction"
+      },
+      {
+        "ppaTypeId": 2,
+        "ppaType": "C&I"
+      }
+    ],
+    "MOCK_CUSTOMER_LIST": [
+      {
+        "customerId": 1,
+        "customerName": "ReNew Power",
+        "status": true
+      },
+      {
+        "customerId": 2,
+        "customerName": "Adani Green Energy",
+        "status": true
+      },
+      {
+        "customerId": 3,
+        "customerName": "Suzlon Energy",
+        "status": true
+      },
+      {
+        "customerId": 4,
+        "customerName": "Greenko",
+        "status": true
+      },
+      {
+        "customerId": 5,
+        "customerName": "Tata Power Renewable",
+        "status": true
+      },
+      {
+        "customerId": 6,
+        "customerName": "JSW Energy",
+        "status": true
+      },
+      {
+        "customerId": 7,
+        "customerName": "NTPC Renewable Energy",
+        "status": true
+      },
+      {
+        "customerId": 8,
+        "customerName": "Torrent Power",
+        "status": false
+      },
+      {
+        "customerId": 9,
+        "customerName": "Hero Future Energies",
+        "status": true
+      },
+      {
+        "customerId": 10,
+        "customerName": "Continuum Green Energy",
+        "status": true
+      }
+    ],
+    "MOCK_CLUSTER_LIST": [
+      {
+        "clusterId": 1,
+        "clusterName": "Gujarat",
+        "status": true
+      },
+      {
+        "clusterId": 2,
+        "clusterName": "Tamil Nadu",
+        "status": true
+      },
+      {
+        "clusterId": 3,
+        "clusterName": "Rajasthan",
+        "status": true
+      },
+      {
+        "clusterId": 4,
+        "clusterName": "Karnataka",
+        "status": true
+      },
+      {
+        "clusterId": 5,
+        "clusterName": "Andhra Pradesh",
+        "status": true
+      },
+      {
+        "clusterId": 6,
+        "clusterName": "Maharashtra",
+        "status": true
+      },
+      {
+        "clusterId": 7,
+        "clusterName": "Madhya Pradesh",
+        "status": true
+      },
+      {
+        "clusterId": 8,
+        "clusterName": "Telangana",
+        "status": true
+      }
+    ],
+    "MOCK_MANAGER_LIST": [
+      {
+        "userId": 1,
+        "userName": "Ravi Kumar",
+        "status": true
+      },
+      {
+        "userId": 2,
+        "userName": "Sunita Sharma",
+        "status": true
+      },
+      {
+        "userId": 3,
+        "userName": "Ajay Patel",
+        "status": true
+      },
+      {
+        "userId": 4,
+        "userName": "Meena Joshi",
+        "status": true
+      },
+      {
+        "userId": 5,
+        "userName": "Vikram Singh",
+        "status": true
+      },
+      {
+        "userId": 6,
+        "userName": "Oxford Rebello",
+        "status": true
+      },
+      {
+        "userId": 7,
+        "userName": "Srikanth Shanmugam",
+        "status": true
+      },
+      {
+        "userId": 8,
+        "userName": "Surendra Panwar",
+        "status": true
+      }
+    ],
+    "MOCK_SPV_OPTIONS": [
+      {
+        "label": "ReNew Wind SPV 1",
+        "value": 101
+      },
+      {
+        "label": "ReNew Wind SPV 2",
+        "value": 102
+      },
+      {
+        "label": "ReNew Wind SPV 3",
+        "value": 103
+      },
+      {
+        "label": "ReNew Wind SPV 4",
+        "value": 104
+      }
+    ],
+    "MOCK_CUSTOMER_SPV_LIST": [
+      {
+        "customerSpvId": 101,
+        "spvName": "ReNew Wind SPV 1",
+        "status": true
+      },
+      {
+        "customerSpvId": 102,
+        "spvName": "ReNew Wind SPV 2",
+        "status": true
+      },
+      {
+        "customerSpvId": 103,
+        "spvName": "ReNew Wind SPV 3",
+        "status": true
+      },
+      {
+        "customerSpvId": 104,
+        "spvName": "ReNew Wind SPV 4",
+        "status": true
+      }
+    ]
+  },
+  "src/app/demand-plan/demand-plan.component.ts": {
+    "MOCK_CUSTOMERS": [
+      {
+        "customerId": 1,
+        "customerName": "ReNew Power Ltd"
+      },
+      {
+        "customerId": 2,
+        "customerName": "Adani Green Energy"
+      },
+      {
+        "customerId": 3,
+        "customerName": "Suzlon Energy"
+      },
+      {
+        "customerId": 4,
+        "customerName": "Greenko Group"
+      },
+      {
+        "customerId": 5,
+        "customerName": "Tata Power Renewable Energy"
+      },
+      {
+        "customerId": 6,
+        "customerName": "Continuum Green Energy"
+      },
+      {
+        "customerId": 7,
+        "customerName": "Hero Future Energies"
+      },
+      {
+        "customerId": 8,
+        "customerName": "JSW Energy"
+      },
+      {
+        "customerId": 9,
+        "customerName": "Sembcorp Green Infra"
+      },
+      {
+        "customerId": 10,
+        "customerName": "Torrent Power Ltd"
+      }
+    ],
+    "MOCK_PROJECTS": [
+      {
+        "projectId": 1,
+        "projectCode": "BWF-P2-2026"
+      },
+      {
+        "projectId": 2,
+        "projectCode": "JSLM-CL4-2026"
+      },
+      {
+        "projectId": 3,
+        "projectCode": "KNL-WP1-2026"
+      },
+      {
+        "projectId": 4,
+        "projectCode": "DVGD-WP3-2026"
+      },
+      {
+        "projectId": 5,
+        "projectCode": "CHTP-WP2-2026"
+      },
+      {
+        "projectId": 6,
+        "projectCode": "RJKT-WP5-2026"
+      },
+      {
+        "projectId": 7,
+        "projectCode": "PATN-WP1-2026"
+      },
+      {
+        "projectId": 8,
+        "projectCode": "TUTC-WP4-2026"
+      },
+      {
+        "projectId": 9,
+        "projectCode": "BLGM-WP2-2026"
+      },
+      {
+        "projectId": 10,
+        "projectCode": "SNGR-WP6-2026"
+      }
+    ],
+    "MOCK_SPVS": [
+      {
+        "customerSpvId": 1,
+        "spvName": "Bhuj Renewable Energy SPV 1"
+      },
+      {
+        "customerSpvId": 2,
+        "spvName": "Jaisalmer Wind Power SPV 2"
+      },
+      {
+        "customerSpvId": 3,
+        "spvName": "Kutch Green Energy SPV 3"
+      },
+      {
+        "customerSpvId": 4,
+        "spvName": "Devgadh Wind Projects SPV 4"
+      },
+      {
+        "customerSpvId": 5,
+        "spvName": "Chitradurga Wind SPV 5"
+      },
+      {
+        "customerSpvId": 6,
+        "spvName": "Rajkot Renewable SPV 6"
+      },
+      {
+        "customerSpvId": 7,
+        "spvName": "Patan Wind Energy SPV 7"
+      },
+      {
+        "customerSpvId": 8,
+        "spvName": "Tuticorin Wind SPV 8"
+      },
+      {
+        "customerSpvId": 9,
+        "spvName": "Belgaum Green Power SPV 9"
+      },
+      {
+        "customerSpvId": 10,
+        "spvName": "Sangareddy Wind SPV 10"
+      }
+    ],
+    "MOCK_WTG_DETAILS": [
+      {
+        "wtgConfigId": 1,
+        "wtgType": "EN-141",
+        "capMw": 3,
+        "towerType": "120HH-355T",
+        "bladeType": "B68.5",
+        "totalQty": 12,
+        "janQty": 1,
+        "febQty": 1,
+        "marQty": 1,
+        "aprQty": 1,
+        "mayQty": 1,
+        "junQty": 1,
+        "julQty": 1,
+        "augQty": 1,
+        "sepQty": 1,
+        "octQty": 1,
+        "novQty": 1,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 2,
+        "wtgType": "EN-156",
+        "capMw": 3.3,
+        "towerType": "140HH-474T",
+        "bladeType": "B76.0",
+        "totalQty": 8,
+        "janQty": 0,
+        "febQty": 1,
+        "marQty": 1,
+        "aprQty": 1,
+        "mayQty": 0,
+        "junQty": 1,
+        "julQty": 1,
+        "augQty": 1,
+        "sepQty": 0,
+        "octQty": 1,
+        "novQty": 1,
+        "decQty": 0
+      },
+      {
+        "wtgConfigId": 3,
+        "wtgType": "EN-171",
+        "capMw": 3.6,
+        "towerType": "135HH-500T",
+        "bladeType": "B83.5",
+        "totalQty": 6,
+        "janQty": 1,
+        "febQty": 0,
+        "marQty": 1,
+        "aprQty": 0,
+        "mayQty": 1,
+        "junQty": 0,
+        "julQty": 1,
+        "augQty": 0,
+        "sepQty": 1,
+        "octQty": 0,
+        "novQty": 1,
+        "decQty": 0
+      },
+      {
+        "wtgConfigId": 4,
+        "wtgType": "EN-131",
+        "capMw": 2.1,
+        "towerType": "105HH-330T",
+        "bladeType": "B64.0",
+        "totalQty": 10,
+        "janQty": 1,
+        "febQty": 1,
+        "marQty": 0,
+        "aprQty": 1,
+        "mayQty": 1,
+        "junQty": 0,
+        "julQty": 1,
+        "augQty": 1,
+        "sepQty": 0,
+        "octQty": 1,
+        "novQty": 1,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 5,
+        "wtgType": "EN-141",
+        "capMw": 3,
+        "towerType": "120HH-355T",
+        "bladeType": "B68.5",
+        "totalQty": 9,
+        "janQty": 0,
+        "febQty": 1,
+        "marQty": 1,
+        "aprQty": 0,
+        "mayQty": 1,
+        "junQty": 1,
+        "julQty": 0,
+        "augQty": 1,
+        "sepQty": 1,
+        "octQty": 0,
+        "novQty": 1,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 6,
+        "wtgType": "EN-156",
+        "capMw": 3.3,
+        "towerType": "140HH-474T",
+        "bladeType": "B76.0",
+        "totalQty": 7,
+        "janQty": 1,
+        "febQty": 0,
+        "marQty": 0,
+        "aprQty": 1,
+        "mayQty": 1,
+        "junQty": 0,
+        "julQty": 1,
+        "augQty": 0,
+        "sepQty": 1,
+        "octQty": 1,
+        "novQty": 0,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 7,
+        "wtgType": "EN-171",
+        "capMw": 3.6,
+        "towerType": "135HH-500T",
+        "bladeType": "B83.5",
+        "totalQty": 11,
+        "janQty": 1,
+        "febQty": 1,
+        "marQty": 1,
+        "aprQty": 1,
+        "mayQty": 0,
+        "junQty": 1,
+        "julQty": 1,
+        "augQty": 1,
+        "sepQty": 1,
+        "octQty": 0,
+        "novQty": 1,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 8,
+        "wtgType": "EN-131",
+        "capMw": 2.1,
+        "towerType": "105HH-330T",
+        "bladeType": "B64.0",
+        "totalQty": 5,
+        "janQty": 0,
+        "febQty": 0,
+        "marQty": 1,
+        "aprQty": 0,
+        "mayQty": 1,
+        "junQty": 0,
+        "julQty": 1,
+        "augQty": 0,
+        "sepQty": 1,
+        "octQty": 0,
+        "novQty": 0,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 9,
+        "wtgType": "EN-156",
+        "capMw": 3.3,
+        "towerType": "140HH-474T",
+        "bladeType": "B76.0",
+        "totalQty": 13,
+        "janQty": 1,
+        "febQty": 1,
+        "marQty": 1,
+        "aprQty": 1,
+        "mayQty": 1,
+        "junQty": 1,
+        "julQty": 1,
+        "augQty": 1,
+        "sepQty": 1,
+        "octQty": 1,
+        "novQty": 1,
+        "decQty": 1
+      },
+      {
+        "wtgConfigId": 10,
+        "wtgType": "EN-141",
+        "capMw": 3,
+        "towerType": "120HH-355T",
+        "bladeType": "B68.5",
+        "totalQty": 4,
+        "janQty": 0,
+        "febQty": 1,
+        "marQty": 0,
+        "aprQty": 0,
+        "mayQty": 1,
+        "junQty": 0,
+        "julQty": 0,
+        "augQty": 1,
+        "sepQty": 0,
+        "octQty": 0,
+        "novQty": 1,
+        "decQty": 0
+      }
+    ]
+  },
+  "src/app/foundation/foundation.ts": {
+    "MOCK_FOUNDATION_PROJECTS": [
+      {
+        "projectId": 1,
+        "projectCode": "ENV-P101",
+        "projectName": "Kutch Wind Farm Phase 1",
+        "totalWtgs": 12,
+        "customer": {
+          "customerId": 1,
+          "customerName": "Adani Green Energy Ltd"
+        }
+      },
+      {
+        "projectId": 2,
+        "projectCode": "ENV-P102",
+        "projectName": "Jaisalmer Cluster Phase 2",
+        "totalWtgs": 8,
+        "customer": {
+          "customerId": 2,
+          "customerName": "ReNew Power Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 3,
+        "projectCode": "ENV-P103",
+        "projectName": "Bhuj Coastal Wind Project",
+        "totalWtgs": 15,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Tata Power Renewable Energy"
+        }
+      },
+      {
+        "projectId": 4,
+        "projectCode": "ENV-P104",
+        "projectName": "Kayathar Wind Farm",
+        "totalWtgs": 6,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Suzlon Energy Ltd"
+        }
+      },
+      {
+        "projectId": 5,
+        "projectCode": "ENV-P105",
+        "projectName": "Chitradurga Wind Corridor",
+        "totalWtgs": 10,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Greenko Energies Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 6,
+        "projectCode": "ENV-P106",
+        "projectName": "Kutch Bhuj Extension Phase 3",
+        "totalWtgs": 9,
+        "customer": {
+          "customerId": 6,
+          "customerName": "CleanMax Enviro Energy"
+        }
+      },
+      {
+        "projectId": 7,
+        "projectCode": "ENV-P107",
+        "projectName": "Rajkot Wind Energy Park",
+        "totalWtgs": 7,
+        "customer": {
+          "customerId": 7,
+          "customerName": "Sembcorp Green Infra"
+        }
+      },
+      {
+        "projectId": 8,
+        "projectCode": "ENV-P108",
+        "projectName": "Tuticorin Coastal Cluster",
+        "totalWtgs": 11,
+        "customer": {
+          "customerId": 8,
+          "customerName": "Vestas Wind Technology India"
+        }
+      },
+      {
+        "projectId": 9,
+        "projectCode": "ENV-P109",
+        "projectName": "Anantapur Wind Complex",
+        "totalWtgs": 14,
+        "customer": {
+          "customerId": 9,
+          "customerName": "Torrent Power Ltd"
+        }
+      },
+      {
+        "projectId": 10,
+        "projectCode": "ENV-P110",
+        "projectName": "Dhule Wind Energy Farm",
+        "totalWtgs": 5,
+        "customer": {
+          "customerId": 10,
+          "customerName": "Continuum Green Energy"
+        }
+      }
+    ],
+    "MOCK_FOUNDATION_VIEWALL": [
+      {
+        "wtgCode": "WTG-01",
+        "locationNo": "LOC-01",
+        "maximoId": "MAX-001"
+      },
+      {
+        "wtgCode": "WTG-02",
+        "locationNo": "LOC-02",
+        "maximoId": "MAX-002"
+      },
+      {
+        "wtgCode": "WTG-03",
+        "locationNo": "LOC-03",
+        "maximoId": "MAX-003"
+      },
+      {
+        "wtgCode": "WTG-04",
+        "locationNo": "LOC-04",
+        "maximoId": "MAX-004"
+      },
+      {
+        "wtgCode": "WTG-05",
+        "locationNo": "LOC-05",
+        "maximoId": "MAX-005"
+      },
+      {
+        "wtgCode": "WTG-06",
+        "locationNo": "LOC-06",
+        "maximoId": "MAX-006"
+      },
+      {
+        "wtgCode": "WTG-07",
+        "locationNo": "LOC-07",
+        "maximoId": "MAX-007"
+      },
+      {
+        "wtgCode": "WTG-08",
+        "locationNo": "LOC-08",
+        "maximoId": "MAX-008"
+      },
+      {
+        "wtgCode": "WTG-09",
+        "locationNo": "LOC-09",
+        "maximoId": "MAX-009"
+      },
+      {
+        "wtgCode": "WTG-10",
+        "locationNo": "LOC-10",
+        "maximoId": "MAX-010"
+      }
+    ]
+  },
+  "src/app/foundation1/foundation1.ts": {
+    "MOCK_FOUNDATION1_PROJECTS": [
+      {
+        "projectId": 1,
+        "projectCode": "ENV-P201",
+        "projectName": "Kutch Wind Farm Phase 1",
+        "totalWtgs": 12,
+        "customer": {
+          "customerId": 1,
+          "customerName": "Adani Green Energy Ltd"
+        }
+      },
+      {
+        "projectId": 2,
+        "projectCode": "ENV-P202",
+        "projectName": "Jaisalmer Cluster Phase 2",
+        "totalWtgs": 8,
+        "customer": {
+          "customerId": 2,
+          "customerName": "ReNew Power Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 3,
+        "projectCode": "ENV-P203",
+        "projectName": "Bhuj Coastal Wind Project",
+        "totalWtgs": 15,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Tata Power Renewable Energy"
+        }
+      },
+      {
+        "projectId": 4,
+        "projectCode": "ENV-P204",
+        "projectName": "Kayathar Wind Farm",
+        "totalWtgs": 6,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Suzlon Energy Ltd"
+        }
+      },
+      {
+        "projectId": 5,
+        "projectCode": "ENV-P205",
+        "projectName": "Chitradurga Wind Corridor",
+        "totalWtgs": 10,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Greenko Energies Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 6,
+        "projectCode": "ENV-P206",
+        "projectName": "Kutch Bhuj Extension Phase 3",
+        "totalWtgs": 9,
+        "customer": {
+          "customerId": 6,
+          "customerName": "CleanMax Enviro Energy"
+        }
+      },
+      {
+        "projectId": 7,
+        "projectCode": "ENV-P207",
+        "projectName": "Rajkot Wind Energy Park",
+        "totalWtgs": 7,
+        "customer": {
+          "customerId": 7,
+          "customerName": "Sembcorp Green Infra"
+        }
+      },
+      {
+        "projectId": 8,
+        "projectCode": "ENV-P208",
+        "projectName": "Tuticorin Coastal Cluster",
+        "totalWtgs": 11,
+        "customer": {
+          "customerId": 8,
+          "customerName": "Vestas Wind Technology India"
+        }
+      },
+      {
+        "projectId": 9,
+        "projectCode": "ENV-P209",
+        "projectName": "Anantapur Wind Complex",
+        "totalWtgs": 14,
+        "customer": {
+          "customerId": 9,
+          "customerName": "Torrent Power Ltd"
+        }
+      },
+      {
+        "projectId": 10,
+        "projectCode": "ENV-P210",
+        "projectName": "Dhule Wind Energy Farm",
+        "totalWtgs": 5,
+        "customer": {
+          "customerId": 10,
+          "customerName": "Continuum Green Energy"
+        }
+      }
+    ],
+    "MOCK_FOUNDATION1_WTG_DETAILS": [
+      {
+        "location": {
+          "locationId": 1,
+          "locationCode": "LOC-01",
+          "maximoId": "MAX-001"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-01"
+        }
+      },
+      {
+        "location": {
+          "locationId": 2,
+          "locationCode": "LOC-02",
+          "maximoId": "MAX-002"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-02"
+        }
+      },
+      {
+        "location": {
+          "locationId": 3,
+          "locationCode": "LOC-03",
+          "maximoId": "MAX-003"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-03"
+        }
+      },
+      {
+        "location": {
+          "locationId": 4,
+          "locationCode": "LOC-04",
+          "maximoId": "MAX-004"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-04"
+        }
+      },
+      {
+        "location": {
+          "locationId": 5,
+          "locationCode": "LOC-05",
+          "maximoId": "MAX-005"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-05"
+        }
+      },
+      {
+        "location": {
+          "locationId": 6,
+          "locationCode": "LOC-06",
+          "maximoId": "MAX-006"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-06"
+        }
+      },
+      {
+        "location": {
+          "locationId": 7,
+          "locationCode": "LOC-07",
+          "maximoId": "MAX-007"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-07"
+        }
+      },
+      {
+        "location": {
+          "locationId": 8,
+          "locationCode": "LOC-08",
+          "maximoId": "MAX-008"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-08"
+        }
+      },
+      {
+        "location": {
+          "locationId": 9,
+          "locationCode": "LOC-09",
+          "maximoId": "MAX-009"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-09"
+        }
+      },
+      {
+        "location": {
+          "locationId": 10,
+          "locationCode": "LOC-10",
+          "maximoId": "MAX-010"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-10"
+        }
+      }
+    ],
+    "MOCK_FOUNDATION1_ACTIVITIES": [
+      {
+        "wtgCode": "WTG-01",
+        "locationCode": "LOC-01",
+        "maximoId": "MAX-001",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-02",
+            "soilTestActualFinish": "2026-05-06",
+            "actualSbc": 18.5
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-08",
+            "excavationActualFinish": "2026-05-14"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-16"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": "2026-05-18",
+            "topFlangeActual": "2026-05-19"
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": "2026-05-20",
+            "reinforcementActualFinish": "2026-05-25"
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": "2026-05-26"
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": "2026-05-28"
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": "2026-05-30",
+            "raftCastingActual": "2026-05-31",
+            "raftCastingForecast": "2026-05-30",
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": "2026-06-02",
+            "pedestalCastingActual": "2026-06-03",
+            "pedestalCastingForecast": "2026-06-02",
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": "2026-06-10",
+            "foundationCubeTest21Days": "2026-06-24",
+            "foundationCubeTest28Days": "2026-07-01"
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": "2026-07-03"
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": "2026-07-10",
+            "groutingCubeTest28Days": "2026-07-31"
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": "2026-08-02"
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": "2026-08-04"
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": "2026-08-06"
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": "2026-08-08"
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-02",
+        "locationCode": "LOC-02",
+        "maximoId": "MAX-002",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-03",
+            "soilTestActualFinish": "2026-05-07",
+            "actualSbc": 19.2
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-09",
+            "excavationActualFinish": "2026-05-15"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-17"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": "2026-05-19",
+            "topFlangeActual": "2026-05-20"
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": "2026-05-21",
+            "reinforcementActualFinish": "2026-05-26"
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": "2026-05-27"
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": "2026-05-29"
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": "2026-05-31",
+            "raftCastingActual": "2026-06-01",
+            "raftCastingForecast": "2026-05-31",
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": "2026-06-05",
+            "pedestalCastingDelayReason": "Rebar delivery delay"
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-03",
+        "locationCode": "LOC-03",
+        "maximoId": "MAX-003",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-04",
+            "soilTestActualFinish": "2026-05-08",
+            "actualSbc": 17.8
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-10",
+            "excavationActualFinish": "2026-05-16"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-18"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": "2026-05-20",
+            "topFlangeActual": "2026-05-21"
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": "2026-06-01",
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-04",
+        "locationCode": "LOC-04",
+        "maximoId": "MAX-004",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-05",
+            "soilTestActualFinish": "2026-05-09",
+            "actualSbc": 20.1
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-11",
+            "excavationActualFinish": "2026-05-17"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-19"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": null,
+            "topFlangeActual": null
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": null,
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-05",
+        "locationCode": "LOC-05",
+        "maximoId": "MAX-005",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-06",
+            "soilTestActualFinish": "2026-05-10",
+            "actualSbc": 18.9
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": null,
+            "excavationActualFinish": null
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": null
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": null,
+            "topFlangeActual": null
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": null,
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-06",
+        "locationCode": "LOC-06",
+        "maximoId": "MAX-006",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-07",
+            "soilTestActualFinish": "2026-05-11",
+            "actualSbc": 19.6
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-13",
+            "excavationActualFinish": "2026-05-19"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-21"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": "2026-05-23",
+            "topFlangeActual": "2026-05-24"
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": "2026-05-25",
+            "reinforcementActualFinish": "2026-05-30"
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": "2026-05-31"
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": "2026-06-02"
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": "2026-06-04",
+            "raftCastingActual": "2026-06-05",
+            "raftCastingForecast": "2026-06-04",
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": "2026-06-07",
+            "pedestalCastingActual": "2026-06-08",
+            "pedestalCastingForecast": "2026-06-07",
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": "2026-06-15",
+            "foundationCubeTest21Days": "2026-06-29",
+            "foundationCubeTest28Days": "2026-07-06"
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": "2026-07-08"
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": "2026-07-15",
+            "groutingCubeTest28Days": "2026-08-05"
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": "2026-08-07"
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": "2026-08-09"
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": "2026-08-11"
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": "2026-08-13"
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-07",
+        "locationCode": "LOC-07",
+        "maximoId": "MAX-007",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-08",
+            "soilTestActualFinish": "2026-05-12",
+            "actualSbc": 21.3
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-14",
+            "excavationActualFinish": "2026-05-20"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-22"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": null,
+            "topFlangeActual": null
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": null,
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-08",
+        "locationCode": "LOC-08",
+        "maximoId": "MAX-008",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-09",
+            "soilTestActualFinish": "2026-05-13",
+            "actualSbc": 18.2
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": null,
+            "excavationActualFinish": null
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": null
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": null,
+            "topFlangeActual": null
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": null,
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-09",
+        "locationCode": "LOC-09",
+        "maximoId": "MAX-009",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": "2026-05-10",
+            "soilTestActualFinish": "2026-05-14",
+            "actualSbc": 19.9
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": "2026-05-16",
+            "excavationActualFinish": "2026-05-22"
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": "2026-05-24"
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": "2026-05-26",
+            "topFlangeActual": "2026-05-27"
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": "2026-05-28",
+            "reinforcementActualFinish": "2026-06-02"
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": "2026-06-03"
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": "2026-06-05"
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": "2026-06-07",
+            "raftCastingActual": "2026-06-08",
+            "raftCastingForecast": "2026-06-07",
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": "2026-06-10",
+            "pedestalCastingActual": "2026-06-11",
+            "pedestalCastingForecast": "2026-06-10",
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": "2026-06-18",
+            "foundationCubeTest21Days": "2026-07-02",
+            "foundationCubeTest28Days": "2026-07-09"
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      },
+      {
+        "wtgCode": "WTG-10",
+        "locationCode": "LOC-10",
+        "maximoId": "MAX-010",
+        "soilTest": {
+          "soilTest": {
+            "soilTestActualStart": null,
+            "soilTestActualFinish": null,
+            "actualSbc": null
+          }
+        },
+        "excavation": {
+          "excavation": {
+            "excavationActualStart": null,
+            "excavationActualFinish": null
+          }
+        },
+        "pcc": {
+          "pcc": {
+            "pccActual": null
+          }
+        },
+        "flange": {
+          "flange": {
+            "bottomFlangeActual": null,
+            "topFlangeActual": null
+          }
+        },
+        "reinforcement": {
+          "reinforcement": {
+            "reinforcementActualStart": null,
+            "reinforcementActualFinish": null
+          }
+        },
+        "earthing": {
+          "earthing": {
+            "earthingStripActual": null
+          }
+        },
+        "shuttering": {
+          "shuttering": {
+            "shutteringActual": null
+          }
+        },
+        "raftCasting": {
+          "raftCasting": {
+            "raftCastingPlan": null,
+            "raftCastingActual": null,
+            "raftCastingForecast": null,
+            "raftCastingDelayReason": ""
+          }
+        },
+        "pedestalCasting": {
+          "pedestalCasting": {
+            "pedestalCastingPlan": null,
+            "pedestalCastingActual": null,
+            "pedestalCastingForecast": null,
+            "pedestalCastingDelayReason": ""
+          }
+        },
+        "foundationCubeTest": {
+          "foundationCubeTest": {
+            "foundationCubeTest7Days": null,
+            "foundationCubeTest21Days": null,
+            "foundationCubeTest28Days": null
+          }
+        },
+        "grouting": {
+          "grouting": {
+            "groutingActual": null
+          }
+        },
+        "groutingCubeTest": {
+          "groutingCubeTest": {
+            "groutingCubeTest7Days": null,
+            "groutingCubeTest28Days": null
+          }
+        },
+        "backfilling": {
+          "backfilling": {
+            "backfillingActual": null
+          }
+        },
+        "approachRoad": {
+          "approachRoad": {
+            "approachRoadActual": null
+          }
+        },
+        "cranePlatform": {
+          "cranePlatform": {
+            "cranePlatformActual": null
+          }
+        },
+        "locationClearance": {
+          "locationClearance": {
+            "locationClearanceActual": null
+          }
+        }
+      }
+    ]
+  },
+  "src/app/installation/installation.ts": {
+    "MOCK_INSTALLATION_PROJECTS": [
+      {
+        "projectId": 1,
+        "projectCode": "ENV-P401",
+        "projectName": "Kutch Wind Farm Phase 1",
+        "totalWtgs": 12,
+        "wtgCount": 12,
+        "customer": {
+          "customerId": 1,
+          "customerName": "Adani Green Energy Ltd"
+        }
+      },
+      {
+        "projectId": 2,
+        "projectCode": "ENV-P402",
+        "projectName": "Jaisalmer Cluster Phase 2",
+        "totalWtgs": 8,
+        "wtgCount": 8,
+        "customer": {
+          "customerId": 2,
+          "customerName": "ReNew Power Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 3,
+        "projectCode": "ENV-P403",
+        "projectName": "Bhuj Coastal Wind Project",
+        "totalWtgs": 15,
+        "wtgCount": 15,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Tata Power Renewable Energy"
+        }
+      },
+      {
+        "projectId": 4,
+        "projectCode": "ENV-P404",
+        "projectName": "Kayathar Wind Farm",
+        "totalWtgs": 6,
+        "wtgCount": 6,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Suzlon Energy Ltd"
+        }
+      },
+      {
+        "projectId": 5,
+        "projectCode": "ENV-P405",
+        "projectName": "Chitradurga Wind Corridor",
+        "totalWtgs": 10,
+        "wtgCount": 10,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Greenko Energies Pvt Ltd"
+        }
+      },
+      {
+        "projectId": 6,
+        "projectCode": "ENV-P406",
+        "projectName": "Kutch Bhuj Extension Phase 3",
+        "totalWtgs": 9,
+        "wtgCount": 9,
+        "customer": {
+          "customerId": 6,
+          "customerName": "CleanMax Enviro Energy"
+        }
+      },
+      {
+        "projectId": 7,
+        "projectCode": "ENV-P407",
+        "projectName": "Rajkot Wind Energy Park",
+        "totalWtgs": 7,
+        "wtgCount": 7,
+        "customer": {
+          "customerId": 7,
+          "customerName": "Sembcorp Green Infra"
+        }
+      },
+      {
+        "projectId": 8,
+        "projectCode": "ENV-P408",
+        "projectName": "Tuticorin Coastal Cluster",
+        "totalWtgs": 11,
+        "wtgCount": 11,
+        "customer": {
+          "customerId": 8,
+          "customerName": "Vestas Wind Technology India"
+        }
+      },
+      {
+        "projectId": 9,
+        "projectCode": "ENV-P409",
+        "projectName": "Anantapur Wind Complex",
+        "totalWtgs": 14,
+        "wtgCount": 14,
+        "customer": {
+          "customerId": 9,
+          "customerName": "Torrent Power Ltd"
+        }
+      },
+      {
+        "projectId": 10,
+        "projectCode": "ENV-P410",
+        "projectName": "Dhule Wind Energy Farm",
+        "totalWtgs": 5,
+        "wtgCount": 5,
+        "customer": {
+          "customerId": 10,
+          "customerName": "Continuum Green Energy"
+        }
+      }
+    ],
+    "MOCK_INSTALLATION_CRANE_DETAILS": [
+      {
+        "projectCraneDetailId": 1,
+        "supplier": {
+          "supplierId": 1,
+          "supplierName": "Sarens Heavy Lift India"
+        },
+        "crane": {
+          "craneId": 1,
+          "craneModel": "LR 1750/2"
+        }
+      },
+      {
+        "projectCraneDetailId": 2,
+        "supplier": {
+          "supplierId": 2,
+          "supplierName": "ALE Heavylift"
+        },
+        "crane": {
+          "craneId": 2,
+          "craneModel": "CC 2800-1"
+        }
+      },
+      {
+        "projectCraneDetailId": 3,
+        "supplier": {
+          "supplierId": 3,
+          "supplierName": "Mammoet India"
+        },
+        "crane": {
+          "craneId": 3,
+          "craneModel": "GMK 6400"
+        }
+      },
+      {
+        "projectCraneDetailId": 4,
+        "supplier": {
+          "supplierId": 4,
+          "supplierName": "Sanghvi Movers Ltd"
+        },
+        "crane": {
+          "craneId": 4,
+          "craneModel": "MD 485"
+        }
+      }
+    ],
+    "MOCK_INSTALLATION_WTG_DETAILS": [
+      {
+        "location": {
+          "locationId": 1,
+          "locationCode": "LOC-01",
+          "maximoId": "MAX-001"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-01",
+          "wtgType": {
+            "wtgType": "EN-156"
+          },
+          "towerType": {
+            "towerType": "140HH-520T",
+            "sectionCount": 6
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 2,
+          "locationCode": "LOC-02",
+          "maximoId": "MAX-002"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-02",
+          "wtgType": {
+            "wtgType": "EN-141"
+          },
+          "towerType": {
+            "towerType": "120HH-474T",
+            "sectionCount": 5
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 3,
+          "locationCode": "LOC-03",
+          "maximoId": "MAX-003"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-03",
+          "wtgType": {
+            "wtgType": "EN-156"
+          },
+          "towerType": {
+            "towerType": "140HH-520T",
+            "sectionCount": 6
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 4,
+          "locationCode": "LOC-04",
+          "maximoId": "MAX-004"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-04",
+          "wtgType": {
+            "wtgType": "EN-141"
+          },
+          "towerType": {
+            "towerType": "120HH-474T",
+            "sectionCount": 5
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 5,
+          "locationCode": "LOC-05",
+          "maximoId": "MAX-005"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-05",
+          "wtgType": {
+            "wtgType": "EN-156"
+          },
+          "towerType": {
+            "towerType": "140HH-520T",
+            "sectionCount": 6
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 6,
+          "locationCode": "LOC-06",
+          "maximoId": "MAX-006"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-06",
+          "wtgType": {
+            "wtgType": "EN-141"
+          },
+          "towerType": {
+            "towerType": "120HH-474T",
+            "sectionCount": 5
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 7,
+          "locationCode": "LOC-07",
+          "maximoId": "MAX-007"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-07",
+          "wtgType": {
+            "wtgType": "EN-156"
+          },
+          "towerType": {
+            "towerType": "140HH-520T",
+            "sectionCount": 6
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 8,
+          "locationCode": "LOC-08",
+          "maximoId": "MAX-008"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-08",
+          "wtgType": {
+            "wtgType": "EN-141"
+          },
+          "towerType": {
+            "towerType": "120HH-474T",
+            "sectionCount": 5
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 9,
+          "locationCode": "LOC-09",
+          "maximoId": "MAX-009"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-09",
+          "wtgType": {
+            "wtgType": "EN-156"
+          },
+          "towerType": {
+            "towerType": "140HH-520T",
+            "sectionCount": 6
+          }
+        }
+      },
+      {
+        "location": {
+          "locationId": 10,
+          "locationCode": "LOC-10",
+          "maximoId": "MAX-010"
+        },
+        "projectWtg": {
+          "wtgCode": "WTG-10",
+          "wtgType": {
+            "wtgType": "EN-141"
+          },
+          "towerType": {
+            "towerType": "120HH-474T",
+            "sectionCount": 5
+          }
+        }
+      }
+    ],
+    "MOCK_INSTALLATION_ACTIVITIES": [
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-01",
+            "wtgType": {
+              "wtgType": "EN-156"
+            },
+            "towerType": {
+              "towerType": "140HH-520T",
+              "sectionCount": 6
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-01",
+          "maximoId": "MAX-001"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 2,
+            "supplierName": "ALE Heavylift"
+          },
+          "crane": {
+            "craneId": 2,
+            "craneModel": "CC 2800-1"
+          }
+        },
+        "craneMobilization": "2026-06-30",
+        "craneAssemblyStart": "2026-07-01",
+        "craneAssemblyFinish": "2026-07-02",
+        "bottomPlatformAssembly": "2026-07-03",
+        "craneBoomUp": "2026-07-04",
+        "converterPanelInstallation": "2026-07-05",
+        "installationPlanStart": "2026-06-30",
+        "installationActualStart": "2026-07-01",
+        "installationForeCastStart": "2026-07-01",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-06",
+            "torqueCheckDate": "2026-07-07"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-07",
+            "torqueCheckDate": "2026-07-08"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-08",
+            "torqueCheckDate": "2026-07-09"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-09",
+            "torqueCheckDate": "2026-07-10"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-10",
+            "torqueCheckDate": "2026-07-11"
+          },
+          {
+            "towerInstallationId": 6,
+            "section": 6,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          }
+        ],
+        "nacelleInstallation": "2026-07-14",
+        "assemblyMethod": "ROTOR",
+        "rotorAssemblyDate": "2026-07-15",
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": "2026-07-16",
+        "installationPlanFinish": "2026-07-20",
+        "installationActualFinish": "2026-07-21",
+        "installationForeCastFinish": "2026-07-21",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-22",
+        "anchorBolt10PercentTorqueCheck": "2026-07-07",
+        "towerNacelle10PercentTorqueCheck": "2026-07-17",
+        "nacelleHub10PercentTorqueCheck": "2026-07-18",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-17",
+            "torqueCheckDate": "2026-07-18"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-18",
+            "torqueCheckDate": "2026-07-19"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-19",
+            "torqueCheckDate": "2026-07-20"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": "2026-07-19",
+        "final10PercentTorqueCheck": "2026-07-23",
+        "generatorAlignment": "2026-07-24",
+        "cableLaying": "2026-07-25",
+        "mechanicalCompletion": "2026-07-26",
+        "electricalCompletion": "2026-07-27",
+        "liftInstallation": "2026-07-28",
+        "qaInspectionFinish": "2026-07-29",
+        "mccPlan": "2026-07-30",
+        "mccActual": "2026-07-30",
+        "mccForecast": "2026-07-30",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-07-31"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-02",
+            "wtgType": {
+              "wtgType": "EN-141"
+            },
+            "towerType": {
+              "towerType": "120HH-474T",
+              "sectionCount": 5
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-02",
+          "maximoId": "MAX-002"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 3,
+            "supplierName": "Mammoet India"
+          },
+          "crane": {
+            "craneId": 3,
+            "craneModel": "GMK 6400"
+          }
+        },
+        "craneMobilization": "2026-07-01",
+        "craneAssemblyStart": "2026-07-02",
+        "craneAssemblyFinish": "2026-07-03",
+        "bottomPlatformAssembly": "2026-07-04",
+        "craneBoomUp": "2026-07-05",
+        "converterPanelInstallation": "2026-07-06",
+        "installationPlanStart": "2026-07-01",
+        "installationActualStart": "2026-07-02",
+        "installationForeCastStart": "2026-07-02",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-07",
+            "torqueCheckDate": "2026-07-08"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-08",
+            "torqueCheckDate": "2026-07-09"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-09",
+            "torqueCheckDate": "2026-07-10"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-10",
+            "torqueCheckDate": "2026-07-11"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          }
+        ],
+        "nacelleInstallation": "2026-07-15",
+        "assemblyMethod": "HUB",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": "2026-07-16",
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-21",
+        "installationActualFinish": "2026-07-22",
+        "installationForeCastFinish": "2026-07-22",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-23",
+        "anchorBolt10PercentTorqueCheck": "2026-07-08",
+        "towerNacelle10PercentTorqueCheck": "2026-07-18",
+        "nacelleHub10PercentTorqueCheck": "2026-07-19",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-18",
+            "torqueCheckDate": "2026-07-19"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-19",
+            "torqueCheckDate": "2026-07-20"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-20",
+            "torqueCheckDate": "2026-07-21"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": "2026-07-24",
+        "generatorAlignment": "2026-07-25",
+        "cableLaying": "2026-07-26",
+        "mechanicalCompletion": "2026-07-27",
+        "electricalCompletion": "2026-07-28",
+        "liftInstallation": "2026-07-29",
+        "qaInspectionFinish": "2026-07-30",
+        "mccPlan": "2026-07-31",
+        "mccActual": "2026-07-31",
+        "mccForecast": "2026-07-31",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-08-01"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-03",
+            "wtgType": {
+              "wtgType": "EN-156"
+            },
+            "towerType": {
+              "towerType": "140HH-520T",
+              "sectionCount": 6
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-03",
+          "maximoId": "MAX-003"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 4,
+            "supplierName": "Sanghvi Movers Ltd"
+          },
+          "crane": {
+            "craneId": 4,
+            "craneModel": "MD 485"
+          }
+        },
+        "craneMobilization": "2026-07-02",
+        "craneAssemblyStart": "2026-07-03",
+        "craneAssemblyFinish": "2026-07-04",
+        "bottomPlatformAssembly": "2026-07-05",
+        "craneBoomUp": "2026-07-06",
+        "converterPanelInstallation": "2026-07-07",
+        "installationPlanStart": "2026-07-02",
+        "installationActualStart": "2026-07-03",
+        "installationForeCastStart": "2026-07-03",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-08",
+            "torqueCheckDate": "2026-07-09"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-09",
+            "torqueCheckDate": "2026-07-10"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-10",
+            "torqueCheckDate": "2026-07-11"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-12",
+            "torqueCheckDate": "2026-07-13"
+          },
+          {
+            "towerInstallationId": 6,
+            "section": 6,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": "2026-07-14"
+          }
+        ],
+        "nacelleInstallation": "2026-07-16",
+        "assemblyMethod": "ROTOR",
+        "rotorAssemblyDate": "2026-07-17",
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": "2026-07-18",
+        "installationPlanFinish": "2026-07-22",
+        "installationActualFinish": "2026-07-23",
+        "installationForeCastFinish": "2026-07-23",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-24",
+        "anchorBolt10PercentTorqueCheck": "2026-07-09",
+        "towerNacelle10PercentTorqueCheck": "2026-07-19",
+        "nacelleHub10PercentTorqueCheck": "2026-07-20",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-19",
+            "torqueCheckDate": "2026-07-20"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-20",
+            "torqueCheckDate": "2026-07-21"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-21",
+            "torqueCheckDate": "2026-07-22"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": "2026-07-21",
+        "final10PercentTorqueCheck": "2026-07-25",
+        "generatorAlignment": "2026-07-26",
+        "cableLaying": "2026-07-27",
+        "mechanicalCompletion": "2026-07-28",
+        "electricalCompletion": "2026-07-29",
+        "liftInstallation": "2026-07-30",
+        "qaInspectionFinish": "2026-07-31",
+        "mccPlan": "2026-08-01",
+        "mccActual": "2026-08-01",
+        "mccForecast": "2026-08-01",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-08-02"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-04",
+            "wtgType": {
+              "wtgType": "EN-141"
+            },
+            "towerType": {
+              "towerType": "120HH-474T",
+              "sectionCount": 5
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-04",
+          "maximoId": "MAX-004"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 1,
+            "supplierName": "Sarens Heavy Lift India"
+          },
+          "crane": {
+            "craneId": 1,
+            "craneModel": "LR 1750/2"
+          }
+        },
+        "craneMobilization": "2026-07-03",
+        "craneAssemblyStart": "2026-07-04",
+        "craneAssemblyFinish": "2026-07-05",
+        "bottomPlatformAssembly": "2026-07-06",
+        "craneBoomUp": "2026-07-07",
+        "converterPanelInstallation": "2026-07-08",
+        "installationPlanStart": "2026-07-03",
+        "installationActualStart": "2026-07-04",
+        "installationForeCastStart": "2026-07-04",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-09",
+            "torqueCheckDate": "2026-07-10"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-10",
+            "torqueCheckDate": "2026-07-11"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-12",
+            "torqueCheckDate": "2026-07-13"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": "2026-07-14"
+          }
+        ],
+        "nacelleInstallation": "2026-07-17",
+        "assemblyMethod": "HUB",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": "2026-07-18",
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-23",
+        "installationActualFinish": "2026-07-24",
+        "installationForeCastFinish": "2026-07-24",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-25",
+        "anchorBolt10PercentTorqueCheck": "2026-07-10",
+        "towerNacelle10PercentTorqueCheck": "2026-07-20",
+        "nacelleHub10PercentTorqueCheck": "2026-07-21",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-20",
+            "torqueCheckDate": "2026-07-21"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-21",
+            "torqueCheckDate": "2026-07-22"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-22",
+            "torqueCheckDate": "2026-07-23"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": "2026-07-26",
+        "generatorAlignment": "2026-07-27",
+        "cableLaying": "2026-07-28",
+        "mechanicalCompletion": "2026-07-29",
+        "electricalCompletion": "2026-07-30",
+        "liftInstallation": "2026-07-31",
+        "qaInspectionFinish": "2026-08-01",
+        "mccPlan": "2026-08-02",
+        "mccActual": "2026-08-02",
+        "mccForecast": "2026-08-02",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-08-03"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-05",
+            "wtgType": {
+              "wtgType": "EN-156"
+            },
+            "towerType": {
+              "towerType": "140HH-520T",
+              "sectionCount": 6
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-05",
+          "maximoId": "MAX-005"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 2,
+            "supplierName": "ALE Heavylift"
+          },
+          "crane": {
+            "craneId": 2,
+            "craneModel": "CC 2800-1"
+          }
+        },
+        "craneMobilization": "2026-07-04",
+        "craneAssemblyStart": "2026-07-05",
+        "craneAssemblyFinish": "2026-07-06",
+        "bottomPlatformAssembly": "2026-07-07",
+        "craneBoomUp": "2026-07-08",
+        "converterPanelInstallation": "2026-07-09",
+        "installationPlanStart": "2026-07-04",
+        "installationActualStart": "2026-07-05",
+        "installationForeCastStart": "2026-07-05",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-10",
+            "torqueCheckDate": "2026-07-11"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-12",
+            "torqueCheckDate": "2026-07-13"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": "2026-07-14"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-14",
+            "torqueCheckDate": "2026-07-15"
+          },
+          {
+            "towerInstallationId": 6,
+            "section": 6,
+            "installationDate": "2026-07-15",
+            "torqueCheckDate": "2026-07-16"
+          }
+        ],
+        "nacelleInstallation": "2026-07-18",
+        "assemblyMethod": "ROTOR",
+        "rotorAssemblyDate": "2026-07-19",
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": "2026-07-20",
+        "installationPlanFinish": "2026-07-24",
+        "installationActualFinish": "2026-07-25",
+        "installationForeCastFinish": "2026-07-25",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-26",
+        "anchorBolt10PercentTorqueCheck": "2026-07-11",
+        "towerNacelle10PercentTorqueCheck": "2026-07-21",
+        "nacelleHub10PercentTorqueCheck": "2026-07-22",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-21",
+            "torqueCheckDate": "2026-07-22"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-22",
+            "torqueCheckDate": "2026-07-23"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-23",
+            "torqueCheckDate": "2026-07-24"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": "2026-07-23",
+        "final10PercentTorqueCheck": "2026-07-27",
+        "generatorAlignment": "2026-07-28",
+        "cableLaying": "2026-07-29",
+        "mechanicalCompletion": "2026-07-30",
+        "electricalCompletion": "2026-07-31",
+        "liftInstallation": "2026-08-01",
+        "qaInspectionFinish": "2026-08-02",
+        "mccPlan": "2026-08-03",
+        "mccActual": "2026-08-03",
+        "mccForecast": "2026-08-03",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-08-04"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-06",
+            "wtgType": {
+              "wtgType": "EN-141"
+            },
+            "towerType": {
+              "towerType": "120HH-474T",
+              "sectionCount": 5
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-06",
+          "maximoId": "MAX-006"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 3,
+            "supplierName": "Mammoet India"
+          },
+          "crane": {
+            "craneId": 3,
+            "craneModel": "GMK 6400"
+          }
+        },
+        "craneMobilization": "2026-07-05",
+        "craneAssemblyStart": "2026-07-06",
+        "craneAssemblyFinish": "2026-07-07",
+        "bottomPlatformAssembly": "2026-07-08",
+        "craneBoomUp": "2026-07-09",
+        "converterPanelInstallation": "2026-07-10",
+        "installationPlanStart": "2026-07-05",
+        "installationActualStart": "2026-07-06",
+        "installationForeCastStart": "2026-07-06",
+        "installationStartDelayReason": "",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-11",
+            "torqueCheckDate": "2026-07-12"
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-12",
+            "torqueCheckDate": "2026-07-13"
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": "2026-07-14"
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": "2026-07-14",
+            "torqueCheckDate": "2026-07-15"
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": "2026-07-15",
+            "torqueCheckDate": "2026-07-16"
+          }
+        ],
+        "nacelleInstallation": "2026-07-19",
+        "assemblyMethod": "HUB",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": "2026-07-20",
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-25",
+        "installationActualFinish": "2026-07-26",
+        "installationForeCastFinish": "2026-07-26",
+        "installationFinishDelayReason": "",
+        "craneBoomDown": "2026-07-27",
+        "anchorBolt10PercentTorqueCheck": "2026-07-12",
+        "towerNacelle10PercentTorqueCheck": "2026-07-22",
+        "nacelleHub10PercentTorqueCheck": "2026-07-23",
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": "2026-07-22",
+            "torqueCheckDate": "2026-07-23"
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": "2026-07-23",
+            "torqueCheckDate": "2026-07-24"
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": "2026-07-24",
+            "torqueCheckDate": "2026-07-25"
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": "2026-07-28",
+        "generatorAlignment": "2026-07-29",
+        "cableLaying": "2026-07-30",
+        "mechanicalCompletion": "2026-07-31",
+        "electricalCompletion": "2026-08-01",
+        "liftInstallation": "2026-08-02",
+        "qaInspectionFinish": "2026-08-03",
+        "mccPlan": "2026-08-04",
+        "mccActual": "2026-08-04",
+        "mccForecast": "2026-08-04",
+        "mccDelayReason": "",
+        "mccSignOff": "2026-08-05"
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-07",
+            "wtgType": {
+              "wtgType": "EN-156"
+            },
+            "towerType": {
+              "towerType": "140HH-520T",
+              "sectionCount": 6
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-07",
+          "maximoId": "MAX-007"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 4,
+            "supplierName": "Sanghvi Movers Ltd"
+          },
+          "crane": {
+            "craneId": 4,
+            "craneModel": "MD 485"
+          }
+        },
+        "craneMobilization": "2026-07-06",
+        "craneAssemblyStart": "2026-07-07",
+        "craneAssemblyFinish": "2026-07-08",
+        "bottomPlatformAssembly": "2026-07-09",
+        "craneBoomUp": "2026-07-10",
+        "converterPanelInstallation": "2026-07-11",
+        "installationPlanStart": "2026-07-06",
+        "installationActualStart": "2026-07-07",
+        "installationForeCastStart": "2026-07-07",
+        "installationStartDelayReason": "Awaiting crane mobilization",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-12",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 6,
+            "section": 6,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "nacelleInstallation": null,
+        "assemblyMethod": "ROTOR",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-26",
+        "installationActualFinish": null,
+        "installationForeCastFinish": "2026-07-31",
+        "installationFinishDelayReason": "Blade delivery delayed",
+        "craneBoomDown": null,
+        "anchorBolt10PercentTorqueCheck": null,
+        "towerNacelle10PercentTorqueCheck": null,
+        "nacelleHub10PercentTorqueCheck": null,
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": null,
+        "generatorAlignment": null,
+        "cableLaying": null,
+        "mechanicalCompletion": null,
+        "electricalCompletion": null,
+        "liftInstallation": null,
+        "qaInspectionFinish": null,
+        "mccPlan": "2026-08-05",
+        "mccActual": null,
+        "mccForecast": "2026-08-09",
+        "mccDelayReason": "Grid connectivity pending",
+        "mccSignOff": null
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-08",
+            "wtgType": {
+              "wtgType": "EN-141"
+            },
+            "towerType": {
+              "towerType": "120HH-474T",
+              "sectionCount": 5
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-08",
+          "maximoId": "MAX-008"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 1,
+            "supplierName": "Sarens Heavy Lift India"
+          },
+          "crane": {
+            "craneId": 1,
+            "craneModel": "LR 1750/2"
+          }
+        },
+        "craneMobilization": "2026-07-07",
+        "craneAssemblyStart": "2026-07-08",
+        "craneAssemblyFinish": "2026-07-09",
+        "bottomPlatformAssembly": "2026-07-10",
+        "craneBoomUp": "2026-07-11",
+        "converterPanelInstallation": "2026-07-12",
+        "installationPlanStart": "2026-07-07",
+        "installationActualStart": "2026-07-08",
+        "installationForeCastStart": "2026-07-08",
+        "installationStartDelayReason": "Awaiting crane mobilization",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-13",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-14",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "nacelleInstallation": null,
+        "assemblyMethod": "HUB",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-27",
+        "installationActualFinish": null,
+        "installationForeCastFinish": "2026-08-01",
+        "installationFinishDelayReason": "Blade delivery delayed",
+        "craneBoomDown": null,
+        "anchorBolt10PercentTorqueCheck": null,
+        "towerNacelle10PercentTorqueCheck": null,
+        "nacelleHub10PercentTorqueCheck": null,
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": null,
+        "generatorAlignment": null,
+        "cableLaying": null,
+        "mechanicalCompletion": null,
+        "electricalCompletion": null,
+        "liftInstallation": null,
+        "qaInspectionFinish": null,
+        "mccPlan": "2026-08-06",
+        "mccActual": null,
+        "mccForecast": "2026-08-10",
+        "mccDelayReason": "Grid connectivity pending",
+        "mccSignOff": null
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-09",
+            "wtgType": {
+              "wtgType": "EN-156"
+            },
+            "towerType": {
+              "towerType": "140HH-520T",
+              "sectionCount": 6
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-09",
+          "maximoId": "MAX-009"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 2,
+            "supplierName": "ALE Heavylift"
+          },
+          "crane": {
+            "craneId": 2,
+            "craneModel": "CC 2800-1"
+          }
+        },
+        "craneMobilization": "2026-07-08",
+        "craneAssemblyStart": "2026-07-09",
+        "craneAssemblyFinish": "2026-07-10",
+        "bottomPlatformAssembly": "2026-07-11",
+        "craneBoomUp": "2026-07-12",
+        "converterPanelInstallation": "2026-07-13",
+        "installationPlanStart": "2026-07-08",
+        "installationActualStart": "2026-07-09",
+        "installationForeCastStart": "2026-07-09",
+        "installationStartDelayReason": "Awaiting crane mobilization",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-14",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-15",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 6,
+            "section": 6,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "nacelleInstallation": null,
+        "assemblyMethod": "ROTOR",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-28",
+        "installationActualFinish": null,
+        "installationForeCastFinish": "2026-08-02",
+        "installationFinishDelayReason": "Blade delivery delayed",
+        "craneBoomDown": null,
+        "anchorBolt10PercentTorqueCheck": null,
+        "towerNacelle10PercentTorqueCheck": null,
+        "nacelleHub10PercentTorqueCheck": null,
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": null,
+        "generatorAlignment": null,
+        "cableLaying": null,
+        "mechanicalCompletion": null,
+        "electricalCompletion": null,
+        "liftInstallation": null,
+        "qaInspectionFinish": null,
+        "mccPlan": "2026-08-07",
+        "mccActual": null,
+        "mccForecast": "2026-08-11",
+        "mccDelayReason": "Grid connectivity pending",
+        "mccSignOff": null
+      },
+      {
+        "projectWtgs": [
+          {
+            "wtgCode": "WTG-10",
+            "wtgType": {
+              "wtgType": "EN-141"
+            },
+            "towerType": {
+              "towerType": "120HH-474T",
+              "sectionCount": 5
+            }
+          }
+        ],
+        "projectLocation": {
+          "locationCode": "LOC-10",
+          "maximoId": "MAX-010"
+        },
+        "projectCraneDetail": {
+          "supplier": {
+            "supplierId": 3,
+            "supplierName": "Mammoet India"
+          },
+          "crane": {
+            "craneId": 3,
+            "craneModel": "GMK 6400"
+          }
+        },
+        "craneMobilization": "2026-07-09",
+        "craneAssemblyStart": "2026-07-10",
+        "craneAssemblyFinish": "2026-07-11",
+        "bottomPlatformAssembly": "2026-07-12",
+        "craneBoomUp": "2026-07-13",
+        "converterPanelInstallation": "2026-07-14",
+        "installationPlanStart": "2026-07-09",
+        "installationActualStart": "2026-07-10",
+        "installationForeCastStart": "2026-07-10",
+        "installationStartDelayReason": "Awaiting crane mobilization",
+        "towerInstallations": [
+          {
+            "towerInstallationId": 1,
+            "section": 1,
+            "installationDate": "2026-07-15",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 2,
+            "section": 2,
+            "installationDate": "2026-07-16",
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 3,
+            "section": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 4,
+            "section": 4,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "towerInstallationId": 5,
+            "section": 5,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "nacelleInstallation": null,
+        "assemblyMethod": "HUB",
+        "rotorAssemblyDate": null,
+        "hubAssemblyDate": null,
+        "rotorInstallationDate": null,
+        "installationPlanFinish": "2026-07-29",
+        "installationActualFinish": null,
+        "installationForeCastFinish": "2026-08-03",
+        "installationFinishDelayReason": "Blade delivery delayed",
+        "craneBoomDown": null,
+        "anchorBolt10PercentTorqueCheck": null,
+        "towerNacelle10PercentTorqueCheck": null,
+        "nacelleHub10PercentTorqueCheck": null,
+        "bladeInstallations": [
+          {
+            "bladeInstallationId": 1,
+            "bladeNo": 1,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 2,
+            "bladeNo": 2,
+            "installationDate": null,
+            "torqueCheckDate": null
+          },
+          {
+            "bladeInstallationId": 3,
+            "bladeNo": 3,
+            "installationDate": null,
+            "torqueCheckDate": null
+          }
+        ],
+        "rotorBolt10PercentTorqueCheck": null,
+        "final10PercentTorqueCheck": null,
+        "generatorAlignment": null,
+        "cableLaying": null,
+        "mechanicalCompletion": null,
+        "electricalCompletion": null,
+        "liftInstallation": null,
+        "qaInspectionFinish": null,
+        "mccPlan": "2026-08-08",
+        "mccActual": null,
+        "mccForecast": "2026-08-12",
+        "mccDelayReason": "Grid connectivity pending",
+        "mccSignOff": null
+      }
+    ]
+  },
+  "src/app/masters/blade-types/blade-types.ts": {
+    "MOCK_BLADE_TYPES": [
+      {
+        "bladeTypeId": 1,
+        "bladeType": "EN-141 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 2,
+        "bladeType": "EN-156 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 3,
+        "bladeType": "EN-165 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 4,
+        "bladeType": "S128 Blade",
+        "countPerWtg": 3,
+        "status": false
+      },
+      {
+        "bladeTypeId": 5,
+        "bladeType": "S120 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 6,
+        "bladeType": "V150 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 7,
+        "bladeType": "GE 2.7-132 Blade",
+        "countPerWtg": 3,
+        "status": false
+      },
+      {
+        "bladeTypeId": 8,
+        "bladeType": "N149 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 9,
+        "bladeType": "AW3000 Blade",
+        "countPerWtg": 3,
+        "status": true
+      },
+      {
+        "bladeTypeId": 10,
+        "bladeType": "MP2.5 Blade",
+        "countPerWtg": 3,
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/clusters/clusters.ts": {
+    "MOCK_CLUSTERS": [
+      {
+        "clusterId": 1,
+        "clusterCode": "GJ",
+        "clusterName": "Gujarat Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 2,
+        "clusterCode": "TN",
+        "clusterName": "Tamil Nadu Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 3,
+        "clusterCode": "RJ",
+        "clusterName": "Rajasthan Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 4,
+        "clusterCode": "KA",
+        "clusterName": "Karnataka Cluster",
+        "status": false
+      },
+      {
+        "clusterId": 5,
+        "clusterCode": "MH",
+        "clusterName": "Maharashtra Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 6,
+        "clusterCode": "AP",
+        "clusterName": "Andhra Pradesh Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 7,
+        "clusterCode": "MP",
+        "clusterName": "Madhya Pradesh Cluster",
+        "status": false
+      },
+      {
+        "clusterId": 8,
+        "clusterCode": "TS",
+        "clusterName": "Telangana Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 9,
+        "clusterCode": "OD",
+        "clusterName": "Odisha Cluster",
+        "status": true
+      },
+      {
+        "clusterId": 10,
+        "clusterCode": "UP",
+        "clusterName": "Uttar Pradesh Cluster",
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/company-users/company-users.ts": {
+    "MOCK_COMPANY_USERS": [
+      {
+        "userId": 1,
+        "userName": "Sanjay Kumar",
+        "email": "sanjay.kumar@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 1,
+            "groupName": "Super Admin Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 2,
+        "userName": "Ananya Iyer",
+        "email": "ananya.iyer@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 2,
+            "groupName": "Plant Operations Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 3,
+        "userName": "Sivakumar R",
+        "email": "sivakumar.r@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 3,
+            "groupName": "Project Management Group"
+          }
+        ],
+        "status": false
+      },
+      {
+        "userId": 4,
+        "userName": "Kayalvizhi M",
+        "email": "kayalvizhi.m@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 4,
+            "groupName": "Quality Control Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 5,
+        "userName": "Rakesh Patel",
+        "email": "rakesh.patel@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 5,
+            "groupName": "Logistics Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 6,
+        "userName": "Meera Shah",
+        "email": "meera.shah@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 6,
+            "groupName": "Finance Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 7,
+        "userName": "Vikram Singh",
+        "email": "vikram.singh@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 7,
+            "groupName": "HR Group"
+          }
+        ],
+        "status": false
+      },
+      {
+        "userId": 8,
+        "userName": "Deepa Nair",
+        "email": "deepa.nair@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 8,
+            "groupName": "Site Engineering Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 9,
+        "userName": "Suresh Reddy",
+        "email": "suresh.reddy@windtechindia.com",
+        "userGroups": [
+          {
+            "userGroupId": 9,
+            "groupName": "Store & Inventory Group"
+          }
+        ],
+        "status": true
+      },
+      {
+        "userId": 10,
+        "userName": "Arjun Mehta",
+        "email": "arjun.mehta@windtechindia.com",
+        "userGroups": [],
+        "status": true
+      }
+    ],
+    "MOCK_USER_GROUP_INFO": [
+      {
+        "userGroupId": 1,
+        "groupName": "Super Admin Group"
+      },
+      {
+        "userGroupId": 2,
+        "groupName": "Plant Operations Group"
+      },
+      {
+        "userGroupId": 3,
+        "groupName": "Project Management Group"
+      },
+      {
+        "userGroupId": 4,
+        "groupName": "Quality Control Group"
+      },
+      {
+        "userGroupId": 5,
+        "groupName": "Logistics Group"
+      },
+      {
+        "userGroupId": 6,
+        "groupName": "Finance Group"
+      },
+      {
+        "userGroupId": 7,
+        "groupName": "HR Group"
+      },
+      {
+        "userGroupId": 8,
+        "groupName": "Site Engineering Group"
+      },
+      {
+        "userGroupId": 9,
+        "groupName": "Store & Inventory Group"
+      },
+      {
+        "userGroupId": 10,
+        "groupName": "Read Only Viewers"
+      }
+    ],
+    "MOCK_PLANT_INFO": [
+      {
+        "id": 1,
+        "plant": "Plant Chennai",
+        "location": "Chennai, Tamil Nadu",
+        "plantManager": "Sanjay Kumar"
+      },
+      {
+        "id": 2,
+        "plant": "Plant Pune",
+        "location": "Pune, Maharashtra",
+        "plantManager": "Ananya Iyer"
+      },
+      {
+        "id": 3,
+        "plant": "Plant Trichy",
+        "location": "Tiruchirappalli, Tamil Nadu",
+        "plantManager": "Sivakumar R"
+      },
+      {
+        "id": 4,
+        "plant": "Plant Tuticorin",
+        "location": "Thoothukudi, Tamil Nadu",
+        "plantManager": "Kayalvizhi M"
+      },
+      {
+        "id": 5,
+        "plant": "Plant Vadodara",
+        "location": "Vadodara, Gujarat",
+        "plantManager": "Rakesh Patel"
+      },
+      {
+        "id": 6,
+        "plant": "Plant Kutch",
+        "location": "Bhuj, Gujarat",
+        "plantManager": "Meera Shah"
+      },
+      {
+        "id": 7,
+        "plant": "Plant Jaisalmer",
+        "location": "Jaisalmer, Rajasthan",
+        "plantManager": "Vikram Singh"
+      },
+      {
+        "id": 8,
+        "plant": "Plant Bengaluru",
+        "location": "Bengaluru, Karnataka",
+        "plantManager": "Deepa Nair"
+      },
+      {
+        "id": 9,
+        "plant": "Plant Hyderabad",
+        "location": "Hyderabad, Telangana",
+        "plantManager": "Suresh Reddy"
+      },
+      {
+        "id": 10,
+        "plant": "Plant Kutch Warehouse",
+        "location": "Bhuj, Gujarat",
+        "plantManager": "Arjun Mehta"
+      }
+    ],
+    "MOCK_CLUSTER_INFO": [
+      {
+        "clusterId": 1,
+        "clusterName": "Kutch Cluster",
+        "clusterCode": "KCH01"
+      },
+      {
+        "clusterId": 2,
+        "clusterName": "Jaisalmer Cluster",
+        "clusterCode": "JSM01"
+      },
+      {
+        "clusterId": 3,
+        "clusterName": "Chitradurga Cluster",
+        "clusterCode": "CTD01"
+      },
+      {
+        "clusterId": 4,
+        "clusterName": "Tuticorin Cluster",
+        "clusterCode": "TUT01"
+      },
+      {
+        "clusterId": 5,
+        "clusterName": "Kayathar Cluster",
+        "clusterCode": "KYT01"
+      },
+      {
+        "clusterId": 6,
+        "clusterName": "Coimbatore Cluster",
+        "clusterCode": "CBE01"
+      },
+      {
+        "clusterId": 7,
+        "clusterName": "Bhuj Cluster",
+        "clusterCode": "BHJ01"
+      },
+      {
+        "clusterId": 8,
+        "clusterName": "Kayamkulam Cluster",
+        "clusterCode": "KYM01"
+      },
+      {
+        "clusterId": 9,
+        "clusterName": "Anantapur Cluster",
+        "clusterCode": "ATP01"
+      },
+      {
+        "clusterId": 10,
+        "clusterName": "Devgadh Baria Cluster",
+        "clusterCode": "DGB01"
+      }
+    ],
+    "MOCK_DEPARTMENT_INFO": [
+      {
+        "departmentId": 1,
+        "departmentName": "Manufacturing"
+      },
+      {
+        "departmentId": 2,
+        "departmentName": "Quality Assurance"
+      },
+      {
+        "departmentId": 3,
+        "departmentName": "Logistics & Supply Chain"
+      },
+      {
+        "departmentId": 4,
+        "departmentName": "Project Management"
+      },
+      {
+        "departmentId": 5,
+        "departmentName": "Site Installation"
+      },
+      {
+        "departmentId": 6,
+        "departmentName": "Finance & Accounts"
+      },
+      {
+        "departmentId": 7,
+        "departmentName": "Human Resources"
+      },
+      {
+        "departmentId": 8,
+        "departmentName": "Procurement"
+      },
+      {
+        "departmentId": 9,
+        "departmentName": "Engineering & Design"
+      },
+      {
+        "departmentId": 10,
+        "departmentName": "Maintenance & Service"
+      }
+    ],
+    "MOCK_COMPONENT_INFO": [
+      {
+        "componentId": 1,
+        "componentName": "Topflange"
+      },
+      {
+        "componentId": 2,
+        "componentName": "Bottomflange"
+      },
+      {
+        "componentId": 3,
+        "componentName": "Blade"
+      },
+      {
+        "componentId": 4,
+        "componentName": "Nacelle"
+      },
+      {
+        "componentId": 5,
+        "componentName": "Hub"
+      },
+      {
+        "componentId": 6,
+        "componentName": "Tower"
+      },
+      {
+        "componentId": 7,
+        "componentName": "Converter Panel"
+      },
+      {
+        "componentId": 8,
+        "componentName": "Site Accessories"
+      },
+      {
+        "componentId": 9,
+        "componentName": "SCADA"
+      },
+      {
+        "componentId": 10,
+        "componentName": "Generator"
+      }
+    ]
+  },
+  "src/app/masters/components/components.ts": {
+    "MOCK_COMPONENTS": [
+      {
+        "componentId": 1,
+        "componentName": "Topflange"
+      },
+      {
+        "componentId": 2,
+        "componentName": "Bottomflange"
+      },
+      {
+        "componentId": 3,
+        "componentName": "Blade"
+      },
+      {
+        "componentId": 4,
+        "componentName": "Nacelle"
+      },
+      {
+        "componentId": 5,
+        "componentName": "Hub"
+      },
+      {
+        "componentId": 6,
+        "componentName": "Tower"
+      },
+      {
+        "componentId": 7,
+        "componentName": "Converter Panel"
+      },
+      {
+        "componentId": 8,
+        "componentName": "Site Accessories"
+      },
+      {
+        "componentId": 9,
+        "componentName": "SCADA"
+      },
+      {
+        "componentId": 10,
+        "componentName": "Generator"
+      }
+    ]
+  },
+  "src/app/masters/crane-suppliers/crane-suppliers.ts": {
+    "MOCK_CRANE_SUPPLIERS": [
+      {
+        "supplierId": 1,
+        "supplierName": "Sarens Heavy Lift India",
+        "contactPerson": "Arvind Menon",
+        "mobileNo": "9840011223",
+        "email": "arvind.menon@sarens.in",
+        "status": true
+      },
+      {
+        "supplierId": 2,
+        "supplierName": "ALE Heavylift",
+        "contactPerson": "Suresh Iyer",
+        "mobileNo": "9845123456",
+        "email": "suresh.iyer@ale-heavylift.com",
+        "status": true
+      },
+      {
+        "supplierId": 3,
+        "supplierName": "Mammoet India",
+        "contactPerson": "Neha Kapoor",
+        "mobileNo": "9880045612",
+        "email": "neha.kapoor@mammoet.com",
+        "status": true
+      },
+      {
+        "supplierId": 4,
+        "supplierName": "Sanghvi Movers Ltd",
+        "contactPerson": "Rakesh Sanghvi",
+        "mobileNo": "9822067890",
+        "email": "rakesh.sanghvi@sanghvimovers.com",
+        "status": false
+      },
+      {
+        "supplierId": 5,
+        "supplierName": "Tiger Crane Services",
+        "contactPerson": "Manoj Pillai",
+        "mobileNo": "9894412378",
+        "email": "manoj.pillai@tigercranes.in",
+        "status": true
+      },
+      {
+        "supplierId": 6,
+        "supplierName": "Bothra Shipping & Logistics",
+        "contactPerson": "Deepak Bothra",
+        "mobileNo": "9811234567",
+        "email": "deepak.bothra@bothra.co.in",
+        "status": true
+      },
+      {
+        "supplierId": 7,
+        "supplierName": "ACME Crane Rentals",
+        "contactPerson": "Farhan Sheikh",
+        "mobileNo": "9900112233",
+        "email": "farhan.sheikh@acmecranes.com",
+        "status": false
+      },
+      {
+        "supplierId": 8,
+        "supplierName": "GMMCO Cranes",
+        "contactPerson": "Vikram Rathi",
+        "mobileNo": "9840098765",
+        "email": "vikram.rathi@gmmco.co.in",
+        "status": true
+      },
+      {
+        "supplierId": 9,
+        "supplierName": "Perfect Lifting Solutions",
+        "contactPerson": "Anita Desai",
+        "mobileNo": "9820054321",
+        "email": "anita.desai@perfectlifting.in",
+        "status": true
+      },
+      {
+        "supplierId": 10,
+        "supplierName": "National Crane Corporation",
+        "contactPerson": "Ramesh Chandran",
+        "mobileNo": "9944778899",
+        "email": "ramesh.chandran@nationalcrane.in",
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/cranes/cranes.ts": {
+    "MOCK_CRANES": [
+      {
+        "craneId": 1,
+        "craneType": "Crawler Crane",
+        "craneModel": "LR 1750/2",
+        "craneMake": "Liebherr",
+        "status": true
+      },
+      {
+        "craneId": 2,
+        "craneType": "Crawler Crane",
+        "craneModel": "CC 2800-1",
+        "craneMake": "Terex",
+        "status": true
+      },
+      {
+        "craneId": 3,
+        "craneType": "Mobile Crane",
+        "craneModel": "GMK 6400",
+        "craneMake": "Grove",
+        "status": true
+      },
+      {
+        "craneId": 4,
+        "craneType": "Tower Crane",
+        "craneModel": "MD 485",
+        "craneMake": "Potain",
+        "status": false
+      },
+      {
+        "craneId": 5,
+        "craneType": "Crawler Crane",
+        "craneModel": "SCC8300",
+        "craneMake": "Sany",
+        "status": true
+      },
+      {
+        "craneId": 6,
+        "craneType": "Mobile Crane",
+        "craneModel": "AC 500-2",
+        "craneMake": "Demag",
+        "status": true
+      },
+      {
+        "craneId": 7,
+        "craneType": "Crawler Crane",
+        "craneModel": "QUY260",
+        "craneMake": "XCMG",
+        "status": false
+      },
+      {
+        "craneId": 8,
+        "craneType": "Mobile Crane",
+        "craneModel": "LTM 1750-9.1",
+        "craneMake": "Liebherr",
+        "status": true
+      },
+      {
+        "craneId": 9,
+        "craneType": "Crawler Crane",
+        "craneModel": "CKE2500",
+        "craneMake": "Kobelco",
+        "status": true
+      },
+      {
+        "craneId": 10,
+        "craneType": "Mobile Crane",
+        "craneModel": "RT9130E-4",
+        "craneMake": "Terex",
+        "status": true
+      }
+    ],
+    "MOCK_SUPPLIERS": [
+      {
+        "supplierId": 1,
+        "supplierName": "Sarens Heavy Lift India"
+      },
+      {
+        "supplierId": 2,
+        "supplierName": "ALE Heavylift"
+      },
+      {
+        "supplierId": 3,
+        "supplierName": "Mammoet India"
+      },
+      {
+        "supplierId": 4,
+        "supplierName": "Sanghvi Movers Ltd"
+      },
+      {
+        "supplierId": 5,
+        "supplierName": "Tiger Crane Services"
+      },
+      {
+        "supplierId": 6,
+        "supplierName": "Bothra Shipping & Logistics"
+      },
+      {
+        "supplierId": 7,
+        "supplierName": "ACME Crane Rentals"
+      },
+      {
+        "supplierId": 8,
+        "supplierName": "GMMCO Cranes"
+      },
+      {
+        "supplierId": 9,
+        "supplierName": "Perfect Lifting Solutions"
+      },
+      {
+        "supplierId": 10,
+        "supplierName": "National Crane Corporation"
+      }
+    ]
+  },
+  "src/app/masters/customer-spv-list/customer-spv-list.ts": {
+    "MOCK_CUSTOMER_DETAIL": {
+      "customerId": 1,
+      "customerCode": "CUST001",
+      "customerName": "ReNew Power Pvt Ltd"
+    },
+    "MOCK_SPV_LIST": [
+      {
+        "customerSpvId": 1,
+        "spvName": "Chennai Wind Farm Pvt Ltd",
+        "spvGstNumber": "33ABCDE1234F1Z5",
+        "address1": "No. 12, Industrial Estate, Guindy",
+        "address2": "",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pinCode": "600032",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 2,
+        "spvName": "Pune Renewable Energy Pvt Ltd",
+        "spvGstNumber": "27ABCDE5678G1Z2",
+        "address1": "Plot 45, MIDC Area, Hinjewadi",
+        "address2": "",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pinCode": "411057",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 3,
+        "spvName": "Gujarat Wind Power Ltd",
+        "spvGstNumber": "24ABCDE9101H1Z8",
+        "address1": "Survey No. 89, Industrial Zone, Kutch",
+        "address2": "",
+        "city": "Bhuj",
+        "state": "Gujarat",
+        "pinCode": "370001",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 4,
+        "spvName": "Rajasthan Green Energy Pvt Ltd",
+        "spvGstNumber": "08ABCDE1122J1Z3",
+        "address1": "Sector 5, RIICO Industrial Area",
+        "address2": "",
+        "city": "Jodhpur",
+        "state": "Rajasthan",
+        "pinCode": "342005",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 5,
+        "spvName": "Karnataka Wind Solutions Pvt Ltd",
+        "spvGstNumber": "29ABCDE3344K1Z6",
+        "address1": "Plot 21, Peenya Industrial Area",
+        "address2": "",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pinCode": "560058",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 6,
+        "spvName": "Kutch Wind Energy Pvt Ltd",
+        "spvGstNumber": "24ABCDE5566L1Z1",
+        "address1": "Village Jangi, Lakhpat Taluka",
+        "address2": "",
+        "city": "Kutch",
+        "state": "Gujarat",
+        "pinCode": "370645",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 7,
+        "spvName": "Anantapur Renewables Pvt Ltd",
+        "spvGstNumber": "37ABCDE7788M1Z4",
+        "address1": "Solar Park Road, Tadipatri",
+        "address2": "",
+        "city": "Anantapur",
+        "state": "Andhra Pradesh",
+        "pinCode": "515401",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 8,
+        "spvName": "Jaisalmer Wind Power Ltd",
+        "spvGstNumber": "08ABCDE9900N1Z9",
+        "address1": "Sam Road Industrial Area",
+        "address2": "",
+        "city": "Jaisalmer",
+        "state": "Rajasthan",
+        "pinCode": "345001",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 9,
+        "spvName": "Kayathar Energy Pvt Ltd",
+        "spvGstNumber": "33ABCDE1212O1Z7",
+        "address1": "Kayathar Industrial Estate",
+        "address2": "",
+        "city": "Thoothukudi",
+        "state": "Tamil Nadu",
+        "pinCode": "628102",
+        "country": "India"
+      },
+      {
+        "customerSpvId": 10,
+        "spvName": "Kutch Mundra Wind Ltd",
+        "spvGstNumber": "24ABCDE3434P1Z0",
+        "address1": "Adani Green Complex, Mundra SEZ",
+        "address2": "",
+        "city": "Mundra",
+        "state": "Gujarat",
+        "pinCode": "370421",
+        "country": "India"
+      }
+    ]
+  },
+  "src/app/masters/customers/customers.ts": {
+    "MOCK_CUSTOMERS": [
+      {
+        "customerId": 1,
+        "customerCode": "CUST001",
+        "customerName": "ReNew Power Pvt Ltd"
+      },
+      {
+        "customerId": 2,
+        "customerCode": "CUST002",
+        "customerName": "Adani Green Energy Ltd"
+      },
+      {
+        "customerId": 3,
+        "customerCode": "CUST003",
+        "customerName": "Suzlon Energy Ltd"
+      },
+      {
+        "customerId": 4,
+        "customerCode": "CUST004",
+        "customerName": "Greenko Energies Pvt Ltd"
+      },
+      {
+        "customerId": 5,
+        "customerCode": "CUST005",
+        "customerName": "Tata Power Renewable Energy Ltd"
+      },
+      {
+        "customerId": 6,
+        "customerCode": "CUST006",
+        "customerName": "CleanMax Enviro Energy Solutions"
+      },
+      {
+        "customerId": 7,
+        "customerCode": "CUST007",
+        "customerName": "Continuum Green Energy Ltd"
+      },
+      {
+        "customerId": 8,
+        "customerCode": "CUST008",
+        "customerName": "Hero Future Energies Pvt Ltd"
+      },
+      {
+        "customerId": 9,
+        "customerCode": "CUST009",
+        "customerName": "Ayana Renewable Power Pvt Ltd"
+      },
+      {
+        "customerId": 10,
+        "customerCode": "CUST010",
+        "customerName": "JSW Energy Ltd"
+      }
+    ]
+  },
+  "src/app/masters/departments/departments.ts": {
+    "MOCK_DEPARTMENTS": [
+      {
+        "departmentId": 1,
+        "departmentName": "Blade Manufacturing",
+        "departmentHead": {
+          "userId": 101,
+          "userName": "Rajesh Kumar"
+        },
+        "clusters": [
+          {
+            "clusterId": 1
+          },
+          {
+            "clusterId": 2
+          }
+        ],
+        "status": true
+      },
+      {
+        "departmentId": 2,
+        "departmentName": "Nacelle Assembly",
+        "departmentHead": {
+          "userId": 102,
+          "userName": "Priya Sharma"
+        },
+        "clusters": [
+          {
+            "clusterId": 3
+          }
+        ],
+        "status": true
+      },
+      {
+        "departmentId": 3,
+        "departmentName": "Tower Fabrication",
+        "departmentHead": {
+          "userId": 103,
+          "userName": "Anil Menon"
+        },
+        "clusters": [
+          {
+            "clusterId": 1
+          }
+        ],
+        "status": true
+      },
+      {
+        "departmentId": 4,
+        "departmentName": "Quality Assurance",
+        "departmentHead": {
+          "userId": 104,
+          "userName": "Sunita Rao"
+        },
+        "clusters": [],
+        "status": true
+      },
+      {
+        "departmentId": 5,
+        "departmentName": "Logistics & Transport",
+        "departmentHead": {
+          "userId": 105,
+          "userName": "Vikram Singh"
+        },
+        "clusters": [
+          {
+            "clusterId": 4
+          },
+          {
+            "clusterId": 5
+          }
+        ],
+        "status": false
+      },
+      {
+        "departmentId": 6,
+        "departmentName": "Site Erection",
+        "departmentHead": {
+          "userId": 106,
+          "userName": "Kiran Patel"
+        },
+        "clusters": [
+          {
+            "clusterId": 2
+          }
+        ],
+        "status": true
+      },
+      {
+        "departmentId": 7,
+        "departmentName": "Grid Connectivity",
+        "departmentHead": {
+          "userId": 107,
+          "userName": "Deepa Nair"
+        },
+        "clusters": [],
+        "status": true
+      },
+      {
+        "departmentId": 8,
+        "departmentName": "Procurement",
+        "departmentHead": {
+          "userId": 108,
+          "userName": "Manoj Verma"
+        },
+        "clusters": [
+          {
+            "clusterId": 3
+          }
+        ],
+        "status": false
+      },
+      {
+        "departmentId": 9,
+        "departmentName": "Project Planning",
+        "departmentHead": {
+          "userId": 109,
+          "userName": "Ritu Agarwal"
+        },
+        "clusters": [
+          {
+            "clusterId": 1
+          },
+          {
+            "clusterId": 5
+          }
+        ],
+        "status": true
+      },
+      {
+        "departmentId": 10,
+        "departmentName": "HSE (Health, Safety & Environment)",
+        "departmentHead": {
+          "userId": 110,
+          "userName": "Arjun Reddy"
+        },
+        "clusters": [],
+        "status": true
+      }
+    ],
+    "MOCK_USERS": [
+      {
+        "user": {
+          "userId": 101,
+          "userName": "Rajesh Kumar"
+        }
+      },
+      {
+        "user": {
+          "userId": 102,
+          "userName": "Priya Sharma"
+        }
+      },
+      {
+        "user": {
+          "userId": 103,
+          "userName": "Anil Menon"
+        }
+      },
+      {
+        "user": {
+          "userId": 104,
+          "userName": "Sunita Rao"
+        }
+      },
+      {
+        "user": {
+          "userId": 105,
+          "userName": "Vikram Singh"
+        }
+      },
+      {
+        "user": {
+          "userId": 106,
+          "userName": "Kiran Patel"
+        }
+      },
+      {
+        "user": {
+          "userId": 107,
+          "userName": "Deepa Nair"
+        }
+      },
+      {
+        "user": {
+          "userId": 108,
+          "userName": "Manoj Verma"
+        }
+      },
+      {
+        "user": {
+          "userId": 109,
+          "userName": "Ritu Agarwal"
+        }
+      },
+      {
+        "user": {
+          "userId": 110,
+          "userName": "Arjun Reddy"
+        }
+      }
+    ],
+    "MOCK_CLUSTER_INFO": [
+      {
+        "clusterId": 1,
+        "clusterCode": "GJ",
+        "clusterName": "Gujarat Cluster"
+      },
+      {
+        "clusterId": 2,
+        "clusterCode": "TN",
+        "clusterName": "Tamil Nadu Cluster"
+      },
+      {
+        "clusterId": 3,
+        "clusterCode": "RJ",
+        "clusterName": "Rajasthan Cluster"
+      },
+      {
+        "clusterId": 4,
+        "clusterCode": "KA",
+        "clusterName": "Karnataka Cluster"
+      },
+      {
+        "clusterId": 5,
+        "clusterCode": "MH",
+        "clusterName": "Maharashtra Cluster"
+      },
+      {
+        "clusterId": 6,
+        "clusterCode": "AP",
+        "clusterName": "Andhra Pradesh Cluster"
+      },
+      {
+        "clusterId": 7,
+        "clusterCode": "MP",
+        "clusterName": "Madhya Pradesh Cluster"
+      },
+      {
+        "clusterId": 8,
+        "clusterCode": "TS",
+        "clusterName": "Telangana Cluster"
+      },
+      {
+        "clusterId": 9,
+        "clusterCode": "OD",
+        "clusterName": "Odisha Cluster"
+      },
+      {
+        "clusterId": 10,
+        "clusterCode": "UP",
+        "clusterName": "Uttar Pradesh Cluster"
+      }
+    ]
+  },
+  "src/app/masters/grid-connectivities/grid-connectivities.ts": {
+    "MOCK_GRID_CONNECTIVITIES": [
+      {
+        "gridConnectivityId": 1,
+        "gridConnectivity": "STU",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 2,
+        "gridConnectivity": "CTU",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 3,
+        "gridConnectivity": "ISTS",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 4,
+        "gridConnectivity": "Intra-State",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 5,
+        "gridConnectivity": "Inter-State",
+        "status": false
+      },
+      {
+        "gridConnectivityId": 6,
+        "gridConnectivity": "DISCOM Direct",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 7,
+        "gridConnectivity": "33kV Feeder",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 8,
+        "gridConnectivity": "66kV Substation",
+        "status": false
+      },
+      {
+        "gridConnectivityId": 9,
+        "gridConnectivity": "132kV Substation",
+        "status": true
+      },
+      {
+        "gridConnectivityId": 10,
+        "gridConnectivity": "220kV Substation",
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/plants/plants.ts": {
+    "MOCK_PLANTS": [
+      {
+        "id": 1,
+        "plant": "Plant Chennai",
+        "location": "Chennai, Tamil Nadu",
+        "plantManager": "Sanjay Kumar",
+        "status": true
+      },
+      {
+        "id": 2,
+        "plant": "Plant Pune",
+        "location": "Pune, Maharashtra",
+        "plantManager": "Ananya Iyer",
+        "status": true
+      },
+      {
+        "id": 3,
+        "plant": "Plant Trichy",
+        "location": "Tiruchirappalli, Tamil Nadu",
+        "plantManager": "Sivakumar R",
+        "status": false
+      },
+      {
+        "id": 4,
+        "plant": "Plant Tuticorin",
+        "location": "Thoothukudi, Tamil Nadu",
+        "plantManager": "Kayalvizhi M",
+        "status": true
+      },
+      {
+        "id": 5,
+        "plant": "Plant Vadodara",
+        "location": "Vadodara, Gujarat",
+        "plantManager": "Rakesh Patel",
+        "status": true
+      },
+      {
+        "id": 6,
+        "plant": "Plant Kutch",
+        "location": "Bhuj, Gujarat",
+        "plantManager": "Meera Shah",
+        "status": true
+      },
+      {
+        "id": 7,
+        "plant": "Plant Jaisalmer",
+        "location": "Jaisalmer, Rajasthan",
+        "plantManager": "Vikram Singh",
+        "status": false
+      },
+      {
+        "id": 8,
+        "plant": "Plant Bengaluru",
+        "location": "Bengaluru, Karnataka",
+        "plantManager": "Deepa Nair",
+        "status": true
+      },
+      {
+        "id": 9,
+        "plant": "Plant Hyderabad",
+        "location": "Hyderabad, Telangana",
+        "plantManager": "Suresh Reddy",
+        "status": true
+      },
+      {
+        "id": 10,
+        "plant": "Plant Kutch Warehouse",
+        "location": "Bhuj, Gujarat",
+        "plantManager": "Arjun Mehta",
+        "status": true
+      }
+    ],
+    "MOCK_PLANT_MANAGER_USERS": [
+      {
+        "user": {
+          "userName": "Sanjay Kumar"
+        }
+      },
+      {
+        "user": {
+          "userName": "Ananya Iyer"
+        }
+      },
+      {
+        "user": {
+          "userName": "Sivakumar R"
+        }
+      },
+      {
+        "user": {
+          "userName": "Kayalvizhi M"
+        }
+      },
+      {
+        "user": {
+          "userName": "Rakesh Patel"
+        }
+      },
+      {
+        "user": {
+          "userName": "Meera Shah"
+        }
+      },
+      {
+        "user": {
+          "userName": "Vikram Singh"
+        }
+      },
+      {
+        "user": {
+          "userName": "Deepa Nair"
+        }
+      },
+      {
+        "user": {
+          "userName": "Suresh Reddy"
+        }
+      },
+      {
+        "user": {
+          "userName": "Arjun Mehta"
+        }
+      }
+    ]
+  },
+  "src/app/masters/ppa-types/ppa-types.ts": {
+    "MOCK_PPA_TYPES": [
+      {
+        "ppaTypeId": 1,
+        "ppaType": "Fixed Tariff PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 2,
+        "ppaType": "Group Captive PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 3,
+        "ppaType": "Merchant PPA",
+        "status": false
+      },
+      {
+        "ppaTypeId": 4,
+        "ppaType": "Wheeling PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 5,
+        "ppaType": "Third Party Sale PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 6,
+        "ppaType": "Open Access PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 7,
+        "ppaType": "Hybrid PPA",
+        "status": false
+      },
+      {
+        "ppaTypeId": 8,
+        "ppaType": "Banking PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 9,
+        "ppaType": "Feed-in Tariff PPA",
+        "status": true
+      },
+      {
+        "ppaTypeId": 10,
+        "ppaType": "Corporate PPA",
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/roles/roles.ts": {
+    "MOCK_ROLES": [
+      {
+        "roleId": 1,
+        "roleKey": "SUPER_ADMIN",
+        "action": "ALL",
+        "resource": "ALL",
+        "description": "Full system access"
+      },
+      {
+        "roleId": 2,
+        "roleKey": "PLANT_ADMIN",
+        "action": "WRITE",
+        "resource": "PLANT",
+        "description": "Manage plant operations"
+      },
+      {
+        "roleId": 3,
+        "roleKey": "PROJECT_MANAGER",
+        "action": "WRITE",
+        "resource": "PROJECT",
+        "description": "Manage project lifecycle"
+      },
+      {
+        "roleId": 4,
+        "roleKey": "QUALITY_INSPECTOR",
+        "action": "READ",
+        "resource": "QC",
+        "description": "Quality inspection access"
+      },
+      {
+        "roleId": 5,
+        "roleKey": "LOGISTICS_COORDINATOR",
+        "action": "WRITE",
+        "resource": "LOGISTICS",
+        "description": "Coordinate crane and transport logistics"
+      },
+      {
+        "roleId": 6,
+        "roleKey": "FINANCE_MANAGER",
+        "action": "READ",
+        "resource": "FINANCE",
+        "description": "View financial reports"
+      },
+      {
+        "roleId": 7,
+        "roleKey": "STORE_KEEPER",
+        "action": "WRITE",
+        "resource": "INVENTORY",
+        "description": "Manage inventory records"
+      },
+      {
+        "roleId": 8,
+        "roleKey": "HR_MANAGER",
+        "action": "WRITE",
+        "resource": "HR",
+        "description": "Manage employee records"
+      },
+      {
+        "roleId": 9,
+        "roleKey": "SITE_ENGINEER",
+        "action": "WRITE",
+        "resource": "INSTALLATION",
+        "description": "Manage installation activities"
+      },
+      {
+        "roleId": 10,
+        "roleKey": "VIEWER",
+        "action": "READ",
+        "resource": "ALL",
+        "description": "Read only access across modules"
+      }
+    ]
+  },
+  "src/app/masters/tower-types/tower-types.ts": {
+    "MOCK_TOWER_TYPES": [
+      {
+        "towerTypeId": 1,
+        "towerType": "120HH-474T",
+        "sectionCount": 5,
+        "status": true
+      },
+      {
+        "towerTypeId": 2,
+        "towerType": "140HH-520T",
+        "sectionCount": 6,
+        "status": true
+      },
+      {
+        "towerTypeId": 3,
+        "towerType": "100HH-380T",
+        "sectionCount": 4,
+        "status": false
+      },
+      {
+        "towerTypeId": 4,
+        "towerType": "160HH-560T",
+        "sectionCount": 7,
+        "status": true
+      },
+      {
+        "towerTypeId": 5,
+        "towerType": "130HH-490T",
+        "sectionCount": 5,
+        "status": true
+      },
+      {
+        "towerTypeId": 6,
+        "towerType": "150HH-540T",
+        "sectionCount": 6,
+        "status": true
+      },
+      {
+        "towerTypeId": 7,
+        "towerType": "110HH-410T",
+        "sectionCount": 4,
+        "status": false
+      },
+      {
+        "towerTypeId": 8,
+        "towerType": "145HH-510T",
+        "sectionCount": 6,
+        "status": true
+      },
+      {
+        "towerTypeId": 9,
+        "towerType": "135HH-500T",
+        "sectionCount": 5,
+        "status": true
+      },
+      {
+        "towerTypeId": 10,
+        "towerType": "125HH-480T",
+        "sectionCount": 5,
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/user-groups/user-groups.ts": {
+    "MOCK_USER_GROUPS": [
+      {
+        "userGroupId": 1,
+        "groupName": "Super Admin Group",
+        "description": "Full administrative access to all modules",
+        "totalRoles": 1,
+        "totalUsers": 2,
+        "status": true
+      },
+      {
+        "userGroupId": 2,
+        "groupName": "Plant Operations Group",
+        "description": "Manages plant-wise production and configuration",
+        "totalRoles": 2,
+        "totalUsers": 8,
+        "status": true
+      },
+      {
+        "userGroupId": 3,
+        "groupName": "Project Management Group",
+        "description": "Handles project, SPV and WTG planning",
+        "totalRoles": 3,
+        "totalUsers": 6,
+        "status": true
+      },
+      {
+        "userGroupId": 4,
+        "groupName": "Quality Control Group",
+        "description": "Quality inspection and compliance checks",
+        "totalRoles": 1,
+        "totalUsers": 5,
+        "status": false
+      },
+      {
+        "userGroupId": 5,
+        "groupName": "Logistics Group",
+        "description": "Crane, transport and supplier coordination",
+        "totalRoles": 2,
+        "totalUsers": 4,
+        "status": true
+      },
+      {
+        "userGroupId": 6,
+        "groupName": "Finance Group",
+        "description": "Budgeting and financial reporting",
+        "totalRoles": 1,
+        "totalUsers": 3,
+        "status": true
+      },
+      {
+        "userGroupId": 7,
+        "groupName": "HR Group",
+        "description": "Employee and department management",
+        "totalRoles": 1,
+        "totalUsers": 3,
+        "status": true
+      },
+      {
+        "userGroupId": 8,
+        "groupName": "Site Engineering Group",
+        "description": "Installation activity tracking at site",
+        "totalRoles": 2,
+        "totalUsers": 7,
+        "status": true
+      },
+      {
+        "userGroupId": 9,
+        "groupName": "Store & Inventory Group",
+        "description": "Component and inventory tracking",
+        "totalRoles": 1,
+        "totalUsers": 4,
+        "status": false
+      },
+      {
+        "userGroupId": 10,
+        "groupName": "Read Only Viewers",
+        "description": "View only access across all masters",
+        "totalRoles": 1,
+        "totalUsers": 10,
+        "status": true
+      }
+    ],
+    "MOCK_ROLE_INFO": [
+      {
+        "roleId": 1,
+        "roleKey": "SUPER_ADMIN",
+        "description": "Full system access"
+      },
+      {
+        "roleId": 2,
+        "roleKey": "PLANT_ADMIN",
+        "description": "Manage plant operations"
+      },
+      {
+        "roleId": 3,
+        "roleKey": "PROJECT_MANAGER",
+        "description": "Manage project lifecycle"
+      },
+      {
+        "roleId": 4,
+        "roleKey": "QUALITY_INSPECTOR",
+        "description": "Quality inspection access"
+      },
+      {
+        "roleId": 5,
+        "roleKey": "LOGISTICS_COORDINATOR",
+        "description": "Coordinate crane and transport logistics"
+      },
+      {
+        "roleId": 6,
+        "roleKey": "FINANCE_MANAGER",
+        "description": "View financial reports"
+      },
+      {
+        "roleId": 7,
+        "roleKey": "STORE_KEEPER",
+        "description": "Manage inventory records"
+      },
+      {
+        "roleId": 8,
+        "roleKey": "HR_MANAGER",
+        "description": "Manage employee records"
+      },
+      {
+        "roleId": 9,
+        "roleKey": "SITE_ENGINEER",
+        "description": "Manage installation activities"
+      },
+      {
+        "roleId": 10,
+        "roleKey": "VIEWER",
+        "description": "Read only access across modules"
+      }
+    ]
+  },
+  "src/app/masters/wtg-capacities/wtg-capacities.ts": {
+    "MOCK_WTG_CAPACITIES": [
+      {
+        "capacityId": 1,
+        "capacity": 2.1,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 2,
+        "capacity": 2.5,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 3,
+        "capacity": 3,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 4,
+        "capacity": 3.3,
+        "unit": "MW",
+        "status": false
+      },
+      {
+        "capacityId": 5,
+        "capacity": 3.6,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 6,
+        "capacity": 4.2,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 7,
+        "capacity": 1.5,
+        "unit": "MW",
+        "status": false
+      },
+      {
+        "capacityId": 8,
+        "capacity": 2,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 9,
+        "capacity": 2.8,
+        "unit": "MW",
+        "status": true
+      },
+      {
+        "capacityId": 10,
+        "capacity": 3.8,
+        "unit": "MW",
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/wtg-types/wtg-types.ts": {
+    "MOCK_WTG_TYPES": [
+      {
+        "wtgTypeId": 1,
+        "wtgType": "EN-141",
+        "isNearShore": false,
+        "status": true
+      },
+      {
+        "wtgTypeId": 2,
+        "wtgType": "EN-156",
+        "isNearShore": true,
+        "status": true
+      },
+      {
+        "wtgTypeId": 3,
+        "wtgType": "EN-132",
+        "isNearShore": false,
+        "status": true
+      },
+      {
+        "wtgTypeId": 4,
+        "wtgType": "EN-158",
+        "isNearShore": true,
+        "status": false
+      },
+      {
+        "wtgTypeId": 5,
+        "wtgType": "EN-176",
+        "isNearShore": true,
+        "status": true
+      },
+      {
+        "wtgTypeId": 6,
+        "wtgType": "EN-120",
+        "isNearShore": false,
+        "status": true
+      },
+      {
+        "wtgTypeId": 7,
+        "wtgType": "EN-148",
+        "isNearShore": false,
+        "status": false
+      },
+      {
+        "wtgTypeId": 8,
+        "wtgType": "EN-165",
+        "isNearShore": true,
+        "status": true
+      },
+      {
+        "wtgTypeId": 9,
+        "wtgType": "EN-172",
+        "isNearShore": true,
+        "status": true
+      },
+      {
+        "wtgTypeId": 10,
+        "wtgType": "EN-184",
+        "isNearShore": true,
+        "status": true
+      }
+    ]
+  },
+  "src/app/masters/zones/zones.ts": {
+    "MOCK_ZONES": [
+      {
+        "zoneId": 1,
+        "zone": "North",
+        "status": true
+      },
+      {
+        "zoneId": 2,
+        "zone": "South",
+        "status": true
+      },
+      {
+        "zoneId": 3,
+        "zone": "East",
+        "status": true
+      },
+      {
+        "zoneId": 4,
+        "zone": "West",
+        "status": false
+      },
+      {
+        "zoneId": 5,
+        "zone": "Central",
+        "status": true
+      },
+      {
+        "zoneId": 6,
+        "zone": "Gujarat",
+        "status": true
+      },
+      {
+        "zoneId": 7,
+        "zone": "Tamil Nadu",
+        "status": true
+      },
+      {
+        "zoneId": 8,
+        "zone": "Rajasthan",
+        "status": false
+      },
+      {
+        "zoneId": 9,
+        "zone": "Karnataka",
+        "status": true
+      },
+      {
+        "zoneId": 10,
+        "zone": "Andhra",
+        "status": true
+      }
+    ]
+  },
+  "src/app/monthly-plan/monthly-plan.ts": {
+    "MOCK_MONTHLY_DEMAND_PLAN": [
+      {
+        "monthlyDemandPlanId": 1,
+        "planMonth": "Apr 2026",
+        "projectCode": "P-8001",
+        "customerCode": "C-101",
+        "customerName": "ReNew Power",
+        "spvName": "ReNew Wind SPV 3",
+        "towerType": "120HH-304T",
+        "bladeType": "Small",
+        "wtgType": "EN132",
+        "capMw": 2.4,
+        "wtgCount": 8,
+        "status": "ACTIVE",
+        "createdOn": "2026-03-01T10:15:00",
+        "createdByName": "Ravi Kumar"
+      },
+      {
+        "monthlyDemandPlanId": 2,
+        "planMonth": "Apr 2026",
+        "projectCode": "P-8002",
+        "customerCode": "C-102",
+        "customerName": "Adani Green Energy",
+        "spvName": "Adani Renewable SPV 1",
+        "towerType": "140HH-474T",
+        "bladeType": "Big",
+        "wtgType": "EN156",
+        "capMw": 3.3,
+        "wtgCount": 5,
+        "status": "DRAFT",
+        "createdOn": "2026-03-02T09:30:00",
+        "createdByName": "Sunita Sharma"
+      },
+      {
+        "monthlyDemandPlanId": 3,
+        "planMonth": "May 2026",
+        "projectCode": "P-8003",
+        "customerCode": "C-103",
+        "customerName": "Suzlon Energy",
+        "spvName": "Suzlon SPV 2",
+        "towerType": "130HH-420T",
+        "bladeType": "Small",
+        "wtgType": "EN132",
+        "capMw": 2.5,
+        "wtgCount": 12,
+        "status": "ACTIVE",
+        "createdOn": "2026-03-05T11:00:00",
+        "createdByName": "Ajay Patel"
+      },
+      {
+        "monthlyDemandPlanId": 4,
+        "planMonth": "May 2026",
+        "projectCode": "P-8004",
+        "customerCode": "C-104",
+        "customerName": "Greenko",
+        "spvName": "Greenko SPV 4",
+        "towerType": "140HH-353T",
+        "bladeType": "Big",
+        "wtgType": "EN156",
+        "capMw": 3.5,
+        "wtgCount": 6,
+        "status": "ON_HOLD",
+        "createdOn": "2026-03-06T14:45:00",
+        "createdByName": "Meena Joshi"
+      },
+      {
+        "monthlyDemandPlanId": 5,
+        "planMonth": "Jun 2026",
+        "projectCode": "P-8005",
+        "customerCode": "C-105",
+        "customerName": "Tata Power Renewable",
+        "spvName": "Tata Power SPV 1",
+        "towerType": "120HH-304T",
+        "bladeType": "Small",
+        "wtgType": "EN182",
+        "capMw": 5,
+        "wtgCount": 4,
+        "status": "COMPLETED",
+        "createdOn": "2026-03-07T08:20:00",
+        "createdByName": "Vikram Singh"
+      },
+      {
+        "monthlyDemandPlanId": 6,
+        "planMonth": "Jun 2026",
+        "projectCode": "P-8006",
+        "customerCode": "C-101",
+        "customerName": "ReNew Power",
+        "spvName": "ReNew Wind SPV 5",
+        "towerType": "140HH-474T",
+        "bladeType": "Big",
+        "wtgType": "EN156",
+        "capMw": 3.3,
+        "wtgCount": 10,
+        "status": "ACTIVE",
+        "createdOn": "2026-03-08T13:10:00",
+        "createdByName": "Ravi Kumar"
+      },
+      {
+        "monthlyDemandPlanId": 7,
+        "planMonth": "Jul 2026",
+        "projectCode": "P-8007",
+        "customerCode": "C-102",
+        "customerName": "Adani Green Energy",
+        "spvName": "Adani Renewable SPV 3",
+        "towerType": "130HH-420T",
+        "bladeType": "Small",
+        "wtgType": "EN132",
+        "capMw": 2.4,
+        "wtgCount": 7,
+        "status": "DRAFT",
+        "createdOn": "2026-03-09T10:00:00",
+        "createdByName": "Sunita Sharma"
+      },
+      {
+        "monthlyDemandPlanId": 8,
+        "planMonth": "Jul 2026",
+        "projectCode": "P-8008",
+        "customerCode": "C-106",
+        "customerName": "JSW Energy",
+        "spvName": "JSW SPV 2",
+        "towerType": "140HH-353T",
+        "bladeType": "Big",
+        "wtgType": "EN182",
+        "capMw": 5.5,
+        "wtgCount": 3,
+        "status": "CANCELLED",
+        "createdOn": "2026-03-10T16:30:00",
+        "createdByName": "Meena Joshi"
+      },
+      {
+        "monthlyDemandPlanId": 9,
+        "planMonth": "Aug 2026",
+        "projectCode": "P-8009",
+        "customerCode": "C-103",
+        "customerName": "Suzlon Energy",
+        "spvName": "Suzlon SPV 5",
+        "towerType": "120HH-304T",
+        "bladeType": "Small",
+        "wtgType": "EN132",
+        "capMw": 2.5,
+        "wtgCount": 9,
+        "status": "ACTIVE",
+        "createdOn": "2026-03-11T09:45:00",
+        "createdByName": "Ajay Patel"
+      },
+      {
+        "monthlyDemandPlanId": 10,
+        "planMonth": "Aug 2026",
+        "projectCode": "P-8010",
+        "customerCode": "C-104",
+        "customerName": "Greenko",
+        "spvName": "Greenko SPV 6",
+        "towerType": "140HH-474T",
+        "bladeType": "Big",
+        "wtgType": "EN156",
+        "capMw": 3.5,
+        "wtgCount": 11,
+        "status": "ON_HOLD",
+        "createdOn": "2026-03-12T15:00:00",
+        "createdByName": "Vikram Singh"
+      }
+    ]
+  },
+  "src/app/project-wtg-location-details/project-wtg-location-details.ts": {
+    "MOCK_PRJ_WTG_DETAILS": [
+      {
+        "projectWtg": {
+          "projectWtgId": 1,
+          "wtgCode": "WTG-001",
+          "wtgType": {
+            "wtgType": "EN132"
+          },
+          "towerType": {
+            "towerType": "120HH-304T"
+          }
+        },
+        "executionStatus": "FDN_COMPLETED",
+        "location": {
+          "locationId": 1,
+          "locationCode": "LOC-001",
+          "maximoId": "MX-1001",
+          "village": "Bhachau",
+          "latitude": 23.28,
+          "longitude": 70.35,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 2,
+          "wtgCode": "WTG-002",
+          "wtgType": {
+            "wtgType": "EN132"
+          },
+          "towerType": {
+            "towerType": "120HH-304T"
+          }
+        },
+        "executionStatus": "INS_IN_PROGRESS",
+        "location": {
+          "locationId": 2,
+          "locationCode": "LOC-002",
+          "maximoId": "MX-1002",
+          "village": "Bhachau",
+          "latitude": 23.29,
+          "longitude": 70.36,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 3,
+          "wtgCode": "WTG-003",
+          "wtgType": {
+            "wtgType": "EN156"
+          },
+          "towerType": {
+            "towerType": "140HH-474T"
+          }
+        },
+        "executionStatus": "NOT_STARTED",
+        "location": null
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 4,
+          "wtgCode": "WTG-004",
+          "wtgType": {
+            "wtgType": "EN156"
+          },
+          "towerType": {
+            "towerType": "140HH-474T"
+          }
+        },
+        "executionStatus": "COMM_COMPLETED",
+        "location": {
+          "locationId": 4,
+          "locationCode": "LOC-004",
+          "maximoId": "MX-1004",
+          "village": "Jaisalmer",
+          "latitude": 26.91,
+          "longitude": 70.92,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 5,
+          "wtgCode": "WTG-005",
+          "wtgType": {
+            "wtgType": "EN182"
+          },
+          "towerType": {
+            "towerType": "130HH-420T"
+          }
+        },
+        "executionStatus": "FDN_IN_PROGRESS",
+        "location": {
+          "locationId": 5,
+          "locationCode": "LOC-005",
+          "maximoId": "MX-1005",
+          "village": "Jaisalmer",
+          "latitude": 26.92,
+          "longitude": 70.93,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 6,
+          "wtgCode": "WTG-006",
+          "wtgType": {
+            "wtgType": "EN182"
+          },
+          "towerType": {
+            "towerType": "130HH-420T"
+          }
+        },
+        "executionStatus": "HOLD",
+        "location": {
+          "locationId": 6,
+          "locationCode": "LOC-006",
+          "maximoId": "MX-1006",
+          "village": "Jaisalmer",
+          "latitude": 26.93,
+          "longitude": 70.94,
+          "status": false
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 7,
+          "wtgCode": "WTG-007",
+          "wtgType": {
+            "wtgType": "EN132"
+          },
+          "towerType": {
+            "towerType": "140HH-353T"
+          }
+        },
+        "executionStatus": "INS_COMPLETED",
+        "location": {
+          "locationId": 7,
+          "locationCode": "LOC-007",
+          "maximoId": "MX-1007",
+          "village": "Tuticorin",
+          "latitude": 8.76,
+          "longitude": 78.13,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 8,
+          "wtgCode": "WTG-008",
+          "wtgType": {
+            "wtgType": "EN156"
+          },
+          "towerType": {
+            "towerType": "140HH-353T"
+          }
+        },
+        "executionStatus": "COMM_IN_PROGRESS",
+        "location": {
+          "locationId": 8,
+          "locationCode": "LOC-008",
+          "maximoId": "MX-1008",
+          "village": "Tuticorin",
+          "latitude": 8.77,
+          "longitude": 78.14,
+          "status": true
+        }
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 9,
+          "wtgCode": "WTG-009",
+          "wtgType": {
+            "wtgType": "EN132"
+          },
+          "towerType": {
+            "towerType": "120HH-304T"
+          }
+        },
+        "executionStatus": "CANCELLED",
+        "location": null
+      },
+      {
+        "projectWtg": {
+          "projectWtgId": 10,
+          "wtgCode": "WTG-010",
+          "wtgType": {
+            "wtgType": "EN182"
+          },
+          "towerType": {
+            "towerType": "130HH-420T"
+          }
+        },
+        "executionStatus": "NOT_STARTED",
+        "location": null
+      }
+    ]
+  },
+  "src/app/wtg-dispatch/wtg-dispatch.ts": {
+    "wtgDispatchPlanList": [
+      {
+        "slNo": 1,
+        "planDate": "2026-04-05",
+        "projectCode": "P-8001",
+        "wtgCount": 3
+      },
+      {
+        "slNo": 2,
+        "planDate": "2026-04-07",
+        "projectCode": "P-8002",
+        "wtgCount": 5
+      },
+      {
+        "slNo": 3,
+        "planDate": "2026-04-10",
+        "projectCode": "P-8003",
+        "wtgCount": 2
+      },
+      {
+        "slNo": 4,
+        "planDate": "2026-04-12",
+        "projectCode": "P-8004",
+        "wtgCount": 4
+      },
+      {
+        "slNo": 5,
+        "planDate": "2026-04-14",
+        "projectCode": "P-8005",
+        "wtgCount": 6
+      },
+      {
+        "slNo": 6,
+        "planDate": "2026-04-16",
+        "projectCode": "P-8006",
+        "wtgCount": 3
+      },
+      {
+        "slNo": 7,
+        "planDate": "2026-04-18",
+        "projectCode": "P-8007",
+        "wtgCount": 5
+      },
+      {
+        "slNo": 8,
+        "planDate": "2026-04-20",
+        "projectCode": "P-8008",
+        "wtgCount": 2
+      },
+      {
+        "slNo": 9,
+        "planDate": "2026-04-22",
+        "projectCode": "P-8009",
+        "wtgCount": 4
+      },
+      {
+        "slNo": 10,
+        "planDate": "2026-04-24",
+        "projectCode": "P-8010",
+        "wtgCount": 7
+      }
+    ]
+  },
+  "src/app/wtg-quality/wtg-quality.ts": {
+    "qualityList": [
+      {
+        "component": "Nacelle",
+        "serialNumber": "NAC-CHN-001",
+        "finalQcDate": "2026-04-02",
+        "projectCode": "P-8001",
+        "inspectionCallPlan": "2026-04-05",
+        "customerInspectionActual": "2026-04-06",
+        "mdccPlan": "2026-04-08",
+        "mdccActual": "2026-04-09"
+      },
+      {
+        "slNo": 2,
+        "component": "Hub",
+        "serialNumber": "HUB-CHN-002",
+        "finalQcDate": "2026-04-03",
+        "projectCode": "P-8002",
+        "inspectionCallPlan": "2026-04-06",
+        "customerInspectionActual": "2026-04-07",
+        "mdccPlan": "2026-04-09",
+        "mdccActual": "2026-04-10"
+      },
+      {
+        "slNo": 3,
+        "component": "Blade",
+        "serialNumber": "BLD-TRY-003",
+        "finalQcDate": "2026-04-04",
+        "projectCode": "P-8003",
+        "inspectionCallPlan": "2026-04-07",
+        "customerInspectionActual": "2026-04-08",
+        "mdccPlan": "2026-04-10",
+        "mdccActual": "2026-04-11"
+      },
+      {
+        "slNo": 4,
+        "component": "Tower",
+        "serialNumber": "TWR-PUN-004",
+        "finalQcDate": "2026-04-05",
+        "projectCode": "P-8004",
+        "inspectionCallPlan": "2026-04-08",
+        "customerInspectionActual": null,
+        "mdccPlan": "2026-04-11",
+        "mdccActual": null
+      },
+      {
+        "slNo": 5,
+        "component": "Converter Panel",
+        "serialNumber": "CNV-CHN-005",
+        "finalQcDate": "2026-04-06",
+        "projectCode": "P-8005",
+        "inspectionCallPlan": "2026-04-09",
+        "customerInspectionActual": "2026-04-10",
+        "mdccPlan": "2026-04-12",
+        "mdccActual": "2026-04-13"
+      },
+      {
+        "slNo": 6,
+        "component": "Nacelle",
+        "serialNumber": "NAC-PUN-006",
+        "finalQcDate": "2026-04-07",
+        "projectCode": "P-8006",
+        "inspectionCallPlan": "2026-04-10",
+        "customerInspectionActual": null,
+        "mdccPlan": "2026-04-13",
+        "mdccActual": null
+      },
+      {
+        "slNo": 7,
+        "component": "Hub",
+        "serialNumber": "HUB-TRY-007",
+        "finalQcDate": "2026-04-08",
+        "projectCode": "P-8007",
+        "inspectionCallPlan": "2026-04-11",
+        "customerInspectionActual": "2026-04-12",
+        "mdccPlan": "2026-04-14",
+        "mdccActual": "2026-04-15"
+      },
+      {
+        "slNo": 8,
+        "component": "Blade",
+        "serialNumber": "BLD-CHN-008",
+        "finalQcDate": "2026-04-09",
+        "projectCode": "P-8008",
+        "inspectionCallPlan": "2026-04-12",
+        "customerInspectionActual": "2026-04-13",
+        "mdccPlan": "2026-04-15",
+        "mdccActual": null
+      },
+      {
+        "slNo": 9,
+        "component": "Tower",
+        "serialNumber": "TWR-BLG-009",
+        "finalQcDate": "2026-04-10",
+        "projectCode": "P-8009",
+        "inspectionCallPlan": "2026-04-13",
+        "customerInspectionActual": "2026-04-14",
+        "mdccPlan": "2026-04-16",
+        "mdccActual": "2026-04-17"
+      },
+      {
+        "slNo": 10,
+        "component": "Converter Panel",
+        "serialNumber": "CNV-KTC-010",
+        "finalQcDate": "2026-04-11",
+        "projectCode": "P-8010",
+        "inspectionCallPlan": "2026-04-14",
+        "customerInspectionActual": null,
+        "mdccPlan": "2026-04-17",
+        "mdccActual": null
+      }
+    ]
+  },
+  "src/app/wtg-receiving-project-summary/wtg-receiving-project-summary.ts": {
+    "wtgProjects": [
+      {
+        "slNo": 1,
+        "openWtg": "WTG-001",
+        "projectCode": "P-8001",
+        "projectName": "India_TataPower_Chennai_TamilNadu_Phase1_250MW",
+        "wtgCount": 2
+      },
+      {
+        "slNo": 2,
+        "openWtg": "WTG-002",
+        "projectCode": "P-8002",
+        "projectName": "India_AdaniEnergy_Belagavi_Karnataka_Phase2_180MW",
+        "wtgCount": 5
+      },
+      {
+        "slNo": 3,
+        "openWtg": "WTG-003",
+        "projectCode": "P-8003",
+        "projectName": "India_ReNewPower_Jaisalmer_Rajasthan_Phase1_320MW",
+        "wtgCount": 6
+      },
+      {
+        "slNo": 4,
+        "openWtg": "WTG-004",
+        "projectCode": "P-8004",
+        "projectName": "India_Greenko_Kutch_Gujarat_Phase3_400MW",
+        "wtgCount": 3
+      },
+      {
+        "slNo": 5,
+        "openWtg": "WTG-005",
+        "projectCode": "P-8005",
+        "projectName": "India_AzurePower_Pune_Maharashtra_Phase1_150MW",
+        "wtgCount": 4
+      },
+      {
+        "slNo": 6,
+        "openWtg": "WTG-006",
+        "projectCode": "P-8006",
+        "projectName": "India_Suzlon_Jaisalmer_Rajasthan_Phase2_200MW",
+        "wtgCount": 3
+      },
+      {
+        "slNo": 7,
+        "openWtg": "WTG-007",
+        "projectCode": "P-8007",
+        "projectName": "India_HeroFuture_Bhuj_Gujarat_Phase1_275MW",
+        "wtgCount": 5
+      },
+      {
+        "slNo": 8,
+        "openWtg": "WTG-008",
+        "projectCode": "P-8008",
+        "projectName": "India_Continuum_Sangareddy_Telangana_Phase1_120MW",
+        "wtgCount": 2
+      },
+      {
+        "slNo": 9,
+        "openWtg": "WTG-009",
+        "projectCode": "P-8009",
+        "projectName": "India_JSWEnergy_Devgadh_Rajasthan_Phase2_300MW",
+        "wtgCount": 6
+      },
+      {
+        "slNo": 10,
+        "openWtg": "WTG-010",
+        "projectCode": "P-8010",
+        "projectName": "India_Torrent_Chitradurga_Karnataka_Phase1_180MW",
+        "wtgCount": 4
+      }
+    ]
+  },
+  "src/app/yearly-demand-plans/yearly-demand-plans.ts": {
+    "MOCK_YEARLY_DEMAND_PLAN": [
+      {
+        "yearlyDemandPlanId": 1,
+        "planYear": 2026,
+        "customer": {
+          "customerId": 1,
+          "customerName": "ReNew Power"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 2,
+        "planYear": 2026,
+        "customer": {
+          "customerId": 2,
+          "customerName": "Adani Green Energy"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 3,
+        "planYear": 2027,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Suzlon Energy"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 4,
+        "planYear": 2026,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Greenko"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 5,
+        "planYear": 2027,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Tata Power Renewable"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 6,
+        "planYear": 2026,
+        "customer": {
+          "customerId": 1,
+          "customerName": "ReNew Power"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 7,
+        "planYear": 2025,
+        "customer": {
+          "customerId": 2,
+          "customerName": "Adani Green Energy"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 8,
+        "planYear": 2027,
+        "customer": {
+          "customerId": 3,
+          "customerName": "Suzlon Energy"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 9,
+        "planYear": 2026,
+        "customer": {
+          "customerId": 4,
+          "customerName": "Greenko"
+        }
+      },
+      {
+        "yearlyDemandPlanId": 10,
+        "planYear": 2027,
+        "customer": {
+          "customerId": 5,
+          "customerName": "Tata Power Renewable"
+        }
+      }
+    ]
+  },
+  "src/app/wtgproduction/wtgproduction.ts": {
+    "wtgProductionList": [
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-001",
+        "finalQCDate": "2026-03-05",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-002",
+        "finalQCDate": "2026-03-05",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-003",
+        "finalQCDate": "2026-03-08",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-004",
+        "finalQCDate": "2026-03-09",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-005",
+        "finalQCDate": "2026-03-10",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-006",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "2026-03-05",
+        "proActualEnd": "2026-03-06",
+        "proDelayReason": "-",
+        "serialNo": "B-007",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "2026-03-05",
+        "proActualEnd": "2026-03-06",
+        "proDelayReason": "",
+        "serialNo": "B-008",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "2026-03-05",
+        "proActualEnd": "2026-03-06",
+        "proDelayReason": "-",
+        "serialNo": "B-009",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-013",
+        "finalQCDate": "2026-03-12",
+        "pCode": "P-8001",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-014",
+        "finalQCDate": "2026-03-14",
+        "pCode": "P-8009",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-01",
+        "proEnd": "2026-03-02",
+        "proActualStart": "2026-03-01",
+        "proActualEnd": "2026-03-02",
+        "proDelayReason": "-",
+        "serialNo": "B-015",
+        "finalQCDate": "2026-03-15",
+        "pCode": "P-8010",
+        "status": "DONE"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-016",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-017",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-03",
+        "proEnd": "2026-03-04",
+        "proActualStart": "2026-03-03",
+        "proActualEnd": "2026-03-04",
+        "proDelayReason": "-",
+        "serialNo": "B-018",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "2026-03-05",
+        "proActualEnd": "2026-03-06",
+        "proDelayReason": "-",
+        "serialNo": "B-019",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "2026-03-05",
+        "proActualEnd": "2026-03-06",
+        "proDelayReason": "-",
+        "serialNo": "B-020",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-05",
+        "proEnd": "2026-03-06",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-07",
+        "proEnd": "2026-03-08",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-09",
+        "proEnd": "2026-03-10",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-09",
+        "proEnd": "2026-03-10",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      },
+      {
+        "component": "Blade",
+        "proStart": "2026-03-09",
+        "proEnd": "2026-03-10",
+        "proActualStart": "-",
+        "proActualEnd": "-",
+        "proDelayReason": "-",
+        "serialNo": "-",
+        "finalQCDate": "-",
+        "pCode": "-",
+        "status": "PLANNED"
+      }
+    ]
+  },
+  "src/app/wtg-dispatch-form/wtg-dispatch-form.ts": {
+    "pCodeList": [
+      {
+        "label": "P-8001",
+        "value": "P-8001"
+      },
+      {
+        "label": "P-8002",
+        "value": "P-8002"
+      },
+      {
+        "label": "P-8003",
+        "value": "P-8003"
+      },
+      {
+        "label": "P-8004",
+        "value": "P-8004"
+      }
+    ],
+    "componentList": [
+      {
+        "label": "Topflange",
+        "value": "Topflange"
+      },
+      {
+        "label": "Bottomflange",
+        "value": "Bottomflange"
+      },
+      {
+        "label": "Blade",
+        "value": "Blade"
+      },
+      {
+        "label": "Nacelle",
+        "value": "Nacelle"
+      },
+      {
+        "label": "Hub",
+        "value": "Hub"
+      },
+      {
+        "label": "Tower",
+        "value": "Tower"
+      },
+      {
+        "label": "Converter Panel",
+        "value": "Converter Panel"
+      },
+      {
+        "label": "Site Accessories",
+        "value": "Site Accessories"
+      },
+      {
+        "label": "SCADA",
+        "value": "SCADA"
+      }
+    ]
+  },
+  "src/app/wtg-receiving/wtg-receiving.ts": {
+    "componentDetails": [
+      {
+        "components": "Top Flange",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Bottom Flange",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 2"
+      },
+      {
+        "components": "Nacelle",
+        "locationId": "ENV 2",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Hub",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 2"
+      },
+      {
+        "components": "Blade 1",
+        "locationId": "ENV 2",
+        "maximoId": "Maximo 2"
+      },
+      {
+        "components": "Blade 2",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Blade 3",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Tower 1",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Tower 2",
+        "locationId": "ENV 2",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Tower 3",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Tower 4",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 2"
+      },
+      {
+        "components": "Tower 5",
+        "locationId": "ENV 2",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "Converter Panel",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 2"
+      },
+      {
+        "components": "Site Accessories",
+        "locationId": "ENV 2",
+        "maximoId": "Maximo 1"
+      },
+      {
+        "components": "SCADA",
+        "locationId": "ENV 1",
+        "maximoId": "Maximo 2"
+      }
+    ],
+    "wtgList": [
+      {
+        "id": 1,
+        "wtgCode": "WTG-001"
+      },
+      {
+        "id": 2,
+        "wtgCode": "WTG-002"
+      }
+    ],
+    "componentConditionList": [
+      {
+        "label": "Good",
+        "value": "Good"
+      },
+      {
+        "label": "Damage",
+        "value": "Damage"
+      }
+    ],
+    "returnStatusList": [
+      {
+        "label": "Returned",
+        "value": true
+      },
+      {
+        "label": "Pending",
+        "value": false
+      }
+    ]
+  },
+  "src/app/plant-allocation/plant-allocation.ts": {
+    "plantNameList": [
+      {
+        "label": "Chennai",
+        "value": "Chennai"
+      },
+      {
+        "label": "Trichy",
+        "value": "Trichy"
+      },
+      {
+        "label": "Pune",
+        "value": "Pune"
+      }
+    ],
+    "plantManagerList": [
+      {
+        "label": "Suresh Reddy",
+        "value": "Suresh Reddy"
+      },
+      {
+        "label": "Lakshmi Devi",
+        "value": "Lakshmi Devi"
+      },
+      {
+        "label": "Anitha Rao",
+        "value": "Anitha Rao"
+      }
+    ]
+  }
+}
