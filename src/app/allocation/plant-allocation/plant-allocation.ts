@@ -10,6 +10,8 @@ import { DialogModule } from 'primeng/dialog';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { RippleModule } from 'primeng/ripple';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 interface PlantManager {
   label: string;
   value: string;
@@ -47,8 +49,10 @@ interface Allocation {
     DialogModule,
     PopoverModule,
     RippleModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ToastModule
   ],
+    providers: [MessageService],
   templateUrl: './plant-allocation.html',
   styleUrl: './plant-allocation.css'
 })
@@ -124,7 +128,7 @@ export class PlantAllocation implements OnInit {
   allocationForm: FormGroup;
   limitForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private messageService: MessageService) {
     this.allocationForm = this.fb.group({
       qty: [0, [Validators.required, Validators.min(1)]],
       plantName: ['', Validators.required],
@@ -467,15 +471,24 @@ export class PlantAllocation implements OnInit {
   }
 
  
-  submitAll(): void {
-    if (this.allocations.length === 0) {
-      alert('Please add at least one allocation before submitting.');
-      return;
-    }
-
-   
-    alert('Allocations are ready. Connect the backend API to save them.');
+submitAll(): void {
+  if (this.allocations.length === 0) {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: 'Please add at least one allocation before submitting.',
+      life: 3000
+    });
+    return;
   }
+
+  this.messageService.add({
+    severity: 'success',
+    summary: 'Success',
+    detail: 'Allocations are ready to submit.',
+    life: 3000
+  });
+}
 
 
   canAddAllocation(): boolean {

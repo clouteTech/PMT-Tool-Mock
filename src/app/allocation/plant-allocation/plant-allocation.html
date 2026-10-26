@@ -114,12 +114,21 @@
 
           <!-- Plant Manager -->
           <p-floatlabel variant="on">
-            <p-select [options]="plantManagerList" formControlName="plantManager" optionLabel="label"
-              optionValue="value" optionDisabled="disabled" styleClass="w-full" appendTo="body">
-            </p-select>
+  <p-select
+    [options]="plantManagerList"
+    formControlName="plantManager"
+    optionLabel="label"
+    optionValue="value"
+    optionDisabled="disabled"
+    [filter]="true"
+    filterPlaceholder="Search Plant Manager"
+    styleClass="w-full"
+    appendTo="body">
 
-            <label>Plant Manager</label>
-          </p-floatlabel>
+  </p-select>
+
+  <label>Plant Manager</label>
+</p-floatlabel>
 
           <!-- Plant -->
           <p-floatlabel variant="on">
@@ -234,9 +243,14 @@
       </p-table>
 
       <!-- Submit All -->
+       <p-toast position="top-right"></p-toast>
+
       <div class="footer-row">
+      
+   
         <button pButton type="button" label="Submit All" (click)="submitAll()">
         </button>
+       
       </div>
 
     </div>
