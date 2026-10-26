@@ -1,13 +1,6 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-
+import { FormBuilder, FormGroup,ReactiveFormsModule, Validators} from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
@@ -75,13 +68,13 @@ export class PlantAllocation implements OnInit {
   availableManagerCount = 0;
 
   pendingDeleteIndex = -1;
-showSuccessDialog = false;
-successMessage = '';
+  showSuccessDialog = false;
+  successMessage = '';
   @ViewChild('op') op!: Popover;
 
   selectedPlantManager: PlantManager | null = null;
 
-  // Configured limits. Do not reduce these when allocations are added.
+  
   plantManagerList: PlantManager[] = [
     {
       label: 'Suresh Reddy (limit 10)',
@@ -103,7 +96,7 @@ successMessage = '';
     }
   ];
 
-  // Add Limit popup dropdown
+  
   plantManagerList1: PlantManagerLimit[] = [
     {
       name: 'Suresh Reddy',
@@ -138,10 +131,10 @@ successMessage = '';
       plantManager: ['', Validators.required]
     });
 
-this.limitForm = this.fb.group({
-  plantManager: [[], Validators.required],
-  qty: [null, [Validators.required, Validators.min(1)]]
-});
+    this.limitForm = this.fb.group({
+      plantManager: [[], Validators.required],
+      qty: [null, [Validators.required, Validators.min(1)]]
+    });
   }
 
   ngOnInit(): void {
@@ -162,7 +155,7 @@ this.limitForm = this.fb.group({
     this.updateManagerLimits();
   }
 
-  // Group components by name
+  
   groupComponents(components: any[]): void {
     const componentMap = new Map<string, any>();
 
@@ -182,7 +175,7 @@ this.limitForm = this.fb.group({
     this.selectedComponents = Array.from(componentMap.values());
   }
 
-  // Update total and remaining quantity
+  
   componentChange(component: any): void {
     this.selectedQty = Number(component?.count ?? 0);
 
@@ -197,7 +190,7 @@ this.limitForm = this.fb.group({
     );
   }
 
-  // Calculate how much a manager has allocated
+  
   getManagerAllocatedQty(managerName: string): number {
     return this.allocations
       .filter(allocation =>
@@ -209,45 +202,45 @@ this.limitForm = this.fb.group({
       );
   }
 
-  // Refresh BOTH dropdowns after adding, deleting or changing a limit
-updateManagerLimits(): void {
-  // Update the main Plant Manager dropdown
-  this.plantManagerList = this.plantManagerList.map(manager => {
-    const allocatedQty = this.getManagerAllocatedQty(manager.value);
-    const remainingLimit = Math.max(0, manager.limit - allocatedQty);
 
-    return {
-      ...manager,
-      label: `${manager.value} (remaining limit ${remainingLimit})`,
-      disabled: remainingLimit === 0
-    };
-  });
+  updateManagerLimits(): void {
+   
+    this.plantManagerList = this.plantManagerList.map(manager => {
+      const allocatedQty = this.getManagerAllocatedQty(manager.value);
+      const remainingLimit = Math.max(0, manager.limit - allocatedQty);
 
-  // Update the Add Limit multi-select dropdown
-  this.plantManagerList1 = this.plantManagerList1.map(manager => {
-    const mainManager = this.plantManagerList.find(
-      item => item.value === manager.name
-    );
+      return {
+        ...manager,
+        label: `${manager.value} (remaining limit ${remainingLimit})`,
+        disabled: remainingLimit === 0
+      };
+    });
 
-    if (!mainManager) {
-      return manager;
-    }
+   
+    this.plantManagerList1 = this.plantManagerList1.map(manager => {
+      const mainManager = this.plantManagerList.find(
+        item => item.value === manager.name
+      );
 
-    const allocatedQty = this.getManagerAllocatedQty(manager.name);
-    const remainingLimit = Math.max(0, mainManager.limit - allocatedQty);
+      if (!mainManager) {
+        return manager;
+      }
 
-    return {
-      ...manager,
-      limit: remainingLimit,
-      label: `${manager.name} (remaining limit ${remainingLimit})`
-    };
-  });
+      const allocatedQty = this.getManagerAllocatedQty(manager.name);
+      const remainingLimit = Math.max(0, mainManager.limit - allocatedQty);
 
-  this.availableManagerCount = this.plantManagerList.filter(
-    manager => !manager.disabled
-  ).length;
-}
-  // Check the entered quantity against the selected manager's capacity
+      return {
+        ...manager,
+        limit: remainingLimit,
+        label: `${manager.name} (remaining limit ${remainingLimit})`
+      };
+    });
+
+    this.availableManagerCount = this.plantManagerList.filter(
+      manager => !manager.disabled
+    ).length;
+  }
+  
   checkQtyLimit(): void {
     const managerName =
       this.allocationForm.get('plantManager')?.value;
@@ -271,7 +264,7 @@ updateManagerLimits(): void {
       allocatedQty + qty > manager.limit;
   }
 
-  // Add an allocation
+  
   addAllocations(): void {
     if (this.allocationForm.invalid) {
       this.allocationForm.markAllAsTouched();
@@ -306,7 +299,7 @@ updateManagerLimits(): void {
       return;
     }
 
-    // Save a copy of the manager and plant details with the allocation
+    
     this.allocations = [
       ...this.allocations,
       {
@@ -320,7 +313,7 @@ updateManagerLimits(): void {
       this.remainingQty -= qty;
     }
 
-    // Refresh both dropdowns
+    
     this.updateManagerLimits();
 
     this.allocationForm.reset({
@@ -333,7 +326,7 @@ updateManagerLimits(): void {
     this.selectedPlantManager = null;
   }
 
-  // Open the quantity limit popup
+
   viewPlantManagers(event: Event): void {
     this.checkQtyLimit();
 
@@ -342,7 +335,7 @@ updateManagerLimits(): void {
     }
   }
 
-  // Suggest other managers who have enough remaining capacity
+  
   getSuggestedManagers(): PlantManager[] {
     if (!this.selectedPlantManager) {
       return [];
@@ -368,65 +361,64 @@ updateManagerLimits(): void {
       .sort((a, b) => a.limit - b.limit);
   }
 
-  // Increase a manager's configured limit
-saveLimit(): void {
-  if (this.limitForm.invalid) {
-    this.limitForm.markAllAsTouched();
-    return;
-  }
 
-  const formValue = this.limitForm.getRawValue();
-  const managerNames: string[] = formValue.plantManager;
-  const extraQty = Number(formValue.qty);
-
-  if (
-    !managerNames?.length ||
-    !Number.isFinite(extraQty) ||
-    extraQty <= 0
-  ) {
-    return;
-  }
-
-  // Update the selected managers' limits
-  this.plantManagerList = this.plantManagerList.map(manager => {
-    if (managerNames.includes(manager.value)) {
-      return {
-        ...manager,
-        limit: manager.limit + extraQty
-      };
+  saveLimit(): void {
+    if (this.limitForm.invalid) {
+      this.limitForm.markAllAsTouched();
+      return;
     }
 
-    return manager;
-  });
+    const formValue = this.limitForm.getRawValue();
+    const managerNames: string[] = formValue.plantManager;
+    const extraQty = Number(formValue.qty);
 
-  // Refresh both dropdowns
-  this.updateManagerLimits();
+    if (
+      !managerNames?.length ||
+      !Number.isFinite(extraQty) ||
+      extraQty <= 0
+    ) {
+      return;
+    }
 
-  // Prepare success confirmation
-  this.successMessage =
-    `Successfully added ${extraQty} to ${managerNames.join(', ')}.`;
+    
+    this.plantManagerList = this.plantManagerList.map(manager => {
+      if (managerNames.includes(manager.value)) {
+        return {
+          ...manager,
+          limit: manager.limit + extraQty
+        };
+      }
 
-  // Close Add Limit dialog
-  this.showLimitForm = false;
+      return manager;
+    });
 
-  // Open success popup
-  this.showSuccessDialog = true;
+    
+    this.updateManagerLimits();
 
-  this.limitForm.reset({
-    plantManager: [],
-    qty: null
-  });
-}
-  // Cancel Add Limit popup
-cancelLimit(): void {
-  this.showLimitForm = false;
+    
+    this.successMessage =
+      `Successfully added ${extraQty} to ${managerNames.join(', ')}.`;
 
-  this.limitForm.reset({
-    plantManager: [],
-    qty: null
-  });
-}
-  // Open delete confirmation popup
+    this.showLimitForm = false;
+
+   
+    this.showSuccessDialog = true;
+
+    this.limitForm.reset({
+      plantManager: [],
+      qty: null
+    });
+  }
+  
+  cancelLimit(): void {
+    this.showLimitForm = false;
+
+    this.limitForm.reset({
+      plantManager: [],
+      qty: null
+    });
+  }
+  
   removeAllocation(index: number, allocation: Allocation): void {
     if (!this.allocations[index]) {
       return;
@@ -436,7 +428,7 @@ cancelLimit(): void {
     this.showDeleteDialog = true;
   }
 
-  // Delete allocation after confirmation
+ 
   confirmDelete(): void {
     if (
       this.pendingDeleteIndex < 0 ||
@@ -448,12 +440,12 @@ cancelLimit(): void {
     const index = this.pendingDeleteIndex;
     const deletedAllocation = this.allocations[index];
 
-    // Remove allocation from the table
+    
     this.allocations = this.allocations.filter(
       (_, currentIndex) => currentIndex !== index
     );
 
-    // Restore the quantity
+  
     if (this.selectedQty > 0) {
       this.remainingQty = Math.min(
         this.selectedQty,
@@ -461,51 +453,51 @@ cancelLimit(): void {
       );
     }
 
-    // IMPORTANT: Refresh both dropdowns after deleting
+   
     this.updateManagerLimits();
 
-    // Close confirmation popup
+    
     this.cancelDelete();
   }
 
-  // Cancel delete confirmation
+  
   cancelDelete(): void {
     this.showDeleteDialog = false;
     this.pendingDeleteIndex = -1;
   }
 
-  // Submit all allocations
+ 
   submitAll(): void {
     if (this.allocations.length === 0) {
       alert('Please add at least one allocation before submitting.');
       return;
     }
 
-    // Connect your backend API here when it is ready.
+   
     alert('Allocations are ready. Connect the backend API to save them.');
   }
 
 
   canAddAllocation(): boolean {
-  const managerName = this.allocationForm.get('plantManager')?.value;
-  const qty = Number(this.allocationForm.get('qty')?.value);
-  const plantName = this.allocationForm.get('plantName')?.value;
+    const managerName = this.allocationForm.get('plantManager')?.value;
+    const qty = Number(this.allocationForm.get('qty')?.value);
+    const plantName = this.allocationForm.get('plantName')?.value;
 
-  if (!managerName || !plantName || !qty || qty <= 0) {
-    return false;
+    if (!managerName || !plantName || !qty || qty <= 0) {
+      return false;
+    }
+
+    const manager = this.plantManagerList.find(
+      item => item.value === managerName
+    );
+
+    if (!manager || manager.disabled) {
+      return false;
+    }
+
+    const alreadyAllocated = this.getManagerAllocatedQty(managerName);
+    const availableLimit = manager.limit - alreadyAllocated;
+
+    return qty <= availableLimit;
   }
-
-  const manager = this.plantManagerList.find(
-    item => item.value === managerName
-  );
-
-  if (!manager || manager.disabled) {
-    return false;
-  }
-
-  const alreadyAllocated = this.getManagerAllocatedQty(managerName);
-  const availableLimit = manager.limit - alreadyAllocated;
-
-  return qty <= availableLimit;
-}
 }
