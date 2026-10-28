@@ -105,46 +105,81 @@ showAllocationMenu = false;
     return this.currentRoute.startsWith('/login') || this.currentRoute === '/';
   }
 
-  navigate(menu: string) {
-    this.activeMenu = menu;
-    if (menu === 'demand') this.router.navigate(['/dashboard']);
-    if (menu === 'yearlyDemandPlans') this.router.navigate(['/yearly-demand-plans']);
-    else if (menu === 'saleDemand') this.router.navigate(['/saleDemand']);
-    else if (menu === 'create') this.router.navigate(['/create-project']);
-    else if (menu === 'monthlyDemandPlan') this.router.navigate(['/monthlyDemandPlan']);
-    else if (menu === 'allocationApproval') this.router.navigate(['/allocationApproval']);
-    else if (menu === 'WTGProduction') this.router.navigate(['/WTGProduction']);
-    else if(menu === 'WTGQuality') this.router.navigate(['/wtg-quality']);
-    else if(menu === 'WTGDispatch') this.router.navigate(['/wtg-dispatch']);
-    else if(menu === 'WTGReceiving') this.router.navigate(['/wtg-receiving']);
-    else if(menu === 'Foundation') this.router.navigate(['/foundation']);
-    else if(menu === 'Commisioning') this.router.navigate(['/commissioning']);
-    else if(menu === 'components') this.router.navigate(['/components']);
-    else if(menu === 'towerType') this.router.navigate(['/tower-types']);
-    else if(menu === 'bladeType') this.router.navigate(['/blade-types']);
-    else if(menu === 'wtgType') this.router.navigate(['/wtg-types']);
-    else if(menu === 'gridConnectivities') this.router.navigate(['/grid-connectivities']);
-    else if(menu === 'wtgCapacities') this.router.navigate(['/wtg-capacities']);
-    else if(menu === 'ppaTypes') this.router.navigate(['/ppa-types']);
-    else if(menu === 'plants') this.router.navigate(['/plants']);
-    else if(menu === 'customers') this.router.navigate(['/customers']);
-    else if(menu === 'zone') this.router.navigate(['/zones']);
-    else if(menu === 'cranes') this.router.navigate(['/cranes']);
-    else if(menu === 'crane-suppliers') this.router.navigate(['/crane-suppliers']);
-    else if(menu === 'department') this.router.navigate(['/departments']);
-    else if(menu === 'clusters') this.router.navigate(['/clusters']);
-    else if(menu === 'installation') this.router.navigate(['/installation']);
-    else if(menu === 'companyUsers') this.router.navigate(['/company-users']);
-    else if(menu === 'userGroups') this.router.navigate(['/user-groups']);
-    else if(menu === 'roles') this.router.navigate(['/roles']);
-    if (window.innerWidth <= 768) this.sidebarOpen.set(false);
-else if (menu === 'plant-allocation') {
-  this.router.navigate(['/plant-allocation']);
-}
-else if (menu === 'view-allocation') {
-  this.router.navigate(['/view-allocation']);
-}
+  
+navigate(menu: string): void {
+  this.activeMenu = menu;
+
+  if (menu === 'demand') {
+    this.router.navigate(['/dashboard']);
+  } else if (menu === 'yearlyDemandPlans') {
+    this.router.navigate(['/yearly-demand-plans']);
+  } else if (menu === 'saleDemand') {
+    this.router.navigate(['/saleDemand']);
+  } else if (menu === 'create') {
+    this.router.navigate(['/create-project']);
+  } else if (menu === 'monthlyDemandPlan') {
+    this.router.navigate(['/monthlyDemandPlan']);
+  } else if (menu === 'allocationApproval') {
+    this.router.navigate(['/allocationApproval']);
+  } else if (menu === 'WTGProduction') {
+    this.router.navigate(['/WTGProduction']);
+  } else if (menu === 'WTGQuality') {
+    this.router.navigate(['/wtg-quality']);
+  } else if (menu === 'WTGDispatch') {
+    this.router.navigate(['/wtg-dispatch']);
+  } else if (menu === 'WTGReceiving') {
+    this.router.navigate(['/wtg-receiving']);
+  } else if (menu === 'Foundation') {
+    this.router.navigate(['/foundation']);
+  } else if (menu === 'Commisioning') {
+    this.router.navigate(['/commissioning']);
+  } else if (menu === 'components') {
+    this.router.navigate(['/components']);
+  } else if (menu === 'towerType') {
+    this.router.navigate(['/tower-types']);
+  } else if (menu === 'bladeType') {
+    this.router.navigate(['/blade-types']);
+  } else if (menu === 'wtgType') {
+    this.router.navigate(['/wtg-types']);
+  } else if (menu === 'gridConnectivities') {
+    this.router.navigate(['/grid-connectivities']);
+  } else if (menu === 'wtgCapacities') {
+    this.router.navigate(['/wtg-capacities']);
+  } else if (menu === 'ppaTypes') {
+    this.router.navigate(['/ppa-types']);
+  } else if (menu === 'plants') {
+    this.router.navigate(['/plants']);
+  } else if (menu === 'customers') {
+    this.router.navigate(['/customers']);
+  } else if (menu === 'zone') {
+    this.router.navigate(['/zones']);
+  } else if (menu === 'cranes') {
+    this.router.navigate(['/cranes']);
+  } else if (menu === 'crane-suppliers') {
+    this.router.navigate(['/crane-suppliers']);
+  } else if (menu === 'department') {
+    this.router.navigate(['/departments']);
+  } else if (menu === 'clusters') {
+    this.router.navigate(['/clusters']);
+  } else if (menu === 'installation') {
+    this.router.navigate(['/installation']);
+  } else if (menu === 'companyUsers') {
+    this.router.navigate(['/company-users']);
+  } else if (menu === 'userGroups') {
+    this.router.navigate(['/user-groups']);
+  } else if (menu === 'roles') {
+    this.router.navigate(['/roles']);
+  } else if (menu === 'plant-allocation') {
+    this.router.navigate(['/plant-allocation']);
+  } else if (menu === 'view-allocation') {
+    this.router.navigate(['/view-allocation']);
   }
+  // Close sidebar on mobile after navigation
+  if (window.innerWidth <= 768) {
+    this.sidebarOpen.set(false);
+  }
+}
+
 
   toggleMastersMenu() {
     this.showMastersMenu = !this.showMastersMenu;

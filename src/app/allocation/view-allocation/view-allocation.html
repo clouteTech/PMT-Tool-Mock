@@ -1,1 +1,254 @@
-<p>view-allocation works!</p>
+
+<div class="card">
+  <div class="plant-header">
+    <h2>View Allocations</h2>
+
+    <p-button
+      label="Create Allocation"
+      icon="pi pi-plus"
+      (onClick)="openCreateModal()">
+    </p-button>
+  </div>
+
+  <div class="custom-container">
+    <p-table
+      [value]="allocationList"
+      [rowHover]="true"
+      [scrollable]="true"
+      [tableStyle]="{ 'min-width': '1150px' }"
+      styleClass="p-datatable-sm">
+
+      <ng-template #header>
+        <tr>
+          <th>SL No</th>
+          <th>Allocation Initiated By</th>
+          <th>Plant Name</th>
+          <th>Plant Manager</th>
+          <th>Status</th>
+          <th>Reviewed By</th>
+          <th>Reviewed On</th>
+          <th>Approved By</th>
+          <th>Approved On</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-allocation let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ allocation.initiatedBy }}</td>
+          <td>{{ allocation.plantName }}</td>
+          <td>{{ allocation.plantManager }}</td>
+
+          <td>
+            <p-tag
+              [value]="allocation.status"
+              [severity]="getStatusSeverity(allocation.status)">
+            </p-tag>
+          </td>
+
+          <td>{{ allocation.reviewedBy || '-' }}</td>
+          <td>{{ allocation.reviewedOn || '-' }}</td>
+          <td>{{ allocation.approvedBy || '-' }}</td>
+          <td>{{ allocation.approvedOn || '-' }}</td>
+
+          <!-- Edit and Delete must be inside the body row -->
+          <td>
+            <div class="action-buttons">
+              <p-button
+                icon="pi pi-pencil"
+                severity="info"
+                [text]="true"
+                [rounded]="true"
+                (onClick)="editAllocation(allocation)">
+              </p-button>
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                (onClick)="confirmDelete(allocation)">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="10" class="empty-message">
+            No Records Found
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+</div>
+
+<!-- Create / Edit Allocation Dialog -->
+<p-dialog
+  [header]="editingAllocationId !== null ? 'Edit Allocation' : 'Create Allocation'"
+  [(visible)]="showAllocationModal"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '45rem', maxWidth: '95vw' }"
+  (onHide)="resetAllocationForm()">
+
+  <form
+    [formGroup]="allocationForm"
+    (ngSubmit)="submitAllocation()">
+
+    <div class="form-grid">
+
+      <div class="form-field">
+        <label for="initiatedBy">Allocation Initiated By</label>
+        <input
+          pInputText
+          id="initiatedBy"
+          formControlName="initiatedBy"
+          placeholder="Enter initiator name">
+
+        @if (allocationForm.controls.initiatedBy.invalid &&
+             allocationForm.controls.initiatedBy.touched) {
+          <small class="required-field">
+            Allocation Initiated By is required.
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="plantName">Plant Name</label>
+        <input
+          pInputText
+          id="plantName"
+          formControlName="plantName"
+          placeholder="Enter plant name">
+
+        @if (allocationForm.controls.plantName.invalid &&
+             allocationForm.controls.plantName.touched) {
+          <small class="required-field">
+            Plant Name is required.
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="plantManager">Plant Manager</label>
+        <input
+          pInputText
+          id="plantManager"
+          formControlName="plantManager"
+          placeholder="Enter plant manager">
+
+        @if (allocationForm.controls.plantManager.invalid &&
+             allocationForm.controls.plantManager.touched) {
+          <small class="required-field">
+            Plant Manager is required.
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="status">Status</label>
+        <p-select
+          inputId="status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select Status"
+          appendTo="body"
+          styleClass="w-full">
+        </p-select>
+      </div>
+
+      <div class="form-field">
+        <label for="reviewedBy">Reviewed By</label>
+        <input
+          pInputText
+          id="reviewedBy"
+          formControlName="reviewedBy"
+          placeholder="Enter reviewer name">
+      </div>
+
+      <div class="form-field">
+        <label for="reviewedOn">Reviewed On</label>
+        <input
+          type="date"
+          pInputText
+          id="reviewedOn"
+          formControlName="reviewedOn">
+      </div>
+
+      <div class="form-field">
+        <label for="approvedBy">Approved By</label>
+        <input
+          pInputText
+          id="approvedBy"
+          formControlName="approvedBy"
+          placeholder="Enter approver name">
+      </div>
+
+      <div class="form-field">
+        <label for="approvedOn">Approved On</label>
+        <input
+          type="date"
+          pInputText
+          id="approvedOn"
+          formControlName="approvedOn">
+      </div>
+
+    </div>
+
+    <div class="submit-btn">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        (onClick)="showAllocationModal = false">
+      </p-button>
+
+      <p-button
+        [label]="editingAllocationId !== null ? 'Update' : 'Create'"
+        icon="pi pi-check"
+        type="submit">
+      </p-button>
+    </div>
+
+  </form>
+</p-dialog>
+
+<!-- Delete Confirmation Dialog -->
+<p-dialog
+  header="Confirm Delete"
+  [(visible)]="showDeleteModal"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '25rem', maxWidth: '95vw' }">
+
+  <div class="delete-message">
+    <i class="pi pi-exclamation-triangle"></i>
+    <span>
+      Are you sure you want to delete this allocation?
+    </span>
+  </div>
+
+  <div class="submit-btn">
+    <p-button
+      label="Cancel"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelDelete()">
+    </p-button>
+
+    <p-button
+      label="Delete"
+      icon="pi pi-trash"
+      severity="danger"
+      (onClick)="deleteAllocation()">
+    </p-button>
+  </div>
+</p-dialog>
