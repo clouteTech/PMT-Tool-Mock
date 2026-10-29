@@ -1,4 +1,18 @@
 
+.plant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.custom-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -12,15 +26,9 @@
   min-width: 0;
 }
 
-.form-field label {
-  font-weight: 500;
-  color: #374151;
-}
-
 .form-field input,
 .form-field p-select {
   width: 100%;
-  box-sizing: border-box;
 }
 
 .required-field {
@@ -35,41 +43,43 @@
   margin-top: 1.5rem;
 }
 
-@media screen and (max-width: 600px) {
+.empty-message {
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (max-width: 600px) {
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .plant-header {
+    align-items: flex-start;
   }
 
   .submit-btn {
     flex-wrap: wrap;
   }
 }
-.create-allocation-btn {
+
+.qty-control {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 1.25rem;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-@media screen and (max-width: 600px) {
-  .create-allocation-btn {
-    justify-content: stretch;
-  }
+.qty-input {
+  width: 100px;
+  text-align: center;
+}
 
-  .create-allocation-btn p-button {
+@media (max-width: 600px) {
+  .qty-control {
     width: 100%;
   }
-}
-.plant-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 
-.plant-header h2 {
-  margin: 0;
-}
-
-.create-allocation-btn {
-  margin-left: auto;
+  .qty-input {
+    flex: 1;
+    min-width: 0;
+  }
 }

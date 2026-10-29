@@ -1,83 +1,64 @@
 
 <div class="card">
   <div class="plant-header">
-    <h2>View Allocations</h2>
+    <h2>View Allocation</h2>
 
     <p-button
-      label="Create Allocation"
       icon="pi pi-plus"
-      (onClick)="openCreateModal()">
+      label="Create Allocation"
+      (onClick)="openPlantModal()">
     </p-button>
   </div>
 
   <div class="custom-container">
     <p-table
-      [value]="allocationList"
+      [value]="plantList"
       [rowHover]="true"
       [scrollable]="true"
-      [tableStyle]="{ 'min-width': '1150px' }"
+      [tableStyle]="{ 'min-width': '650px' }"
       styleClass="p-datatable-sm">
 
       <ng-template #header>
         <tr>
           <th>SL No</th>
-          <th>Allocation Initiated By</th>
-          <th>Plant Name</th>
           <th>Plant Manager</th>
-          <th>Status</th>
-          <th>Reviewed By</th>
-          <th>Reviewed On</th>
-          <th>Approved By</th>
-          <th>Approved On</th>
-          <th>Actions</th>
+          <th>Plant</th>
+          <th>Qty</th>
+          <th>Action</th>
         </tr>
       </ng-template>
 
-      <ng-template #body let-allocation let-i="rowIndex">
+      <ng-template #body let-plant let-i="rowIndex">
         <tr>
           <td>{{ i + 1 }}</td>
-          <td>{{ allocation.initiatedBy }}</td>
-          <td>{{ allocation.plantName }}</td>
-          <td>{{ allocation.plantManager }}</td>
+       <td>{{ getManagerNames(plant) }}</td>
+          <td>{{ plant.plant }}</td>
+          <td>{{ plant.qty }}</td>
 
           <td>
-            <p-tag
-              [value]="allocation.status"
-              [severity]="getStatusSeverity(allocation.status)">
-            </p-tag>
-          </td>
+            <p-menu
+              #menu
+              [model]="items"
+              [popup]="true"
+              appendTo="body">
+            </p-menu>
 
-          <td>{{ allocation.reviewedBy || '-' }}</td>
-          <td>{{ allocation.reviewedOn || '-' }}</td>
-          <td>{{ allocation.approvedBy || '-' }}</td>
-          <td>{{ allocation.approvedOn || '-' }}</td>
-
-          <!-- Edit and Delete must be inside the body row -->
-          <td>
-            <div class="action-buttons">
-              <p-button
-                icon="pi pi-pencil"
-                severity="info"
-                [text]="true"
-                [rounded]="true"
-                (onClick)="editAllocation(allocation)">
-              </p-button>
-
-              <p-button
-                icon="pi pi-trash"
-                severity="danger"
-                [text]="true"
-                [rounded]="true"
-                (onClick)="confirmDelete(allocation)">
-              </p-button>
-            </div>
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="secondary"
+              (click)="plantMenu($event, menu, plant)">
+              <i class="pi pi-ellipsis-v"></i>
+            </button>
           </td>
         </tr>
       </ng-template>
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="10" class="empty-message">
+          <td colspan="5" class="empty-message">
             No Records Found
           </td>
         </tr>
@@ -89,116 +70,117 @@
 
 <!-- Create / Edit Allocation Dialog -->
 <p-dialog
-  [header]="editingAllocationId !== null ? 'Edit Allocation' : 'Create Allocation'"
-  [(visible)]="showAllocationModal"
+  [header]="selectedPlant ? 'Update Allocation' : 'Create Allocation'"
+  [(visible)]="showPlantModal"
   [modal]="true"
   [draggable]="false"
-  [style]="{ width: '45rem', maxWidth: '95vw' }"
-  (onHide)="resetAllocationForm()">
+  [style]="{ width: '40rem', maxWidth: '95vw' }"
+  (onHide)="onDialogClose()">
 
   <form
-    [formGroup]="allocationForm"
-    (ngSubmit)="submitAllocation()">
+    [formGroup]="plantForm"
+    (ngSubmit)="submitPlantForm()">
 
     <div class="form-grid">
+<div class="form-field">
+  <label for="plant-manager">Plant Manager</label>
 
-      <div class="form-field">
-        <label for="initiatedBy">Allocation Initiated By</label>
-        <input
-          pInputText
-          id="initiatedBy"
-          formControlName="initiatedBy"
-          placeholder="Enter initiator name">
+  <p-multiselect
+    inputId="plant-manager"
+    [options]="userList"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select Plant Managers"
+    [filter]="true"
+    filterBy="label"
+    [showClear]="true"
+    appendTo="body"
+    styleClass="w-full"
+    formControlName="plantManager"
+    display="chip">
+  </p-multiselect>
 
-        @if (allocationForm.controls.initiatedBy.invalid &&
-             allocationForm.controls.initiatedBy.touched) {
-          <small class="required-field">
-            Allocation Initiated By is required.
-          </small>
-        }
-      </div>
+  @if (plantManager?.invalid && plantManager?.touched) {
+    <small class="required-field">
+      Plant Manager is required.
+    </small>
+  }
+</div>
+<div class="form-field">
+  <label for="plant-name">Plant</label>
 
-      <div class="form-field">
-        <label for="plantName">Plant Name</label>
-        <input
-          pInputText
-          id="plantName"
-          formControlName="plantName"
-          placeholder="Enter plant name">
+  <p-select
+    inputId="plant-name"
+    [options]="plantOptions"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select Plant"
+    [showClear]="true"
+    appendTo="body"
+    styleClass="w-full"
+    formControlName="plant">
+  </p-select>
 
-        @if (allocationForm.controls.plantName.invalid &&
-             allocationForm.controls.plantName.touched) {
-          <small class="required-field">
-            Plant Name is required.
-          </small>
-        }
-      </div>
+  @if (plant?.invalid && plant?.touched) {
+    <small class="required-field">
+      Plant is required.
+    </small>
+  }
+</div>
 
-      <div class="form-field">
-        <label for="plantManager">Plant Manager</label>
-        <input
-          pInputText
-          id="plantManager"
-          formControlName="plantManager"
-          placeholder="Enter plant manager">
 
-        @if (allocationForm.controls.plantManager.invalid &&
-             allocationForm.controls.plantManager.touched) {
-          <small class="required-field">
-            Plant Manager is required.
-          </small>
-        }
-      </div>
+<div class="form-field">
+  <label for="qty">Qty</label>
 
-      <div class="form-field">
-        <label for="status">Status</label>
-        <p-select
-          inputId="status"
-          formControlName="status"
-          [options]="statusOptions"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select Status"
-          appendTo="body"
-          styleClass="w-full">
-        </p-select>
-      </div>
+  @if (selectedPlant) {
+    <div class="qty-control">
+      <p-button
+        icon="pi pi-minus"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        [disabled]="Number(plantForm.get('qty')?.value) <= 1"
+        (onClick)="decrementQty()">
+      </p-button>
 
-      <div class="form-field">
-        <label for="reviewedBy">Reviewed By</label>
-        <input
-          pInputText
-          id="reviewedBy"
-          formControlName="reviewedBy"
-          placeholder="Enter reviewer name">
-      </div>
+      <input
+        pInputText
+        id="qty"
+        type="number"
+        min="1"
+        formControlName="qty"
+        class="qty-input">
 
-      <div class="form-field">
-        <label for="reviewedOn">Reviewed On</label>
-        <input
-          type="date"
-          pInputText
-          id="reviewedOn"
-          formControlName="reviewedOn">
-      </div>
+      <p-button
+        icon="pi pi-plus"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        (onClick)="incrementQty()">
+      </p-button>
+    </div>
+  } @else {
+    <input
+      pInputText
+      id="qty"
+      type="number"
+      min="1"
+      formControlName="qty"
+      placeholder="Enter quantity"
+      class="w-full">
+  }
 
-      <div class="form-field">
-        <label for="approvedBy">Approved By</label>
-        <input
-          pInputText
-          id="approvedBy"
-          formControlName="approvedBy"
-          placeholder="Enter approver name">
-      </div>
+  @if (qty?.invalid && qty?.touched) {
+    <small class="required-field">
+      @if (qty?.hasError('required')) {
+        Quantity is required.
+      } @else if (qty?.hasError('min')) {
+        Quantity must be greater than zero.
+      }
+    </small>
+  }
+</div>
 
-      <div class="form-field">
-        <label for="approvedOn">Approved On</label>
-        <input
-          type="date"
-          pInputText
-          id="approvedOn"
-          formControlName="approvedOn">
-      </div>
 
     </div>
 
@@ -208,11 +190,11 @@
         severity="secondary"
         [outlined]="true"
         type="button"
-        (onClick)="showAllocationModal = false">
+        (onClick)="showPlantModal = false">
       </p-button>
 
       <p-button
-        [label]="editingAllocationId !== null ? 'Update' : 'Create'"
+        [label]="actionName"
         icon="pi pi-check"
         type="submit">
       </p-button>
@@ -221,34 +203,5 @@
   </form>
 </p-dialog>
 
-<!-- Delete Confirmation Dialog -->
-<p-dialog
-  header="Confirm Delete"
-  [(visible)]="showDeleteModal"
-  [modal]="true"
-  [draggable]="false"
-  [style]="{ width: '25rem', maxWidth: '95vw' }">
-
-  <div class="delete-message">
-    <i class="pi pi-exclamation-triangle"></i>
-    <span>
-      Are you sure you want to delete this allocation?
-    </span>
-  </div>
-
-  <div class="submit-btn">
-    <p-button
-      label="Cancel"
-      severity="secondary"
-      [outlined]="true"
-      (onClick)="cancelDelete()">
-    </p-button>
-
-    <p-button
-      label="Delete"
-      icon="pi pi-trash"
-      severity="danger"
-      (onClick)="deleteAllocation()">
-    </p-button>
-  </div>
-</p-dialog>
+<p-toast></p-toast>
+<p-confirmdialog></p-confirmdialog>

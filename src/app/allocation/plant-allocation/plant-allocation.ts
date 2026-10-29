@@ -1,6 +1,12 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup,ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
@@ -12,6 +18,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+
 interface PlantManager {
   label: string;
   value: string;
@@ -52,33 +59,36 @@ interface Allocation {
     MultiSelectModule,
     ToastModule
   ],
-    providers: [MessageService],
+  providers: [MessageService],
   templateUrl: './plant-allocation.html',
   styleUrl: './plant-allocation.css'
 })
 export class PlantAllocation implements OnInit {
+
+  private readonly draftStorageKey = 'plantAllocationDraft';
+  private readonly submittedStorageKey = 'plantAllocations';
 
   selectedQty = 0;
   remainingQty = 0;
 
   allocations: Allocation[] = [];
   selectedComponents: any[] = [];
+  selectedComponents1: any[] = [];
 
   qtyLimitError = false;
   showPlantManager = false;
   showLimitForm = false;
   showDeleteDialog = false;
+  showSuccessDialog = false;
 
   availableManagerCount = 0;
-
   pendingDeleteIndex = -1;
-  showSuccessDialog = false;
   successMessage = '';
+
   @ViewChild('op') op!: Popover;
 
   selectedPlantManager: PlantManager | null = null;
 
-  
   plantManagerList: PlantManager[] = [
     {
       label: 'Suresh Reddy (limit 10)',
@@ -100,7 +110,6 @@ export class PlantAllocation implements OnInit {
     }
   ];
 
-  
   plantManagerList1: PlantManagerLimit[] = [
     {
       name: 'Suresh Reddy',
@@ -128,7 +137,10 @@ export class PlantAllocation implements OnInit {
   allocationForm: FormGroup;
   limitForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private messageService: MessageService) {
+  constructor(
+    private fb: FormBuilder,
+    private messageService: MessageService
+  ) {
     this.allocationForm = this.fb.group({
       qty: [0, [Validators.required, Validators.min(1)]],
       plantName: ['', Validators.required],
@@ -142,6 +154,9 @@ export class PlantAllocation implements OnInit {
   }
 
   ngOnInit(): void {
+    // Restore the allocation list when this page opens again.
+    this.loadAllocations();
+
     const state = history.state;
 
     if (state?.components) {
@@ -157,9 +172,68 @@ export class PlantAllocation implements OnInit {
     });
 
     this.updateManagerLimits();
+
+    this.selectedComponents1 = [
+      { componentName: 'Topflange', qty: 1 },
+      { componentName: 'Bottomflange', qty: 1 },
+      { componentName: 'Blade', qty: 3 },
+      { componentName: 'Nacelle', qty: 1 },
+      { componentName: 'Hub', qty: 1 },
+      { componentName: 'Tower', qty: 2 },
+      { componentName: 'Converter Panel', qty: 1 },
+      { componentName: 'Site Accessories', qty: 1 },
+      { componentName: 'SCADA', qty: 1 }
+    ];
   }
 
-  
+  // Restore saved draft allocations.
+  loadAllocations(): void {
+    try {
+      const savedData = localStorage.getItem(this.draftStorageKey);
+
+      if (!savedData) {
+        this.allocations = [];
+        return;
+      }
+
+      const parsedData: unknown = JSON.parse(savedData);
+
+      if (!Array.isArray(parsedData)) {
+        this.allocations = [];
+        return;
+      }
+
+      this.allocations = parsedData.filter(
+        (item: any) =>
+          item &&
+          Number.isFinite(Number(item.qty)) &&
+          item.plantManager &&
+          item.plantName
+      );
+    } catch (error) {
+      console.error('Error loading allocation draft:', error);
+      this.allocations = [];
+    }
+  }
+
+  // Save the current allocation list.
+  saveAllocations(): void {
+    try {
+      localStorage.setItem(
+        this.draftStorageKey,
+        JSON.stringify(this.allocations)
+      );
+    } catch (error) {
+      console.error('Error saving allocation draft:', error);
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to save allocations in this browser.'
+      });
+    }
+  }
+
   groupComponents(components: any[]): void {
     const componentMap = new Map<string, any>();
 
@@ -179,7 +253,6 @@ export class PlantAllocation implements OnInit {
     this.selectedComponents = Array.from(componentMap.values());
   }
 
-  
   componentChange(component: any): void {
     this.selectedQty = Number(component?.count ?? 0);
 
@@ -194,11 +267,10 @@ export class PlantAllocation implements OnInit {
     );
   }
 
-  
   getManagerAllocatedQty(managerName: string): number {
     return this.allocations
       .filter(allocation =>
-        allocation.plantManager.value === managerName
+        allocation.plantManager?.value === managerName
       )
       .reduce(
         (total, allocation) => total + Number(allocation.qty),
@@ -206,21 +278,21 @@ export class PlantAllocation implements OnInit {
       );
   }
 
-
   updateManagerLimits(): void {
-   
     this.plantManagerList = this.plantManagerList.map(manager => {
       const allocatedQty = this.getManagerAllocatedQty(manager.value);
-      const remainingLimit = Math.max(0, manager.limit - allocatedQty);
+      const remainingLimit = Math.max(
+        0,
+        manager.limit - allocatedQty
+      );
 
       return {
         ...manager,
-        label: `${manager.value} (remaining limit ${remainingLimit})`,
+        label: `${manager.value} (limit ${remainingLimit})`,
         disabled: remainingLimit === 0
       };
     });
 
-   
     this.plantManagerList1 = this.plantManagerList1.map(manager => {
       const mainManager = this.plantManagerList.find(
         item => item.value === manager.name
@@ -231,12 +303,15 @@ export class PlantAllocation implements OnInit {
       }
 
       const allocatedQty = this.getManagerAllocatedQty(manager.name);
-      const remainingLimit = Math.max(0, mainManager.limit - allocatedQty);
+      const remainingLimit = Math.max(
+        0,
+        mainManager.limit - allocatedQty
+      );
 
       return {
         ...manager,
         limit: remainingLimit,
-        label: `${manager.name} (remaining limit ${remainingLimit})`
+        label: `${manager.name} (limit ${remainingLimit})`
       };
     });
 
@@ -244,7 +319,7 @@ export class PlantAllocation implements OnInit {
       manager => !manager.disabled
     ).length;
   }
-  
+
   checkQtyLimit(): void {
     const managerName =
       this.allocationForm.get('plantManager')?.value;
@@ -268,7 +343,6 @@ export class PlantAllocation implements OnInit {
       allocatedQty + qty > manager.limit;
   }
 
-  
   addAllocations(): void {
     if (this.allocationForm.invalid) {
       this.allocationForm.markAllAsTouched();
@@ -299,11 +373,14 @@ export class PlantAllocation implements OnInit {
     }
 
     if (this.selectedQty > 0 && qty > this.remainingQty) {
-      alert('Quantity cannot be greater than the remaining quantity.');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Quantity cannot be greater than the remaining quantity.'
+      });
       return;
     }
 
-    
     this.allocations = [
       ...this.allocations,
       {
@@ -313,11 +390,13 @@ export class PlantAllocation implements OnInit {
       }
     ];
 
+    // Persist immediately after adding.
+    this.saveAllocations();
+
     if (this.selectedQty > 0) {
       this.remainingQty -= qty;
     }
 
-    
     this.updateManagerLimits();
 
     this.allocationForm.reset({
@@ -330,7 +409,6 @@ export class PlantAllocation implements OnInit {
     this.selectedPlantManager = null;
   }
 
-
   viewPlantManagers(event: Event): void {
     this.checkQtyLimit();
 
@@ -339,7 +417,6 @@ export class PlantAllocation implements OnInit {
     }
   }
 
-  
   getSuggestedManagers(): PlantManager[] {
     if (!this.selectedPlantManager) {
       return [];
@@ -365,7 +442,6 @@ export class PlantAllocation implements OnInit {
       .sort((a, b) => a.limit - b.limit);
   }
 
-
   saveLimit(): void {
     if (this.limitForm.invalid) {
       this.limitForm.markAllAsTouched();
@@ -384,7 +460,6 @@ export class PlantAllocation implements OnInit {
       return;
     }
 
-    
     this.plantManagerList = this.plantManagerList.map(manager => {
       if (managerNames.includes(manager.value)) {
         return {
@@ -396,16 +471,12 @@ export class PlantAllocation implements OnInit {
       return manager;
     });
 
-    
     this.updateManagerLimits();
 
-    
     this.successMessage =
       `Successfully added ${extraQty} to ${managerNames.join(', ')}.`;
 
     this.showLimitForm = false;
-
-   
     this.showSuccessDialog = true;
 
     this.limitForm.reset({
@@ -413,7 +484,7 @@ export class PlantAllocation implements OnInit {
       qty: null
     });
   }
-  
+
   cancelLimit(): void {
     this.showLimitForm = false;
 
@@ -422,7 +493,7 @@ export class PlantAllocation implements OnInit {
       qty: null
     });
   }
-  
+
   removeAllocation(index: number, allocation: Allocation): void {
     if (!this.allocations[index]) {
       return;
@@ -432,7 +503,6 @@ export class PlantAllocation implements OnInit {
     this.showDeleteDialog = true;
   }
 
- 
   confirmDelete(): void {
     if (
       this.pendingDeleteIndex < 0 ||
@@ -444,12 +514,13 @@ export class PlantAllocation implements OnInit {
     const index = this.pendingDeleteIndex;
     const deletedAllocation = this.allocations[index];
 
-    
     this.allocations = this.allocations.filter(
       (_, currentIndex) => currentIndex !== index
     );
 
-  
+    // Persist the updated list after deleting.
+    this.saveAllocations();
+
     if (this.selectedQty > 0) {
       this.remainingQty = Math.min(
         this.selectedQty,
@@ -457,42 +528,62 @@ export class PlantAllocation implements OnInit {
       );
     }
 
-   
     this.updateManagerLimits();
-
-    
     this.cancelDelete();
   }
 
-  
   cancelDelete(): void {
     this.showDeleteDialog = false;
     this.pendingDeleteIndex = -1;
   }
 
- 
-submitAll(): void {
-  if (this.allocations.length === 0) {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Warning',
-      detail: 'Please add at least one allocation before submitting.',
-      life: 3000
-    });
-    return;
+  submitAll(): void {
+    if (this.allocations.length === 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please add allocations before submitting.'
+      });
+      return;
+    }
+
+    // Convert to the format used by View Allocation.
+    const submittedAllocations = this.allocations.map(item => ({
+      plantManager: item.plantManager?.value ?? '',
+      plant: item.plantName?.value ?? '',
+      qty: Number(item.qty)
+    }));
+
+    try {
+      // Replace the submitted list to prevent duplicate submissions.
+      localStorage.setItem(
+        this.submittedStorageKey,
+        JSON.stringify(submittedAllocations)
+      );
+
+      // Keep the draft so the Plant Allocation list remains visible.
+      this.saveAllocations();
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Allocations submitted successfully.'
+      });
+    } catch (error) {
+      console.error('Error submitting allocations:', error);
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to submit allocations.'
+      });
+    }
   }
 
-  this.messageService.add({
-    severity: 'success',
-    summary: 'Success',
-    detail: 'Allocations are ready to submit.',
-    life: 3000
-  });
-}
-
-
   canAddAllocation(): boolean {
-    const managerName = this.allocationForm.get('plantManager')?.value;
+    const managerName =
+      this.allocationForm.get('plantManager')?.value;
+
     const qty = Number(this.allocationForm.get('qty')?.value);
     const plantName = this.allocationForm.get('plantName')?.value;
 
@@ -511,6 +602,9 @@ submitAll(): void {
     const alreadyAllocated = this.getManagerAllocatedQty(managerName);
     const availableLimit = manager.limit - alreadyAllocated;
 
-    return qty <= availableLimit;
+    return (
+      qty <= availableLimit &&
+      (this.selectedQty <= 0 || qty <= this.remainingQty)
+    );
   }
 }

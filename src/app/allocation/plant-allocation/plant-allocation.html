@@ -4,14 +4,17 @@
 
     <div class="card-box">
       <p class="title">Plant Allocations</p>
-
-      <div>
-        <label>Select Component</label>
-
-        <p-select [options]="selectedComponents" optionLabel="componentName" styleClass="w-full" appendTo="body"
-          placeholder="Select Component" (onChange)="componentChange($event.value)">
-        </p-select>
-      </div>
+<div>
+  <label>Select Component</label>
+   <p-select
+  [options]="selectedComponents1"
+  optionLabel="componentName"
+  styleClass="w-full"
+  appendTo="body"
+  placeholder="Select Component"
+  (onChange)="componentChange($event.value)">
+</p-select>
+</div>
     </div>
 
     <!-- Quantity -->
@@ -41,11 +44,9 @@
     <!-- Add Plant Manager Limit Dialog -->
     <p-dialog header="Add Plant Manager Limit" [(visible)]="showLimitForm" [modal]="true" [style]="{ width: '400px' }"
       [closable]="true">
-
       <form [formGroup]="limitForm" (ngSubmit)="saveLimit()">
         <div class="field">
           <label for="limitManager">Plant Manager</label>
-
           <p-multiselect inputId="limitManager" [options]="plantManagerList1" optionLabel="label" optionValue="name"
             placeholder="Select Plant Managers" formControlName="plantManager" [style]="{ width: '100%' }"
             display="chip" appendTo="body">
@@ -101,7 +102,6 @@
         <button pButton type="button" label="OK" (click)="showSuccessDialog = false">
         </button>
       </div>
-
     </p-dialog>
 
     <!-- Allocation Form -->

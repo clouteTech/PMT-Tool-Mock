@@ -1,197 +1,312 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ConfirmationService,MenuItem, MessageService} from 'primeng/api';
 import { Shared } from 'src/app/shared/services/shared';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 interface Allocation {
   id: number;
-  initiatedBy: string;
-  plantName: string;
-  plantManager: string;
-  status: string;
-  reviewedBy: string;
-  reviewedOn: string;
-  approvedBy: string;
-  approvedOn: string;
+  plantManager: string[];
+  plant: string;
+  qty: number;
 }
-
-const MOCK_ALLOCATIONS: Allocation[] = [];
 
 @Component({
   selector: 'app-view-allocation',
   standalone: true,
-  imports: [Shared],
+  imports: [Shared, MultiSelectModule],
   templateUrl: './view-allocation.html',
-  styleUrl: './view-allocation.css'
+  styleUrl: './view-allocation.css',
+  providers: [ConfirmationService, MessageService]
 })
 export class ViewAllocation implements OnInit {
 
-  allocationList: Allocation[] = [];
+  // Allocation table data
+  plantList: Allocation[] = [];
 
-  showAllocationModal = false;
-  showDeleteModal = false;
+  // Plant Manager dropdown options
+  userList = [
+ { label: 'Suresh Reddy', value: 'Suresh Reddy' },
+    { label: 'Laxmi Devi', value: 'Laxmi Devi' },
+    { label: 'Anitha Rao', value: 'Anitha Rao' }
 
-  editingAllocationId: number | null = null;
-  selectedAllocation: Allocation | null = null;
-
-  private fb = new FormBuilder();
-
-  allocationForm = this.fb.group({
-    initiatedBy: ['', Validators.required],
-    plantName: ['', Validators.required],
-    plantManager: ['', Validators.required],
-    status: ['Pending', Validators.required],
-    reviewedBy: [''],
-    reviewedOn: [''],
-    approvedBy: [''],
-    approvedOn: ['']
-  });
-
-  statusOptions = [
-    { label: 'Pending', value: 'Pending' },
-    { label: 'Under Review', value: 'Under Review' },
-    { label: 'Approved', value: 'Approved' },
-    { label: 'Rejected', value: 'Rejected' }
   ];
 
+  // Plant dropdown options
+  plantOptions = [
+    { label: 'Chennai', value: 'Chennai' },
+    { label: 'Trichy', value: 'Trichy' },
+    { label: 'Pune', value: 'Pune' }
+  ];
+
+  items: MenuItem[] = [];
+
+  showPlantModal = false;
+  selectedPlant: Allocation | null = null;
+  actionName = 'Create';  
+
+  Number = Number;
+
+  private fb = inject(FormBuilder);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
+
+  // Allocation form
+  plantForm = this.fb.group({
+    plantManager: this.fb.control<string[]>([], {
+      validators: [Validators.required]
+    }),
+    plant: this.fb.control('', {
+      validators: [Validators.required]
+    }),
+    qty: this.fb.control(0, {
+      validators: [Validators.required, Validators.min(1)]
+    })
+  });
+
+  // Form control getters
+  get plant() {
+    return this.plantForm.get('plant');
+  }
+
+  get plantManager() {
+    return this.plantForm.get('plantManager');
+  }
+
+  get qty() {
+    return this.plantForm.get('qty');
+  }
+
   ngOnInit(): void {
-    this.fetchAllocationList();
+    this.items = [
+      {
+        label: 'Edit',
+        icon: 'pi pi-pencil',
+        command: () => this.editPlant()
+      },
+      {
+        label: 'Delete',
+        icon: 'pi pi-trash',
+        command: () => this.deletePlant()
+      }
+    ];
+
+    // Load allocations submitted from Plant Allocation
+    this.loadAllocations();
   }
 
-  fetchAllocationList(): void {
-    this.allocationList = [...MOCK_ALLOCATIONS];
+  // Load saved allocation data
+  loadAllocations(): void {
+    try {
+      const savedData = localStorage.getItem('plantAllocations');
+      const parsedData: any[] = savedData
+        ? JSON.parse(savedData)
+        : [];
+
+      this.plantList = parsedData.map((item, index) => ({
+        id: item.id ?? index + 1,
+
+        // Support both single and multiple managers
+        plantManager: Array.isArray(item.plantManager)
+          ? item.plantManager
+          : item.plantManager
+            ? [item.plantManager]
+            : [],
+
+        // Support both plantName and plant property names
+        plant: typeof item.plant === 'string'
+          ? item.plant
+          : item.plantName?.label ?? item.plantName ?? '',
+
+        qty: Number(item.qty) || 0
+      }));
+
+      // Save normalized records with IDs
+      this.saveAllocations();
+
+      console.log('Loaded Plant Allocations:', this.plantList);
+
+    } catch (error) {
+      console.error('Unable to load allocations:', error);
+      this.plantList = [];
+    }
   }
 
-  // Open the dialog for creating a new allocation
-  openCreateModal(): void {
-    this.editingAllocationId = null;
-    this.resetAllocationForm();
-    this.showAllocationModal = true;
+  // Save allocation data in browser storage
+  saveAllocations(): void {
+    localStorage.setItem(
+      'plantAllocations',
+      JSON.stringify(this.plantList)
+    );
   }
 
-  // Open the dialog with the selected allocation's details
-  editAllocation(allocation: Allocation): void {
-    this.editingAllocationId = allocation.id;
+  // Open Create Allocation dialog
+  openPlantModal(): void {
+    this.selectedPlant = null;
+    this.actionName = 'Create';
 
-    this.allocationForm.reset({
-      initiatedBy: allocation.initiatedBy,
-      plantName: allocation.plantName,
-      plantManager: allocation.plantManager,
-      status: allocation.status,
-      reviewedBy: allocation.reviewedBy,
-      reviewedOn: allocation.reviewedOn,
-      approvedBy: allocation.approvedBy,
-      approvedOn: allocation.approvedOn
+    this.plantForm.reset({
+      plantManager: [],
+      plant: '',
+      qty: 0
     });
 
-    this.showAllocationModal = true;
+    this.showPlantModal = true;
   }
 
-  // Create a new allocation or update the selected allocation
-  submitAllocation(): void {
-    if (this.allocationForm.invalid) {
-      this.allocationForm.markAllAsTouched();
+  // Open row action menu
+  plantMenu(event: Event, menu: any, plant: Allocation): void {
+    this.selectedPlant = plant;
+    menu.toggle(event);
+  }
+
+  // Edit existing allocation
+  editPlant(): void {
+    if (!this.selectedPlant) {
       return;
     }
 
-    const formValue = this.allocationForm.getRawValue();
+    this.actionName = 'Update';
 
-    const allocationData: Omit<Allocation, 'id'> = {
-      initiatedBy: formValue.initiatedBy ?? '',
-      plantName: formValue.plantName ?? '',
-      plantManager: formValue.plantManager ?? '',
-      status: formValue.status ?? 'Pending',
-      reviewedBy: formValue.reviewedBy ?? '',
-      reviewedOn: formValue.reviewedOn ?? '',
-      approvedBy: formValue.approvedBy ?? '',
-      approvedOn: formValue.approvedOn ?? ''
+    this.plantForm.patchValue({
+      plantManager: [...this.selectedPlant.plantManager],
+      plant: this.selectedPlant.plant,
+      qty: this.selectedPlant.qty
+    });
+
+    this.showPlantModal = true;
+  }
+
+  // Create or update allocation
+  submitPlantForm(): void {
+    if (this.plantForm.invalid) {
+      this.plantForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.plantForm.getRawValue();
+
+    const allocationData = {
+      plantManager: formValue.plantManager ?? [],
+      plant: formValue.plant?.trim() ?? '',
+      qty: Number(formValue.qty)
     };
 
-    if (this.editingAllocationId !== null) {
-      this.allocationList = this.allocationList.map(allocation =>
-        allocation.id === this.editingAllocationId
-          ? { ...allocation, ...allocationData }
-          : allocation
+    if (this.selectedPlant) {
+      // Update existing record
+      this.plantList = this.plantList.map(item =>
+        item.id === this.selectedPlant!.id
+          ? { ...item, ...allocationData }
+          : item
       );
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Allocation updated successfully'
+      });
+
     } else {
+      // Create a new record
+      const newId =
+        Math.max(0, ...this.plantList.map(item => item.id)) + 1;
+
       const newAllocation: Allocation = {
-        id: Math.max(0, ...this.allocationList.map(a => a.id)) + 1,
+        id: newId,
         ...allocationData
       };
 
-      this.allocationList = [
-        newAllocation,
-        ...this.allocationList
-      ];
+      this.plantList = [newAllocation, ...this.plantList];
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Allocation created successfully'
+      });
     }
 
-    this.showAllocationModal = false;
-    this.editingAllocationId = null;
-    this.resetAllocationForm();
+    // Persist Create and Update operations
+    this.saveAllocations();
+
+    this.showPlantModal = false;
+    this.onDialogClose();
   }
 
-  // Reset the form when the allocation dialog closes
-  resetAllocationForm(): void {
-    this.allocationForm.reset({
-      initiatedBy: '',
-      plantName: '',
-      plantManager: '',
-      status: 'Pending',
-      reviewedBy: '',
-      reviewedOn: '',
-      approvedBy: '',
-      approvedOn: ''
-    });
-
-    this.editingAllocationId = null;
-  }
-
-  // Open delete confirmation
-  confirmDelete(allocation: Allocation): void {
-    this.selectedAllocation = allocation;
-    this.showDeleteModal = true;
-  }
-
-  // Cancel deletion
-  cancelDelete(): void {
-    this.showDeleteModal = false;
-    this.selectedAllocation = null;
-  }
-
-  // Delete the selected allocation
-  deleteAllocation(): void {
-    if (this.selectedAllocation === null) {
+  // Delete confirmation
+  deletePlant(): void {
+    if (!this.selectedPlant) {
       return;
     }
 
-    const idToDelete = this.selectedAllocation.id;
+    const allocation = this.selectedPlant;
 
-    this.allocationList = this.allocationList.filter(
-      allocation => allocation.id !== idToDelete
-    );
+    this.confirmationService.confirm({
+      header: 'Delete Allocation',
+      message: 'Are you sure you want to delete this allocation?',
+      icon: 'pi pi-exclamation-triangle',
+      rejectLabel: 'Cancel',
+      acceptLabel: 'Delete',
 
-    this.cancelDelete();
+      rejectButtonProps: {
+        severity: 'secondary',
+        outlined: true
+      },
+
+      acceptButtonProps: {
+        severity: 'danger'
+      },
+
+      accept: () => {
+        this.plantList = this.plantList.filter(
+          item => item.id !== allocation.id
+        );
+
+        // Persist the deletion
+        this.saveAllocations();
+
+        this.selectedPlant = null;
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Allocation deleted successfully'
+        });
+      }
+    });
   }
 
-  // Set the status tag color
-  getStatusSeverity(
-    status: string
-  ): 'success' | 'warn' | 'danger' | 'info' | 'secondary' {
-    switch (status) {
-      case 'Approved':
-        return 'success';
+  // Close and reset dialog
+  onDialogClose(): void {
+    this.showPlantModal = false;
+    this.selectedPlant = null;
+    this.actionName = 'Create';
 
-      case 'Pending':
-        return 'warn';
+    this.plantForm.reset({
+      plantManager: [],
+      plant: '',
+      qty: 0
+    });
+  }
 
-      case 'Under Review':
-        return 'info';
+  // Display multiple managers in a single table cell
+  getManagerNames(plant: Allocation): string {
+    return plant.plantManager.join(', ');
+  }
 
-      case 'Rejected':
-        return 'danger';
+  // Increase quantity
+  incrementQty(): void {
+    const currentQty =
+      Number(this.plantForm.get('qty')?.value) || 0;
 
-      default:
-        return 'secondary';
+    this.plantForm.get('qty')?.setValue(currentQty + 1);
+  }
+
+  // Decrease quantity without going below 1
+  decrementQty(): void {
+    const currentQty =
+      Number(this.plantForm.get('qty')?.value) || 1;
+
+    if (currentQty > 1) {
+      this.plantForm.get('qty')?.setValue(currentQty - 1);
     }
   }
 }
