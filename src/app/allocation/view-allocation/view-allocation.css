@@ -1,85 +1,252 @@
 
-.plant-header {
+.allocation-container {
+  width: 100%;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.page-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.custom-container {
-  width: 100%;
-  overflow-x: auto;
+.header-content h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #263238;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
+.header-content p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: #777;
 }
 
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 0;
+.total-count {
+  padding: 10px 15px;
+  border-radius: 6px;
+  background: #eef4ff;
+  color: #2456a6;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
-.form-field input,
-.form-field p-select {
-  width: 100%;
-}
-
-.required-field {
-  color: #dc2626;
-  font-size: 0.8rem;
-}
-
-.submit-btn {
+/* Selected count */
+.selection-header {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  margin-bottom: 12px;
 }
 
+.selected-count {
+  padding: 7px 13px;
+  background: #e8f2ff;
+  color: #2161a8;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Table container */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table */
+.allocation-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+}
+
+.allocation-table th,
+.allocation-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.allocation-table th {
+  background: #f5f7fa;
+  color: #374151;
+  font-weight: 600;
+}
+
+.allocation-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.allocation-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Selected row */
+.allocation-table tbody tr.selected-row {
+  background: #eaf4ff;
+}
+
+.allocation-table tbody tr.selected-row:hover {
+  background: #dceeff;
+}
+
+/* Checkbox */
+.checkbox-column {
+  width: 75px;
+  text-align: center !important;
+}
+
+.checkbox-column input {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: #2563eb;
+  vertical-align: middle;
+}
+
+/* Manager name */
+.manager-name {
+  font-weight: 500;
+  color: #263238;
+}
+
+/* Limit */
+.limit-value {
+  color: #2456a6;
+  font-weight: 600;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
+/* Empty message */
 .empty-message {
-  text-align: center;
-  padding: 1rem;
+  text-align: center !important;
+  padding: 25px !important;
+  color: #777;
 }
 
-@media (max-width: 600px) {
-  .form-grid {
-    grid-template-columns: minmax(0, 1fr);
+/* Dialog */
+.dialog-content {
+  padding-top: 5px;
+}
+
+.dialog-description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.selected-info {
+  padding: 12px;
+  margin-bottom: 18px;
+  background: #f5f7fa;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: #3b82f6;
+}
+
+/* Dialog actions */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* Tablet and mobile */
+@media screen and (max-width: 768px) {
+  .allocation-container {
+    padding: 12px;
   }
 
-  .plant-header {
+  .header-content h2 {
+    font-size: 19px;
+  }
+
+  .total-count {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .allocation-table {
+    min-width: 850px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page-header {
+    flex-direction: column;
     align-items: flex-start;
   }
 
-  .submit-btn {
-    flex-wrap: wrap;
+  .selection-header {
+    justify-content: flex-start;
   }
 }
 
-.qty-control {
+
+:host ::ng-deep .add-limit-btn {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border: 1px solid #bae6fd !important;
+}
+
+:host ::ng-deep .reduce-limit-btn {
+  background: #fff7ed !important;
+  color: #c2410c !important;
+  border: 1px solid #fed7aa !important;
+}
+
+.action-buttons {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.qty-input {
-  width: 100px;
-  text-align: center;
-}
-
-@media (max-width: 600px) {
-  .qty-control {
-    width: 100%;
-  }
-
-  .qty-input {
-    flex: 1;
-    min-width: 0;
-  }
+  gap: 8px;
 }

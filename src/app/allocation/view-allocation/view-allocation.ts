@@ -1,312 +1,266 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ConfirmationService,MenuItem, MessageService} from 'primeng/api';
-import { Shared } from 'src/app/shared/services/shared';
-import { MultiSelectModule } from 'primeng/multiselect';
-interface Allocation {
+
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+interface PlantManager {
   id: number;
-  plantManager: string[];
-  plant: string;
-  qty: number;
+  plantManager: string;
+  limit: number;
 }
+
+type LimitAction = 'add' | 'reduce';
 
 @Component({
   selector: 'app-view-allocation',
   standalone: true,
-  imports: [Shared, MultiSelectModule],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    DialogModule,
+    ToastModule
+  ],
+  providers: [MessageService],
   templateUrl: './view-allocation.html',
-  styleUrl: './view-allocation.css',
-  providers: [ConfirmationService, MessageService]
+  styleUrl: './view-allocation.css'
 })
 export class ViewAllocation implements OnInit {
 
-  // Allocation table data
-  plantList: Allocation[] = [];
+  // New key prevents loading old incorrect records.
+  private readonly storageKey = 'viewAllocationData_v3';
 
-  // Plant Manager dropdown options
-  userList = [
- { label: 'Suresh Reddy', value: 'Suresh Reddy' },
-    { label: 'Laxmi Devi', value: 'Laxmi Devi' },
-    { label: 'Anitha Rao', value: 'Anitha Rao' }
+  allocationList: PlantManager[] = [];
 
-  ];
+  selectedIds = new Set<number>();
 
-  // Plant dropdown options
-  plantOptions = [
-    { label: 'Chennai', value: 'Chennai' },
-    { label: 'Trichy', value: 'Trichy' },
-    { label: 'Pune', value: 'Pune' }
-  ];
+  dialogVisible = false;
+  currentAction: LimitAction = 'add';
 
-  items: MenuItem[] = [];
+  qty: number | null = null;
 
-  showPlantModal = false;
-  selectedPlant: Allocation | null = null;
-  actionName = 'Create';  
-
-  Number = Number;
-
-  private fb = inject(FormBuilder);
-  private confirmationService = inject(ConfirmationService);
-  private messageService = inject(MessageService);
-
-  // Allocation form
-  plantForm = this.fb.group({
-    plantManager: this.fb.control<string[]>([], {
-      validators: [Validators.required]
-    }),
-    plant: this.fb.control('', {
-      validators: [Validators.required]
-    }),
-    qty: this.fb.control(0, {
-      validators: [Validators.required, Validators.min(1)]
-    })
-  });
-
-  // Form control getters
-  get plant() {
-    return this.plantForm.get('plant');
-  }
-
-  get plantManager() {
-    return this.plantForm.get('plantManager');
-  }
-
-  get qty() {
-    return this.plantForm.get('qty');
-  }
+  constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: 'Edit',
-        icon: 'pi pi-pencil',
-        command: () => this.editPlant()
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-trash',
-        command: () => this.deletePlant()
-      }
+    this.loadAllocationData();
+  }
+
+  // Default 10 Plant Managers
+  private getDefaultManagers(): PlantManager[] {
+    return [
+      { id: 1, plantManager: 'Sanjay Kumar', limit: 10 },
+      { id: 2, plantManager: 'Ananya Iyer', limit: 20 },
+      { id: 3, plantManager: 'Sivakumar R', limit: 30 },
+      { id: 4, plantManager: 'Kayalvizhi M', limit: 40 },
+      { id: 5, plantManager: 'Rakesh Patel', limit: 50 },
+      { id: 6, plantManager: 'Meera Shah', limit: 60 },
+      { id: 7, plantManager: 'Vikram Singh', limit: 70 },
+      { id: 8, plantManager: 'Deepa Nair', limit: 80 },
+      { id: 9, plantManager: 'Suresh Reddy', limit: 90 },
+      { id: 10, plantManager: 'Arjun Mehta', limit: 100 }
     ];
-
-    // Load allocations submitted from Plant Allocation
-    this.loadAllocations();
   }
 
-  // Load saved allocation data
-  loadAllocations(): void {
-    try {
-      const savedData = localStorage.getItem('plantAllocations');
-      const parsedData: any[] = savedData
-        ? JSON.parse(savedData)
-        : [];
+  // Load only View Allocation data
+  loadAllocationData(): void {
+    const savedData = localStorage.getItem(this.storageKey);
 
-      this.plantList = parsedData.map((item, index) => ({
-        id: item.id ?? index + 1,
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
 
-        // Support both single and multiple managers
-        plantManager: Array.isArray(item.plantManager)
-          ? item.plantManager
-          : item.plantManager
-            ? [item.plantManager]
-            : [],
+        const isValid =
+          Array.isArray(parsedData) &&
+          parsedData.length === 10 &&
+          parsedData.every((item: any) =>
+            typeof item.id === 'number' &&
+            typeof item.plantManager === 'string' &&
+            typeof item.limit === 'number'
+          );
 
-        // Support both plantName and plant property names
-        plant: typeof item.plant === 'string'
-          ? item.plant
-          : item.plantName?.label ?? item.plantName ?? '',
+        if (isValid) {
+          this.allocationList = parsedData;
+          return;
+        }
 
-        qty: Number(item.qty) || 0
-      }));
-
-      // Save normalized records with IDs
-      this.saveAllocations();
-
-      console.log('Loaded Plant Allocations:', this.plantList);
-
-    } catch (error) {
-      console.error('Unable to load allocations:', error);
-      this.plantList = [];
+      } catch (error) {
+        console.error('Error loading View Allocation data:', error);
+      }
     }
+
+    // Load default 10 managers if data is missing or invalid.
+    this.allocationList = this.getDefaultManagers();
+    this.saveAllocationData();
   }
 
-  // Save allocation data in browser storage
-  saveAllocations(): void {
+  // Save View Allocation data
+  saveAllocationData(): void {
     localStorage.setItem(
-      'plantAllocations',
-      JSON.stringify(this.plantList)
+      this.storageKey,
+      JSON.stringify(this.allocationList)
     );
   }
 
-  // Open Create Allocation dialog
-  openPlantModal(): void {
-    this.selectedPlant = null;
-    this.actionName = 'Create';
-
-    this.plantForm.reset({
-      plantManager: [],
-      plant: '',
-      qty: 0
-    });
-
-    this.showPlantModal = true;
+  // Total managers
+  get totalManagers(): number {
+    return this.allocationList.length;
   }
 
-  // Open row action menu
-  plantMenu(event: Event, menu: any, plant: Allocation): void {
-    this.selectedPlant = plant;
-    menu.toggle(event);
+  // Selected managers count
+  get selectedCount(): number {
+    return this.selectedIds.size;
   }
 
-  // Edit existing allocation
-  editPlant(): void {
-    if (!this.selectedPlant) {
+  // Check all selected
+  get allSelected(): boolean {
+    return this.allocationList.length > 0 &&
+      this.selectedIds.size === this.allocationList.length;
+  }
+
+  // Check partially selected
+  get someSelected(): boolean {
+    return this.selectedIds.size > 0 && !this.allSelected;
+  }
+
+  // Check individual manager
+  isSelected(id: number): boolean {
+    return this.selectedIds.has(id);
+  }
+
+  // Individual checkbox selection
+  toggleSelection(id: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      this.selectedIds.add(id);
+    } else {
+      this.selectedIds.delete(id);
+    }
+  }
+
+  // Select All checkbox
+  toggleAll(event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      this.allocationList.forEach(manager => {
+        this.selectedIds.add(manager.id);
+      });
+    } else {
+      this.selectedIds.clear();
+    }
+  }
+
+  // Open Add Limit / Reduce Limit popup
+  openLimitDialog(action: LimitAction): void {
+
+    if (this.selectedIds.size === 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Select Manager',
+        detail: 'Please select at least one Plant Manager.'
+      });
       return;
     }
 
-    this.actionName = 'Update';
-
-    this.plantForm.patchValue({
-      plantManager: [...this.selectedPlant.plantManager],
-      plant: this.selectedPlant.plant,
-      qty: this.selectedPlant.qty
-    });
-
-    this.showPlantModal = true;
+    this.currentAction = action;
+    this.qty = null;
+    this.dialogVisible = true;
   }
 
-  // Create or update allocation
-  submitPlantForm(): void {
-    if (this.plantForm.invalid) {
-      this.plantForm.markAllAsTouched();
+  // Quantity input change
+  onQtyChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+
+    this.qty = value === '' ? null : Number(value);
+  }
+
+  // Submit Add Limit / Reduce Limit
+  submitLimit(): void {
+
+    if (
+      this.qty === null ||
+      !Number.isInteger(this.qty) ||
+      this.qty <= 0
+    ) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Invalid Quantity',
+        detail: 'Please enter a quantity greater than zero.'
+      });
       return;
     }
 
-    const formValue = this.plantForm.getRawValue();
+    const selectedManagers = this.allocationList.filter(manager =>
+      this.selectedIds.has(manager.id)
+    );
 
-    const allocationData = {
-      plantManager: formValue.plantManager ?? [],
-      plant: formValue.plant?.trim() ?? '',
-      qty: Number(formValue.qty)
-    };
+    if (selectedManagers.length === 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Select Manager',
+        detail: 'Please select at least one Plant Manager.'
+      });
+      return;
+    }
 
-    if (this.selectedPlant) {
-      // Update existing record
-      this.plantList = this.plantList.map(item =>
-        item.id === this.selectedPlant!.id
-          ? { ...item, ...allocationData }
-          : item
+    // Validate all managers before reducing limits.
+    if (this.currentAction === 'reduce') {
+
+      const insufficientManagers = selectedManagers.filter(
+        manager => manager.limit < this.qty!
       );
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Allocation updated successfully'
-      });
+      if (insufficientManagers.length > 0) {
 
-    } else {
-      // Create a new record
-      const newId =
-        Math.max(0, ...this.plantList.map(item => item.id)) + 1;
-
-      const newAllocation: Allocation = {
-        id: newId,
-        ...allocationData
-      };
-
-      this.plantList = [newAllocation, ...this.plantList];
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Allocation created successfully'
-      });
-    }
-
-    // Persist Create and Update operations
-    this.saveAllocations();
-
-    this.showPlantModal = false;
-    this.onDialogClose();
-  }
-
-  // Delete confirmation
-  deletePlant(): void {
-    if (!this.selectedPlant) {
-      return;
-    }
-
-    const allocation = this.selectedPlant;
-
-    this.confirmationService.confirm({
-      header: 'Delete Allocation',
-      message: 'Are you sure you want to delete this allocation?',
-      icon: 'pi pi-exclamation-triangle',
-      rejectLabel: 'Cancel',
-      acceptLabel: 'Delete',
-
-      rejectButtonProps: {
-        severity: 'secondary',
-        outlined: true
-      },
-
-      acceptButtonProps: {
-        severity: 'danger'
-      },
-
-      accept: () => {
-        this.plantList = this.plantList.filter(
-          item => item.id !== allocation.id
-        );
-
-        // Persist the deletion
-        this.saveAllocations();
-
-        this.selectedPlant = null;
+        const names = insufficientManagers
+          .map(manager => manager.plantManager)
+          .join(', ');
 
         this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Allocation deleted successfully'
+          severity: 'error',
+          summary: 'Insufficient Limit',
+          detail: `Cannot reduce the entered quantity for: ${names}`
         });
+
+        return;
       }
-    });
-  }
-
-  // Close and reset dialog
-  onDialogClose(): void {
-    this.showPlantModal = false;
-    this.selectedPlant = null;
-    this.actionName = 'Create';
-
-    this.plantForm.reset({
-      plantManager: [],
-      plant: '',
-      qty: 0
-    });
-  }
-
-  // Display multiple managers in a single table cell
-  getManagerNames(plant: Allocation): string {
-    return plant.plantManager.join(', ');
-  }
-
-  // Increase quantity
-  incrementQty(): void {
-    const currentQty =
-      Number(this.plantForm.get('qty')?.value) || 0;
-
-    this.plantForm.get('qty')?.setValue(currentQty + 1);
-  }
-
-  // Decrease quantity without going below 1
-  decrementQty(): void {
-    const currentQty =
-      Number(this.plantForm.get('qty')?.value) || 1;
-
-    if (currentQty > 1) {
-      this.plantForm.get('qty')?.setValue(currentQty - 1);
     }
+
+    // Update every selected manager.
+    selectedManagers.forEach(manager => {
+
+      if (this.currentAction === 'add') {
+        manager.limit += this.qty!;
+      } else {
+        manager.limit -= this.qty!;
+      }
+
+    });
+
+    this.saveAllocationData();
+
+    const actionText =
+      this.currentAction === 'add' ? 'increased' : 'reduced';
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: `Limit ${actionText} successfully for ${selectedManagers.length} selected manager(s).`
+    });
+
+    // Close popup and clear selections.
+    this.dialogVisible = false;
+    this.qty = null;
+    this.selectedIds.clear();
+  }
+
+  // Close popup
+  closeDialog(): void {
+    this.dialogVisible = false;
+    this.qty = null;
   }
 }

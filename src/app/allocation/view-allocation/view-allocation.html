@@ -1,207 +1,199 @@
 
-<div class="card">
-  <div class="plant-header">
-    <h2>View Allocation</h2>
+<p-toast position="top-right"></p-toast>
+<div class="allocation-container">
 
-    <p-button
-      icon="pi pi-plus"
-      label="Create Allocation"
-      (onClick)="openPlantModal()">
-    </p-button>
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div class="header-content">
+      <h2>View Allocation</h2>
+
+    </div>
+
+    <div class="total-count">
+      Total Managers:
+      <strong>{{ totalManagers }}</strong>
+    </div>
+
   </div>
 
-  <div class="custom-container">
-    <p-table
-      [value]="plantList"
-      [rowHover]="true"
-      [scrollable]="true"
-      [tableStyle]="{ 'min-width': '650px' }"
-      styleClass="p-datatable-sm">
+  <!-- Selected Manager Count -->
+  <div class="selection-header">
 
-      <ng-template #header>
+    <span class="selected-count">
+      {{ selectedCount }} Manager(s) Selected
+    </span>
+
+  </div>
+
+  <!-- Allocation Table -->
+  <div class="table-container">
+
+    <table class="allocation-table">
+
+      <thead>
         <tr>
+
           <th>SL No</th>
+
+          <th class="checkbox-column">
+            <input
+              type="checkbox"
+              [checked]="allSelected"
+              [indeterminate]="someSelected"
+              (change)="toggleAll($event)"
+              aria-label="Select all managers">
+          </th>
+
           <th>Plant Manager</th>
-          <th>Plant</th>
-          <th>Qty</th>
+
+          <th>Limit</th>
+
           <th>Action</th>
-        </tr>
-      </ng-template>
 
-      <ng-template #body let-plant let-i="rowIndex">
-        <tr>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let manager of allocationList; let i = index"
+          [class.selected-row]="isSelected(manager.id)">
+
+          <!-- SL No -->
           <td>{{ i + 1 }}</td>
-       <td>{{ getManagerNames(plant) }}</td>
-          <td>{{ plant.plant }}</td>
-          <td>{{ plant.qty }}</td>
 
+          <!-- Individual Checkbox -->
+          <td class="checkbox-column">
+
+            <input
+              type="checkbox"
+              [checked]="isSelected(manager.id)"
+              (change)="toggleSelection(manager.id, $event)"
+              [attr.aria-label]="'Select ' + manager.plantManager">
+
+          </td>
+
+          <!-- Plant Manager Name -->
+          <td class="manager-name">
+            {{ manager.plantManager }}
+          </td>
+
+          <!-- Manager Limit -->
           <td>
-            <p-menu
-              #menu
-              [model]="items"
-              [popup]="true"
-              appendTo="body">
-            </p-menu>
-
-            <button
-              pButton
-              type="button"
-              text
-              rounded
-              severity="secondary"
-              (click)="plantMenu($event, menu, plant)">
-              <i class="pi pi-ellipsis-v"></i>
-            </button>
+            <span class="limit-value">
+              {{ manager.limit }}
+            </span>
           </td>
-        </tr>
-      </ng-template>
 
-      <ng-template #emptymessage>
-        <tr>
-          <td colspan="5" class="empty-message">
-            No Records Found
-          </td>
-        </tr>
-      </ng-template>
+          <!-- Action Buttons -->
+          <td>
 
-    </p-table>
-  </div>
+          <div class="action-buttons">
+  <p-button
+    label="Add Limit"
+    icon="pi pi-plus"
+    styleClass="add-limit-btn"
+    size="small"
+    (onClick)="openLimitDialog('add')">
+  </p-button>
+
+  <p-button
+    label="Reduce Limit"
+    icon="pi pi-minus"
+    styleClass="reduce-limit-btn"
+    size="small"
+    (onClick)="openLimitDialog('reduce')">
+  </p-button>
 </div>
 
-<!-- Create / Edit Allocation Dialog -->
+          </td>
+
+        </tr>
+
+        <!-- Empty Message -->
+        <tr *ngIf="allocationList.length === 0">
+
+          <td colspan="5" class="empty-message">
+            No Plant Managers Found
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+<!-- Add Limit / Reduce Limit Dialog -->
 <p-dialog
-  [header]="selectedPlant ? 'Update Allocation' : 'Create Allocation'"
-  [(visible)]="showPlantModal"
+  [header]="currentAction === 'add' ? 'Add Limit' : 'Reduce Limit'"
+  [(visible)]="dialogVisible"
   [modal]="true"
   [draggable]="false"
-  [style]="{ width: '40rem', maxWidth: '95vw' }"
-  (onHide)="onDialogClose()">
+  [resizable]="false"
+  [closable]="true"
+  [position]="'center'"
+  [style]="{ width: '420px', maxWidth: '95vw' }"
+  (onHide)="closeDialog()">
 
-  <form
-    [formGroup]="plantForm"
-    (ngSubmit)="submitPlantForm()">
+  <div class="dialog-content">
 
-    <div class="form-grid">
-<div class="form-field">
-  <label for="plant-manager">Plant Manager</label>
+    <p class="dialog-description">
 
-  <p-multiselect
-    inputId="plant-manager"
-    [options]="userList"
-    optionLabel="label"
-    optionValue="value"
-    placeholder="Select Plant Managers"
-    [filter]="true"
-    filterBy="label"
-    [showClear]="true"
-    appendTo="body"
-    styleClass="w-full"
-    formControlName="plantManager"
-    display="chip">
-  </p-multiselect>
+      {{ currentAction === 'add'
+        ? 'Enter quantity to increase the limit for selected managers.'
+        : 'Enter quantity to decrease the limit for selected managers.' }}
 
-  @if (plantManager?.invalid && plantManager?.touched) {
-    <small class="required-field">
-      Plant Manager is required.
-    </small>
-  }
-</div>
-<div class="form-field">
-  <label for="plant-name">Plant</label>
+    </p>
 
-  <p-select
-    inputId="plant-name"
-    [options]="plantOptions"
-    optionLabel="label"
-    optionValue="value"
-    placeholder="Select Plant"
-    [showClear]="true"
-    appendTo="body"
-    styleClass="w-full"
-    formControlName="plant">
-  </p-select>
+    <div class="selected-info">
 
-  @if (plant?.invalid && plant?.touched) {
-    <small class="required-field">
-      Plant is required.
-    </small>
-  }
-</div>
+      Selected Managers:
 
+      <strong>{{ selectedCount }}</strong>
 
-<div class="form-field">
-  <label for="qty">Qty</label>
+    </div>
 
-  @if (selectedPlant) {
-    <div class="qty-control">
-      <p-button
-        icon="pi pi-minus"
-        severity="secondary"
-        [outlined]="true"
-        type="button"
-        [disabled]="Number(plantForm.get('qty')?.value) <= 1"
-        (onClick)="decrementQty()">
-      </p-button>
+    <!-- Quantity Input -->
+    <div class="form-group">
+
+      <label for="qty">Quantity</label>
 
       <input
-        pInputText
         id="qty"
         type="number"
         min="1"
-        formControlName="qty"
-        class="qty-input">
-
-      <p-button
-        icon="pi pi-plus"
-        severity="secondary"
-        [outlined]="true"
-        type="button"
-        (onClick)="incrementQty()">
-      </p-button>
-    </div>
-  } @else {
-    <input
-      pInputText
-      id="qty"
-      type="number"
-      min="1"
-      formControlName="qty"
-      placeholder="Enter quantity"
-      class="w-full">
-  }
-
-  @if (qty?.invalid && qty?.touched) {
-    <small class="required-field">
-      @if (qty?.hasError('required')) {
-        Quantity is required.
-      } @else if (qty?.hasError('min')) {
-        Quantity must be greater than zero.
-      }
-    </small>
-  }
-</div>
-
+        step="1"
+        [value]="qty ?? ''"
+        (input)="onQtyChange($event)"
+        placeholder="Enter quantity">
 
     </div>
 
-    <div class="submit-btn">
+    <!-- Dialog Buttons -->
+    <div class="dialog-actions">
+
       <p-button
         label="Cancel"
         severity="secondary"
         [outlined]="true"
-        type="button"
-        (onClick)="showPlantModal = false">
+        (onClick)="closeDialog()">
       </p-button>
 
       <p-button
-        [label]="actionName"
-        icon="pi pi-check"
-        type="submit">
+        label="Submit"
+        [icon]="currentAction === 'add' ? 'pi pi-plus' : 'pi pi-minus'"
+        [severity]="currentAction === 'add' ? 'success' : 'danger'"
+        (onClick)="submitLimit()">
       </p-button>
+
     </div>
 
-  </form>
-</p-dialog>
+  </div>
 
-<p-toast></p-toast>
-<p-confirmdialog></p-confirmdialog>
+</p-dialog>
