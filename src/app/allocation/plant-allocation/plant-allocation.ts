@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -30,6 +30,12 @@ interface PlantManagerLimit {
   name: string;
   limit: number;
   label: string;
+}
+
+interface StoredManager {
+  id: number;
+  name: string;
+  limit: number;
 }
 
 interface PlantOption {
@@ -63,10 +69,13 @@ interface Allocation {
   templateUrl: './plant-allocation.html',
   styleUrl: './plant-allocation.css'
 })
-export class PlantAllocation implements OnInit {
+export class PlantAllocation implements OnInit, OnDestroy {
 
   private readonly draftStorageKey = 'plantAllocationDraft';
   private readonly submittedStorageKey = 'plantAllocations';
+
+  private readonly storageKey = 'sharedPlantManagerLimits_v1';
+  private readonly updateEvent = 'sharedPlantManagerLimitsUpdated';
 
   selectedQty = 0;
   remainingQty = 0;
@@ -89,44 +98,8 @@ export class PlantAllocation implements OnInit {
 
   selectedPlantManager: PlantManager | null = null;
 
-  plantManagerList: PlantManager[] = [
-    {
-      label: 'Suresh Reddy (limit 10)',
-      value: 'Suresh Reddy',
-      limit: 10,
-      disabled: false
-    },
-    {
-      label: 'Laxmi Devi (limit 20)',
-      value: 'Laxmi Devi',
-      limit: 20,
-      disabled: false
-    },
-    {
-      label: 'Anitha Rao (limit 40)',
-      value: 'Anitha Rao',
-      limit: 40,
-      disabled: false
-    }
-  ];
-
-  plantManagerList1: PlantManagerLimit[] = [
-    {
-      name: 'Suresh Reddy',
-      limit: 10,
-      label: 'Suresh Reddy (limit 10)'
-    },
-    {
-      name: 'Laxmi Devi',
-      limit: 20,
-      label: 'Laxmi Devi (limit 20)'
-    },
-    {
-      name: 'Anitha Rao',
-      limit: 40,
-      label: 'Anitha Rao (limit 40)'
-    }
-  ];
+  plantManagerList: PlantManager[] = [];
+  plantManagerList1: PlantManagerLimit[] = [];
 
   plantNameList: PlantOption[] = [
     { label: 'Chennai', value: 'Chennai' },
@@ -136,6 +109,20 @@ export class PlantAllocation implements OnInit {
 
   allocationForm: FormGroup;
   limitForm: FormGroup;
+
+  // Refresh when another browser tab updates manager limits.
+  private handleStorageChange = (event: StorageEvent): void => {
+    if (event.key === this.storageKey) {
+      this.loadSharedManagerLimits();
+      this.updateManagerLimits();
+    }
+  };
+
+  // Refresh when another component updates limits in the same tab.
+  private handleSameTabUpdate = (): void => {
+    this.loadSharedManagerLimits();
+    this.updateManagerLimits();
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -154,7 +141,11 @@ export class PlantAllocation implements OnInit {
   }
 
   ngOnInit(): void {
-    // Restore the allocation list when this page opens again.
+
+    // Load the shared manager limits first.
+    this.loadSharedManagerLimits();
+
+    // Restore saved allocation list.
     this.loadAllocations();
 
     const state = history.state;
@@ -173,6 +164,10 @@ export class PlantAllocation implements OnInit {
 
     this.updateManagerLimits();
 
+    // Listen for updates from other tabs and components.
+    window.addEventListener('storage', this.handleStorageChange);
+    window.addEventListener(this.updateEvent, this.handleSameTabUpdate);
+
     this.selectedComponents1 = [
       { componentName: 'Topflange', qty: 1 },
       { componentName: 'Bottomflange', qty: 1 },
@@ -184,6 +179,75 @@ export class PlantAllocation implements OnInit {
       { componentName: 'Site Accessories', qty: 1 },
       { componentName: 'SCADA', qty: 1 }
     ];
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('storage', this.handleStorageChange);
+    window.removeEventListener(this.updateEvent, this.handleSameTabUpdate);
+  }
+
+  // Default manager list shared by both screens.
+  private getDefaultManagers(): StoredManager[] {
+    return [
+      { id: 1, name: 'Suresh Reddy', limit: 10 },
+      { id: 2, name: 'Laxmi Devi', limit: 20 },
+      { id: 3, name: 'Anitha Rao', limit: 40 },
+      { id: 4, name: 'Kayalvizhi M', limit: 30 },
+      { id: 5, name: 'Rakesh Patel', limit: 50 },
+      { id: 6, name: 'Meera Shah', limit: 60 },
+      { id: 7, name: 'Vikram Singh', limit: 70 },
+      { id: 8, name: 'Deepa Nair', limit: 80 },
+      { id: 9, name: 'Sanjay kumar', limit: 90 },
+      { id: 10, name: 'Arjun Mehta', limit: 100 }
+    ];
+  }
+
+  // Load shared manager limits from localStorage.
+  loadSharedManagerLimits(): void {
+    try {
+      const saved = localStorage.getItem(this.storageKey);
+      const defaults = this.getDefaultManagers();
+
+      if (!saved) {
+        localStorage.setItem(this.storageKey, JSON.stringify(defaults));
+      }
+
+      const stored: StoredManager[] = JSON.parse(
+        localStorage.getItem(this.storageKey) || '[]'
+      );
+
+      // Preserve saved limits and add any missing default managers.
+      const managers = defaults.map(defaultManager => {
+        const existing = stored.find(
+          manager => manager.name === defaultManager.name
+        );
+
+        return existing
+          ? {
+              ...defaultManager,
+              limit: Number(existing.limit)
+            }
+          : defaultManager;
+      });
+
+      localStorage.setItem(this.storageKey, JSON.stringify(managers));
+
+      this.plantManagerList = managers.map(manager => ({
+        label: `${manager.name} (limit ${manager.limit})`,
+        value: manager.name,
+        limit: manager.limit,
+        disabled: false
+      }));
+
+      this.plantManagerList1 = managers.map(manager => ({
+        name: manager.name,
+        limit: manager.limit,
+        label: `${manager.name} (limit ${manager.limit})`
+      }));
+
+    } catch (error) {
+      console.error('Error loading shared manager limits:', error);
+    }
   }
 
   // Restore saved draft allocations.
@@ -210,6 +274,7 @@ export class PlantAllocation implements OnInit {
           item.plantManager &&
           item.plantName
       );
+
     } catch (error) {
       console.error('Error loading allocation draft:', error);
       this.allocations = [];
@@ -278,9 +343,13 @@ export class PlantAllocation implements OnInit {
       );
   }
 
+  // Show remaining quantity in Plant Allocation.
   updateManagerLimits(): void {
+
     this.plantManagerList = this.plantManagerList.map(manager => {
+
       const allocatedQty = this.getManagerAllocatedQty(manager.value);
+
       const remainingLimit = Math.max(
         0,
         manager.limit - allocatedQty
@@ -293,27 +362,26 @@ export class PlantAllocation implements OnInit {
       };
     });
 
-    this.plantManagerList1 = this.plantManagerList1.map(manager => {
-      const mainManager = this.plantManagerList.find(
-        item => item.value === manager.name
-      );
+this.plantManagerList1 = this.plantManagerList1.map(manager => {
+  const mainManager = this.plantManagerList.find(
+    item => item.value === manager.name
+  );
 
-      if (!mainManager) {
-        return manager;
-      }
+  if (!mainManager) {
+    return manager;
+  }
 
-      const allocatedQty = this.getManagerAllocatedQty(manager.name);
-      const remainingLimit = Math.max(
-        0,
-        mainManager.limit - allocatedQty
-      );
+  const remainingLimit = Math.max(
+    0,
+    mainManager.limit - this.getManagerAllocatedQty(manager.name)
+  );
 
-      return {
-        ...manager,
-        limit: remainingLimit,
-        label: `${manager.name} (limit ${remainingLimit})`
-      };
-    });
+  return {
+    ...manager,
+    limit: remainingLimit,
+    label: `${manager.name} (limit ${remainingLimit})`
+  };
+});
 
     this.availableManagerCount = this.plantManagerList.filter(
       manager => !manager.disabled
@@ -344,6 +412,7 @@ export class PlantAllocation implements OnInit {
   }
 
   addAllocations(): void {
+
     if (this.allocationForm.invalid) {
       this.allocationForm.markAllAsTouched();
       return;
@@ -390,7 +459,6 @@ export class PlantAllocation implements OnInit {
       }
     ];
 
-    // Persist immediately after adding.
     this.saveAllocations();
 
     if (this.selectedQty > 0) {
@@ -442,7 +510,9 @@ export class PlantAllocation implements OnInit {
       .sort((a, b) => a.limit - b.limit);
   }
 
+  // Add limits to selected managers and save to shared storage.
   saveLimit(): void {
+
     if (this.limitForm.invalid) {
       this.limitForm.markAllAsTouched();
       return;
@@ -454,35 +524,54 @@ export class PlantAllocation implements OnInit {
 
     if (
       !managerNames?.length ||
-      !Number.isFinite(extraQty) ||
+      !Number.isInteger(extraQty) ||
       extraQty <= 0
     ) {
       return;
     }
 
-    this.plantManagerList = this.plantManagerList.map(manager => {
-      if (managerNames.includes(manager.value)) {
-        return {
-          ...manager,
-          limit: manager.limit + extraQty
-        };
-      }
+    try {
+      const managers: StoredManager[] = JSON.parse(
+        localStorage.getItem(this.storageKey) || '[]'
+      );
 
-      return manager;
-    });
+      managerNames.forEach(name => {
+        const manager = managers.find(item => item.name === name);
 
-    this.updateManagerLimits();
+        if (manager) {
+          manager.limit += extraQty;
+        }
+      });
 
-    this.successMessage =
-      `Successfully added ${extraQty} to ${managerNames.join(', ')}.`;
+      localStorage.setItem(this.storageKey, JSON.stringify(managers));
 
-    this.showLimitForm = false;
-    this.showSuccessDialog = true;
+      // Refresh current screen.
+      this.loadSharedManagerLimits();
+      this.updateManagerLimits();
 
-    this.limitForm.reset({
-      plantManager: [],
-      qty: null
-    });
+      // Notify other components in the same browser tab.
+      window.dispatchEvent(new Event(this.updateEvent));
+
+      this.successMessage =
+        `Successfully added ${extraQty} to ${managerNames.join(', ')}.`;
+
+      this.showLimitForm = false;
+      this.showSuccessDialog = true;
+
+      this.limitForm.reset({
+        plantManager: [],
+        qty: null
+      });
+
+    } catch (error) {
+      console.error('Error updating manager limits:', error);
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to update manager limits.'
+      });
+    }
   }
 
   cancelLimit(): void {
@@ -504,6 +593,7 @@ export class PlantAllocation implements OnInit {
   }
 
   confirmDelete(): void {
+
     if (
       this.pendingDeleteIndex < 0 ||
       this.pendingDeleteIndex >= this.allocations.length
@@ -518,7 +608,6 @@ export class PlantAllocation implements OnInit {
       (_, currentIndex) => currentIndex !== index
     );
 
-    // Persist the updated list after deleting.
     this.saveAllocations();
 
     if (this.selectedQty > 0) {
@@ -528,7 +617,9 @@ export class PlantAllocation implements OnInit {
       );
     }
 
+    // Deleting an allocation does not change the total manager limit.
     this.updateManagerLimits();
+
     this.cancelDelete();
   }
 
@@ -538,6 +629,7 @@ export class PlantAllocation implements OnInit {
   }
 
   submitAll(): void {
+
     if (this.allocations.length === 0) {
       this.messageService.add({
         severity: 'warn',
@@ -547,7 +639,6 @@ export class PlantAllocation implements OnInit {
       return;
     }
 
-    // Convert to the format used by View Allocation.
     const submittedAllocations = this.allocations.map(item => ({
       plantManager: item.plantManager?.value ?? '',
       plant: item.plantName?.value ?? '',
@@ -555,13 +646,11 @@ export class PlantAllocation implements OnInit {
     }));
 
     try {
-      // Replace the submitted list to prevent duplicate submissions.
       localStorage.setItem(
         this.submittedStorageKey,
         JSON.stringify(submittedAllocations)
       );
 
-      // Keep the draft so the Plant Allocation list remains visible.
       this.saveAllocations();
 
       this.messageService.add({
@@ -569,6 +658,7 @@ export class PlantAllocation implements OnInit {
         summary: 'Success',
         detail: 'Allocations submitted successfully.'
       });
+
     } catch (error) {
       console.error('Error submitting allocations:', error);
 
@@ -581,6 +671,7 @@ export class PlantAllocation implements OnInit {
   }
 
   canAddAllocation(): boolean {
+
     const managerName =
       this.allocationForm.get('plantManager')?.value;
 

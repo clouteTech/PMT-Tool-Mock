@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +10,12 @@ import { MessageService } from 'primeng/api';
 interface PlantManager {
   id: number;
   plantManager: string;
+  limit: number;
+}
+
+interface StoredManager {
+  id: number;
+  name: string;
   limit: number;
 }
 
@@ -28,10 +34,12 @@ type LimitAction = 'add' | 'reduce';
   templateUrl: './view-allocation.html',
   styleUrl: './view-allocation.css'
 })
-export class ViewAllocation implements OnInit {
+export class ViewAllocation implements OnInit, OnDestroy {
 
-  // New key prevents loading old incorrect records.
-  private readonly storageKey = 'viewAllocationData_v3';
+  // SAME STORAGE KEY AS PLANT ALLOCATION.
+  private readonly storageKey = 'sharedPlantManagerLimits_v1';
+
+  private readonly updateEvent = 'sharedPlantManagerLimitsUpdated';
 
   allocationList: PlantManager[] = [];
 
@@ -42,96 +50,164 @@ export class ViewAllocation implements OnInit {
 
   qty: number | null = null;
 
+  // Refresh when another browser tab updates manager limits.
+  private handleStorageChange = (event: StorageEvent): void => {
+    if (event.key === this.storageKey) {
+      this.loadAllocationData();
+    }
+  };
+
+  // Refresh when another component updates limits in the same tab.
+  private handleSameTabUpdate = (): void => {
+    this.loadAllocationData();
+  };
+
   constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {
+
     this.loadAllocationData();
+
+    window.addEventListener('storage', this.handleStorageChange);
+    window.addEventListener(this.updateEvent, this.handleSameTabUpdate);
   }
 
-  // Default 10 Plant Managers
-  private getDefaultManagers(): PlantManager[] {
+  ngOnDestroy(): void {
+    window.removeEventListener('storage', this.handleStorageChange);
+    window.removeEventListener(this.updateEvent, this.handleSameTabUpdate);
+  }
+
+  // Default 10 Plant Managers.
+  private getDefaultManagers(): StoredManager[] {
     return [
-      { id: 1, plantManager: 'Sanjay Kumar', limit: 10 },
-      { id: 2, plantManager: 'Ananya Iyer', limit: 20 },
-      { id: 3, plantManager: 'Sivakumar R', limit: 30 },
-      { id: 4, plantManager: 'Kayalvizhi M', limit: 40 },
-      { id: 5, plantManager: 'Rakesh Patel', limit: 50 },
-      { id: 6, plantManager: 'Meera Shah', limit: 60 },
-      { id: 7, plantManager: 'Vikram Singh', limit: 70 },
-      { id: 8, plantManager: 'Deepa Nair', limit: 80 },
-      { id: 9, plantManager: 'Suresh Reddy', limit: 90 },
-      { id: 10, plantManager: 'Arjun Mehta', limit: 100 }
+      { id: 1, name: 'Suresh Reddy', limit: 10 },
+      { id: 2, name: 'Laxmi Devi', limit: 20 },
+      { id: 3, name: 'Anitha Rao', limit: 40 },
+      { id: 4, name: 'Kayalvizhi M', limit: 30 },
+      { id: 5, name: 'Rakesh Patel', limit: 50 },
+      { id: 6, name: 'Meera Shah', limit: 60 },
+      { id: 7, name: 'Vikram Singh', limit: 70 },
+      { id: 8, name: 'Deepa Nair', limit: 80 },
+      { id: 9, name: 'Sanjay kumar', limit: 90 },
+      { id: 10, name: 'Arjun Mehta', limit: 100 }
     ];
   }
 
-  // Load only View Allocation data
+  // Load shared manager data.
   loadAllocationData(): void {
-    const savedData = localStorage.getItem(this.storageKey);
 
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData);
+    try {
+      const savedData = localStorage.getItem(this.storageKey);
+      const defaults = this.getDefaultManagers();
 
-        const isValid =
-          Array.isArray(parsedData) &&
-          parsedData.length === 10 &&
-          parsedData.every((item: any) =>
-            typeof item.id === 'number' &&
-            typeof item.plantManager === 'string' &&
-            typeof item.limit === 'number'
-          );
-
-        if (isValid) {
-          this.allocationList = parsedData;
-          return;
-        }
-
-      } catch (error) {
-        console.error('Error loading View Allocation data:', error);
+      if (!savedData) {
+        localStorage.setItem(
+          this.storageKey,
+          JSON.stringify(defaults)
+        );
       }
+
+      const stored: StoredManager[] = JSON.parse(
+        localStorage.getItem(this.storageKey) || '[]'
+      );
+
+      // Keep saved limits and add missing default managers.
+      const managers = defaults.map(defaultManager => {
+
+        const existing = stored.find(
+          manager => manager.name === defaultManager.name
+        );
+
+        return existing
+          ? {
+              ...defaultManager,
+              limit: Number(existing.limit)
+            }
+          : defaultManager;
+      });
+
+      localStorage.setItem(
+        this.storageKey,
+        JSON.stringify(managers)
+      );
+
+      this.allocationList = managers.map(manager => ({
+        id: manager.id,
+        plantManager: manager.name,
+        limit: manager.limit
+      }));
+
+    } catch (error) {
+      console.error('Error loading shared manager data:', error);
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to load Plant Manager limits.'
+      });
     }
-
-    // Load default 10 managers if data is missing or invalid.
-    this.allocationList = this.getDefaultManagers();
-    this.saveAllocationData();
   }
 
-  // Save View Allocation data
+  // Save shared manager data.
   saveAllocationData(): void {
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify(this.allocationList)
-    );
+
+    try {
+      const managers: StoredManager[] = this.allocationList.map(
+        manager => ({
+          id: manager.id,
+          name: manager.plantManager,
+          limit: manager.limit
+        })
+      );
+
+      localStorage.setItem(
+        this.storageKey,
+        JSON.stringify(managers)
+      );
+
+      // Notify other components in the same browser tab.
+      window.dispatchEvent(new Event(this.updateEvent));
+
+    } catch (error) {
+      console.error('Error saving shared manager data:', error);
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to save Plant Manager limits.'
+      });
+    }
   }
 
-  // Total managers
+  // Total managers.
   get totalManagers(): number {
     return this.allocationList.length;
   }
 
-  // Selected managers count
+  // Selected managers count.
   get selectedCount(): number {
     return this.selectedIds.size;
   }
 
-  // Check all selected
+  // Check all selected.
   get allSelected(): boolean {
     return this.allocationList.length > 0 &&
       this.selectedIds.size === this.allocationList.length;
   }
 
-  // Check partially selected
+  // Check partially selected.
   get someSelected(): boolean {
     return this.selectedIds.size > 0 && !this.allSelected;
   }
 
-  // Check individual manager
+  // Check individual manager.
   isSelected(id: number): boolean {
     return this.selectedIds.has(id);
   }
 
-  // Individual checkbox selection
+  // Individual checkbox selection.
   toggleSelection(id: number, event: Event): void {
+
     const checked = (event.target as HTMLInputElement).checked;
 
     if (checked) {
@@ -141,8 +217,9 @@ export class ViewAllocation implements OnInit {
     }
   }
 
-  // Select All checkbox
+  // Select All checkbox.
   toggleAll(event: Event): void {
+
     const checked = (event.target as HTMLInputElement).checked;
 
     if (checked) {
@@ -154,7 +231,7 @@ export class ViewAllocation implements OnInit {
     }
   }
 
-  // Open Add Limit / Reduce Limit popup
+  // Open Add Limit / Reduce Limit popup.
   openLimitDialog(action: LimitAction): void {
 
     if (this.selectedIds.size === 0) {
@@ -171,14 +248,15 @@ export class ViewAllocation implements OnInit {
     this.dialogVisible = true;
   }
 
-  // Quantity input change
+  // Quantity input change.
   onQtyChange(event: Event): void {
+
     const value = (event.target as HTMLInputElement).value;
 
     this.qty = value === '' ? null : Number(value);
   }
 
-  // Submit Add Limit / Reduce Limit
+  // Submit Add Limit / Reduce Limit.
   submitLimit(): void {
 
     if (
@@ -194,6 +272,9 @@ export class ViewAllocation implements OnInit {
       return;
     }
 
+    // Read the latest shared data before updating.
+    this.loadAllocationData();
+
     const selectedManagers = this.allocationList.filter(manager =>
       this.selectedIds.has(manager.id)
     );
@@ -207,7 +288,7 @@ export class ViewAllocation implements OnInit {
       return;
     }
 
-    // Validate all managers before reducing limits.
+    // Validate all managers before reducing.
     if (this.currentAction === 'reduce') {
 
       const insufficientManagers = selectedManagers.filter(
@@ -230,7 +311,7 @@ export class ViewAllocation implements OnInit {
       }
     }
 
-    // Update every selected manager.
+    // Update selected managers.
     selectedManagers.forEach(manager => {
 
       if (this.currentAction === 'add') {
@@ -241,6 +322,7 @@ export class ViewAllocation implements OnInit {
 
     });
 
+    // Save changes to the common localStorage key.
     this.saveAllocationData();
 
     const actionText =
@@ -258,7 +340,7 @@ export class ViewAllocation implements OnInit {
     this.selectedIds.clear();
   }
 
-  // Close popup
+  // Close popup.
   closeDialog(): void {
     this.dialogVisible = false;
     this.qty = null;
