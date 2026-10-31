@@ -250,3 +250,61 @@
   display: flex;
   gap: 8px;
 }
+
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.column-search {
+  width: 100%;
+  min-width: 90px;
+  padding: 7px 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.filter-row th {
+  background: #f8fafc;
+  padding: 8px;
+}
+
+.manager-name {
+  font-weight: 500;
+}
+
+.limit-value {
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.selected-row {
+  background: #eff6ff !important;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 25px;
+  color: #64748b;
+}
+
+@media screen and (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .action-buttons {
+    min-width: 190px;
+  }
+
+  .column-search {
+    min-width: 100px;
+  }
+}

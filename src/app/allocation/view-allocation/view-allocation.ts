@@ -6,7 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 interface PlantManager {
   id: number;
   plantManager: string;
@@ -28,7 +29,9 @@ type LimitAction = 'add' | 'reduce';
     CommonModule,
     ButtonModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+      TableModule,
+  InputTextModule
   ],
   providers: [MessageService],
   templateUrl: './view-allocation.html',

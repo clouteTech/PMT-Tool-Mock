@@ -1,42 +1,53 @@
 
 <p-toast position="top-right"></p-toast>
+
 <div class="allocation-container">
 
   <!-- Page Header -->
   <div class="page-header">
-
     <div class="header-content">
       <h2>View Allocation</h2>
-
     </div>
 
     <div class="total-count">
       Total Managers:
       <strong>{{ totalManagers }}</strong>
     </div>
-
   </div>
 
   <!-- Selected Manager Count -->
   <div class="selection-header">
-
     <span class="selected-count">
       {{ selectedCount }} Manager(s) Selected
     </span>
-
   </div>
 
-  <!-- Allocation Table -->
+  <!-- PrimeNG Table -->
   <div class="table-container">
 
-    <table class="allocation-table">
+    <p-table
+      #dt
+      [value]="allocationList"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} managers"
+      [globalFilterFields]="['id', 'plantManager', 'limit']"
+      [rowHover]="true"
+      [scrollable]="true"
+      scrollHeight="flex"
+      styleClass="p-datatable-striped"
+      responsiveLayout="scroll"
+      dataKey="id">
 
-      <thead>
+      <!-- Table Header -->
+      <ng-template pTemplate="header">
+
         <tr>
+          <th style="width: 75px;">SL No</th>
 
-          <th>SL No</th>
-
-          <th class="checkbox-column">
+          <th style="width: 65px;">
             <input
               type="checkbox"
               [checked]="allSelected"
@@ -49,37 +60,77 @@
 
           <th>Limit</th>
 
-          <th>Action</th>
+          <th style="min-width: 220px;">Action</th>
+        </tr>
+
+        <!-- Individual Column Search -->
+        <tr class="filter-row">
+
+          <!-- SL No Filter -->
+          <th>
+            <input
+              pInputText
+              type="number"
+              placeholder="Search SL No"
+              class="column-search"
+              (input)="dt.filter($any($event.target).value, 'id', 'equals')">
+          </th>
+
+          <!-- Checkbox Column -->
+          <th></th>
+
+          <!-- Plant Manager Filter -->
+          <th>
+            <input
+              pInputText
+              type="text"
+              placeholder="Search manager"
+              class="column-search"
+              (input)="dt.filter($any($event.target).value, 'plantManager', 'contains')">
+          </th>
+
+          <!-- Limit Filter -->
+          <th>
+            <input
+              pInputText
+              type="number"
+              placeholder="Search limit"
+              class="column-search"
+              (input)="dt.filter($any($event.target).value, 'limit', 'equals')">
+          </th>
+
+          <!-- Action Column -->
+          <th></th>
 
         </tr>
-      </thead>
 
-      <tbody>
+      </ng-template>
 
-        <tr
-          *ngFor="let manager of allocationList; let i = index"
-          [class.selected-row]="isSelected(manager.id)">
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-manager let-i="rowIndex">
+
+        <tr [class.selected-row]="isSelected(manager.id)">
 
           <!-- SL No -->
-          <td>{{ i + 1 }}</td>
+          <td>
+            {{ i + 1 + (dt.first || 0) }}
+          </td>
 
-          <!-- Individual Checkbox -->
-          <td class="checkbox-column">
-
+          <!-- Checkbox -->
+          <td>
             <input
               type="checkbox"
               [checked]="isSelected(manager.id)"
               (change)="toggleSelection(manager.id, $event)"
               [attr.aria-label]="'Select ' + manager.plantManager">
-
           </td>
 
-          <!-- Plant Manager Name -->
+          <!-- Plant Manager -->
           <td class="manager-name">
             {{ manager.plantManager }}
           </td>
 
-          <!-- Manager Limit -->
+          <!-- Limit -->
           <td>
             <span class="limit-value">
               {{ manager.limit }}
@@ -88,48 +139,48 @@
 
           <!-- Action Buttons -->
           <td>
+            <div class="action-buttons">
 
-          <div class="action-buttons">
-  <p-button
-    label="Add Limit"
-    icon="pi pi-plus"
-    styleClass="add-limit-btn"
-    size="small"
-    (onClick)="openLimitDialog('add')">
-  </p-button>
+              <p-button
+                label="Add Limit"
+                icon="pi pi-plus"
+                styleClass="add-limit-btn"
+                size="small"
+                (onClick)="openLimitDialog('add')">
+              </p-button>
 
-  <p-button
-    label="Reduce Limit"
-    icon="pi pi-minus"
-    styleClass="reduce-limit-btn"
-    size="small"
-    (onClick)="openLimitDialog('reduce')">
-  </p-button>
-</div>
+              <p-button
+                label="Reduce Limit"
+                icon="pi pi-minus"
+                styleClass="reduce-limit-btn"
+                size="small"
+                (onClick)="openLimitDialog('reduce')">
+              </p-button>
 
+            </div>
           </td>
 
         </tr>
 
-        <!-- Empty Message -->
-        <tr *ngIf="allocationList.length === 0">
+      </ng-template>
 
+      <!-- Empty Message -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
           <td colspan="5" class="empty-message">
             No Plant Managers Found
           </td>
-
         </tr>
+      </ng-template>
 
-      </tbody>
-
-    </table>
+    </p-table>
 
   </div>
 
 </div>
 
 
-<!-- Add Limit / Reduce Limit Dialog -->
+<!-- Add / Reduce Limit Dialog -->
 <p-dialog
   [header]="currentAction === 'add' ? 'Add Limit' : 'Reduce Limit'"
   [(visible)]="dialogVisible"
@@ -144,19 +195,16 @@
   <div class="dialog-content">
 
     <p class="dialog-description">
-
-      {{ currentAction === 'add'
-        ? 'Enter quantity to increase the limit for selected managers.'
-        : 'Enter quantity to decrease the limit for selected managers.' }}
-
+      {{
+        currentAction === 'add'
+          ? 'Enter quantity to increase the limit for selected managers.'
+          : 'Enter quantity to decrease the limit for selected managers.'
+      }}
     </p>
 
     <div class="selected-info">
-
       Selected Managers:
-
       <strong>{{ selectedCount }}</strong>
-
     </div>
 
     <!-- Quantity Input -->
